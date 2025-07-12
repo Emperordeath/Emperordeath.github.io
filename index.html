@@ -249,6 +249,30 @@
       border: 1.5px solid var(--vermelho);
       box-shadow: 0 4px 12px #ff2a2a55;
     }
+    .sneak-peaks .videos img {
+      max-width: 260px;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #000a;
+      background: #111;
+      border: 1.5px solid var(--azul);
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .sneak-peaks .videos img:hover {
+      border: 1.5px solid var(--vermelho);
+      box-shadow: 0 4px 12px #ff2a2a55;
+    }
+    @media (max-width: 768px) {
+      .sneak-peaks .videos img {
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+      }
+      .sneak-peaks .videos {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
     footer {
       font-size: 0.95em;
       color: #aaa;
