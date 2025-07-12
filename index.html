@@ -85,8 +85,6 @@
       background: var(--cinza-escuro);
       position: relative;
       box-shadow: 0 2px 16px #0004;
-      width: 100%;
-      margin: 0 auto;
     }
     .flags-sugestao-bar {
       display: flex;
@@ -137,10 +135,9 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      margin: 24px auto 12px auto;
+      margin: 24px 0 12px 0;
       gap: 18px;
       flex-wrap: wrap;
-      max-width: 900px;
     }
     .banner img {
       width: 540px;
@@ -238,19 +235,6 @@
       justify-content: center;
       margin-top: 10px;
     }
-    .sneak-peaks .videos img {
-      max-width: 260px;
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #000a;
-      background: #111;
-      border: 1.5px solid var(--azul);
-      transition: border 0.2s, box-shadow 0.2s;
-    }
-    .sneak-peaks .videos img:hover {
-      border: 1.5px solid var(--vermelho);
-      box-shadow: 0 4px 12px #ff2a2a55;
-    }
     .sneak-peaks video {
       max-width: 260px;
       width: 100%;
@@ -273,8 +257,6 @@
       margin-top: 24px;
       letter-spacing: 0.5px;
       box-shadow: 0 -2px 10px #0004;
-      width: 100%;
-      margin: 0 auto;
     }
     @media (max-width: 900px) {
       .banner { flex-direction: column; align-items: center; gap: 10px; }
@@ -291,7 +273,7 @@
       }
       .creditos-box { font-size: 0.95em; padding: 7px 8px; }
       .sneak-peaks .videos { gap: 7px; }
-      .sneak-peaks video, .sneak-peaks .videos img { max-width: 98vw; }
+      .sneak-peaks video { max-width: 98vw; }
       .info { font-size: 0.95em; }
       .btn { font-size: 0.95em; padding: 8px 12px; }
       .sneak-peaks { padding: 8px 2vw; }
@@ -311,9 +293,9 @@
   </div>
   <header>
     <div class="flags-sugestao-bar">
-      <button class="sugestao-btn" id="open-sugestao">Sugestão</button>
+      <button class="sugestao-btn" id="open-sugestao" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfHuoLX9s3U7EZMu9eVhLFB5hgsfGniyiq0DaXBRE4MwGKwDg/viewform?edit2=2_ABaOnud3KKfvXGpEKKY5fBnTZ6HGrQmQ9J9SbRkfEfrMyL6wyOWpyJLhmUpv8VVx5w&pli=1', '_blank')">Sugestão</button>
       <div class="flags">
-        <button class="flag-btn" onclick="setLang('pt')"><img class="flag-img" src="https://flagcdnAllora.com/br.svg" alt="Português"></button>
+        <button class="flag-btn" onclick="setLang('pt')"><img class="flag-img" src="https://flagcdn.com/br.svg" alt="Português"></button>
         <button class="flag-btn" onclick="setLang('en')"><img class="flag-img" src="https://flagcdn.com/us.svg" alt="English"></button>
         <button class="flag-btn" onclick="setLang('es')"><img class="flag-img" src="https://flagcdn.com/es.svg" alt="Español"></button>
       </div>
@@ -343,7 +325,7 @@
       Em breve imagens e vídeos exclusivos do desenvolvimento!
     </div>
     <div class="videos">
-      <img src="espdasneak.png" alt="Sneak Peak - Espda" />
+      <img src="espadasneak.png" alt="Sneak Peak - Espada" />
       <img src="ui1.png" alt="Sneak Peak - UI 1" />
       <img src="ui2.png" alt="Sneak Peak - UI 2" />
       <video src="1.mp4" controls preload="metadata" poster="thumb1.jpg"></video>
@@ -367,9 +349,7 @@
         sneak: "Sneak-peaks",
         sneakPlaceholder: "Em breve imagens e vídeos exclusivos do desenvolvimento!",
         footer: "© 2025 Steal a Football Player • Todos os direitos reservados",
-        sugestao: "Sugestão",
-        placeholder: "Digite sua sugestão (máx. 100 caracteres)...",
-        tags: ["Novo modo de jogo", "Evento especial"]
+        sugestao: "Sugestão"
       },
       en: {
         title: "A new football Steal on Roblox!",
@@ -382,9 +362,7 @@
         sneak: "Sneak-peaks",
         sneakPlaceholder: "Soon, exclusive images and videos from development!",
         footer: "© 2025 Steal a Football Player • All rights reserved",
-        sugestao: "Suggestion",
-        placeholder: "Type your suggestion (max. 100 characters)...",
-        tags: ["New game mode", "Special event"]
+        sugestao: "Suggestion"
       },
       es: {
         title: "¡Un nuevo Steal de fútbol en Roblox!",
@@ -397,9 +375,7 @@
         sneak: "Sneak-peaks",
         sneakPlaceholder: "¡Pronto imágenes y videos exclusivos del desarrollo!",
         footer: "© 2025 Steal a Football Player • Todos los derechos reservados",
-        sugestao: "Sugerencia",
-        placeholder: "Escribe tu sugerencia (máx. 100 caracteres)...",
-        tags: ["Nuevo modo de juego", "Evento especial"]
+        sugestao: "Sugerencia"
       }
     };
 
@@ -407,7 +383,7 @@
       const t = translations[lang];
       document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').innerHTML = t.subtitle;
-      document.getElementById('desc').innerHTML = t.desc;
+      document.getElementById('desc').innerHTML Streets = t.desc;
       document.getElementById('discord-btn').innerHTML = t.discord;
       document.getElementById('sneak-title').innerHTML = t.sneak;
       document.getElementById('sneak-placeholder').innerHTML = t.sneakPlaceholder;
