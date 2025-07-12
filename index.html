@@ -6,70 +6,49 @@
   <title>SPDM ANTI-RAID</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
-      background: linear-gradient(135deg, #0a0000, #1a0000);
+      background: linear-gradient(135deg, #110000, #220000);
       font-family: 'Montserrat', sans-serif;
       color: #ff4444;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem 4rem;
+      padding: 2rem 1rem 5rem;
     }
-
     header {
       text-align: center;
       margin-bottom: 3rem;
       user-select: none;
     }
-
     header img.bot-image {
       max-width: 160px;
       border-radius: 20px;
       box-shadow: 0 0 25px #990000cc;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     header img.bot-image:hover {
       transform: scale(1.1);
       box-shadow: 0 0 50px #ff0000cc;
     }
-
     header h1 {
       font-size: 3rem;
       margin-top: 1rem;
       color: #cc0000;
       text-shadow: 0 0 8px #880000;
     }
-
     header p {
       margin-top: 0.6rem;
       font-size: 1.2rem;
       max-width: 600px;
       color: #bb3333;
       text-shadow: 0 0 4px #660000;
-    }
-
-    .assinatura-centralizada {
-      margin-top: 0.5rem;
-      text-align: center;
-      font-size: 1rem;
-      font-style: italic;
-      color: #cc1111;
-      text-shadow: 0 0 3px #000, 0 0 6px #ff0000;
-      user-select: none;
-      animation: sangueFade 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes sangueFade {
-      0%   { opacity: 0.6; text-shadow: 0 0 5px #330000; }
-      100% { opacity: 1; text-shadow: 0 0 15px #990000; }
     }
 
     main {
@@ -80,6 +59,7 @@
       gap: 1.6rem;
     }
 
+    /* Card das funções */
     .feature-card {
       background: #220000dd;
       border: 2px solid #660000;
@@ -89,33 +69,33 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: default;
     }
-
     .feature-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 0 35px #bb0000cc;
     }
-
     .feature-card h3 {
       color: #ff2222;
       font-size: 1.6rem;
       margin-bottom: 0.8rem;
       text-shadow: 0 0 6px #990000;
     }
-
     .feature-card p {
       color: #dd5555;
       font-size: 1.1rem;
       line-height: 1.5;
       text-shadow: 0 0 3px #660000;
     }
+    .feature-card li {
+      margin-bottom: 0.5rem;
+    }
 
+    /* Botão convite */
     .invite-section {
       margin-top: 3rem;
       width: 100%;
       text-align: center;
       user-select: none;
     }
-
     .invite-btn {
       display: inline-block;
       background: #7f0000;
@@ -130,9 +110,7 @@
       transition: background 0.3s ease, box-shadow 0.3s ease;
       user-select: none;
     }
-
-    .invite-btn:hover,
-    .invite-btn:focus {
+    .invite-btn:hover, .invite-btn:focus {
       background: #cc0000;
       box-shadow: 0 0 45px #ff2222;
       outline: none;
@@ -146,8 +124,105 @@
       color: #660000;
       text-align: center;
       user-select: none;
+      position: relative;
+      padding-top: 1rem;
     }
 
+    /* Efeito Glitch na assinatura */
+    .assinatura-glitch {
+      margin-top: 0.5rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ff1a1a;
+      position: relative;
+      user-select: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan;
+      animation: glitchAnim 2s infinite;
+    }
+
+    .assinatura-glitch::before,
+    .assinatura-glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      right: 0;
+      opacity: 0.8;
+      clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    }
+
+    .assinatura-glitch::before {
+      top: -2px;
+      left: 2px;
+      color: #ff0000;
+      text-shadow: -2px 0 red;
+      animation: glitchAnimBefore 2s infinite;
+    }
+
+    .assinatura-glitch::after {
+      top: 2px;
+      left: -2px;
+      color: #00ffff;
+      text-shadow: 2px 0 cyan;
+      animation: glitchAnimAfter 2s infinite;
+    }
+
+    @keyframes glitchAnim {
+      0% {
+        transform: translate(0);
+      }
+      20% {
+        transform: translate(-2px, 2px);
+      }
+      40% {
+        transform: translate(-2px, -2px);
+      }
+      60% {
+        transform: translate(2px, 2px);
+      }
+      80% {
+        transform: translate(2px, -2px);
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+
+    @keyframes glitchAnimBefore {
+      0% {
+        clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        transform: translate(0);
+      }
+      50% {
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        transform: translate(-1px, -1px);
+      }
+      100% {
+        clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        transform: translate(0);
+      }
+    }
+
+    @keyframes glitchAnimAfter {
+      0% {
+        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        transform: translate(0);
+      }
+      50% {
+        clip-path: polygon(0 55%, 100% 55%, 100% 70%, 0 70%);
+        transform: translate(1px, 1px);
+      }
+      100% {
+        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        transform: translate(0);
+      }
+    }
+
+    /* Responsividade ajustes */
     @media (max-width: 400px) {
       header h1 {
         font-size: 2.2rem;
@@ -159,6 +234,9 @@
         font-size: 1.2rem;
         padding: 0.9rem 2rem;
       }
+      .assinatura-glitch {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -167,7 +245,6 @@
     <img src="https://arceusxexecutor.com/wp-content/uploads/2025/05/ArceusX-Executor.webp" alt="SPDM ANTI-RAID" class="bot-image" />
     <h1>SPDM ANTI-RAID</h1>
     <p>Proteja seu servidor Discord com o bot mais sombrio e sanguinário do mercado.</p>
-    <p class="assinatura-centralizada">By: DeathTeam / Deathbringer</p>
   </header>
 
   <main>
@@ -175,22 +252,27 @@
       <h3>🚨 Detecção de contas novas suspeitas</h3>
       <p>Conta criada há menos de 20 dias? O SPDM ANTI-RAID já levanta o alerta e impede invasões.</p>
     </div>
+
     <div class="feature-card">
       <h3>🔇 Sistema automático de mute</h3>
       <p>Silencia automaticamente spammers e repetidores, mantendo seu servidor limpo e seguro.</p>
     </div>
+
     <div class="feature-card">
       <h3>⚠️ Alertas configuráveis</h3>
       <p>Receba avisos no canal que você escolher, direto na sua central de comando.</p>
     </div>
+
     <div class="feature-card">
       <h3>🛠️ Comandos para silenciar em massa</h3>
       <p>Comandos poderosos para controlar sua comunidade sem esforço, dando mute geral quando precisar.</p>
     </div>
+
     <div class="feature-card">
       <h3>🔧 Configuração fácil via Slash Commands</h3>
       <p>Use comandos simples para configurar o bot e manter tudo sob controle, sem complicação.</p>
     </div>
+
     <div class="feature-card">
       <h3>🔒 Imunidade para cargos Owner e Co-owner</h3>
       <p>Quem manda no pedaço não leva mute, garantindo que seus líderes continuem no controle.</p>
@@ -205,6 +287,7 @@
 
   <footer>
     <p>© 2025 SPDM ANTI-RAID. Feito pra proteger sua comunidade Discord, no sangue e na sombra.</p>
+    <p class="assinatura-glitch" data-text="By: DeathTeam / Deathbringer">By: DeathTeam / Deathbringer</p>
   </footer>
 </body>
 </html>
