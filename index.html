@@ -10,9 +10,6 @@
       --vermelho: #ff2a2a;
       --cinza-escuro: #23272a;
       --cinza-bg: #181a1b;
-      --cinza-borda: #363636;
-      --shadow: 0 8px 32px #000a;
-      --radius: 16px;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -23,296 +20,133 @@
       min-height: 100vh;
     }
     #loader-overlay {
-      position: fixed;
-      z-index: 99999;
+      position: fixed; z-index: 99999;
       background: linear-gradient(135deg, #181a1b 60%, #23272a 100%);
-      width: 100vw;
-      height: 100vh;
-      top: 0; left: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.5s;
-      opacity: 1;
-      pointer-events: all;
+      width: 100vw; height: 100vh; top: 0; left: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.5s; opacity: 1; pointer-events: all;
     }
     #loader-overlay.hide {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.7s;
+      opacity: 0; pointer-events: none; transition: opacity 0.7s;
     }
     .loader-dots {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      justify-content: center;
+      display: flex; gap: 12px; align-items: center; justify-content: center;
     }
     .loader-dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--azul);
-      animation: loader-bounce 1.2s infinite alternate;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--azul); animation: loader-bounce 1.2s infinite alternate;
       box-shadow: 0 2px 12px #00bfff55;
     }
     .loader-dot:nth-child(2) {
-      background: var(--vermelho);
-      animation-delay: .2s;
+      background: var(--vermelho); animation-delay: .2s;
       box-shadow: 0 2px 12px #ff2a2a55;
     }
     .loader-dot:nth-child(3) {
-      background: #fff;
-      animation-delay: .4s;
-      box-shadow: 0 2px 12px #fff5;
+      background: #fff; animation-delay: .4s; box-shadow: 0 2px 12px #fff5;
     }
-    @keyframes loader-bounce {
-      to { transform: translateY(-18px); }
-    }
+    @keyframes loader-bounce { to { transform: translateY(-18px); } }
     .loader-text {
-      margin-top: 22px;
-      color: #fff;
-      font-size: 1.1em;
-      letter-spacing: 1.5px;
-      font-weight: 500;
-      opacity: 0.8;
-      text-align: center;
-      text-shadow: 0 2px 8px #0008;
-      font-family: 'Segoe UI', Arial, sans-serif;
+      margin-top: 22px; color: #fff; font-size: 1.1em;
+      letter-spacing: 1.5px; font-weight: 500; opacity: 0.8;
+      text-align: center; text-shadow: 0 2px 8px #0008;
     }
     header, footer {
-      text-align: center;
-      padding: 20px 0 10px 0;
-      background: var(--cinza-escuro);
-      position: relative;
+      text-align: center; padding: 20px 0 10px;
+      background: var(--cinza-escuro); position: relative;
       box-shadow: 0 2px 16px #0004;
     }
     .flags-sugestao-bar {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 14px;
-      margin: 0 16px 0 0;
-      position: absolute;
-      right: 0;
-      top: 14px;
-      z-index: 10;
+      position: absolute; top: 14px; right: 0; margin: 0 16px 0 0;
+      display: flex; align-items: center; justify-content: flex-end; gap: 14px;
     }
-    .flags { display: flex; gap: 8px; align-items: center; }
-    .flag-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      outline: none;
-      transition: transform 0.1s;
-    }
-    .flag-btn:active { transform: scale(0.95); }
-    .flag-img {
-      width: 28px;
-      height: 18px;
-      border-radius: 4px;
-      border: 1.5px solid var(--azul);
-      background: #fff;
-      object-fit: cover;
-    }
+    .flags { display: flex; gap: 8px; }
+    .flag-btn { background: none; border: none; cursor: pointer; padding: 0; }
+    .flag-img { width: 28px; height: 18px; border-radius: 4px; border: 1.5px solid var(--azul); }
     .sugestao-btn {
       background: linear-gradient(90deg, var(--azul) 0%, var(--vermelho) 100%);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-size: 1em;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 8px #0005;
-      letter-spacing: 0.5px;
+      color: #fff; border: none; border-radius: 8px; padding: 6px 14px;
+      font-size: 1em; font-weight: 600; cursor: pointer;
     }
     .sugestao-btn:hover {
       background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
-      color: #fff;
     }
+
+    /* Banner */
     .banner {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      margin: 24px 0 12px 0;
-      gap: 18px;
-      flex-wrap: wrap;
+      display: flex; justify-content: center; align-items: center;
+      margin: 24px 0 12px; gap: 18px; flex-wrap: wrap;
     }
     .banner img {
-      width: 540px;
-      max-width: 98vw;
-      height: auto;
-      max-height: 300px;
-      border-radius: 12px;
-      box-shadow: 0 4px 18px #000b, 0 0 0 2px var(--azul);
-      background: #111;
-      object-fit: contain;
-      transition: box-shadow 0.3s;
+      width: 540px; max-width: 98vw; height: auto; max-height: 300px;
+      border-radius: 12px; box-shadow: 0 4px 18px #000b, 0 0 0 2px var(--azul);
+      object-fit: contain; transition: box-shadow 0.3s;
     }
     .banner img:hover {
       box-shadow: 0 8px 32px #00bfff88, 0 0 0 4px var(--vermelho);
     }
     .creditos-box {
-      background: #23272a;
-      border-radius: 10px;
-      padding: 10px 18px;
-      box-shadow: 0 2px 8px #0007;
-      color: var(--azul);
-      font-weight: bold;
-      font-size: 1em;
-      min-width: 100px;
-      margin-top: 8px;
-      text-align: left;
+      background: #23272a; border-radius: 10px; padding: 10px 18px;
+      box-shadow: 0 2px 8px #0007; color: var(--azul);
+      font-weight: bold; min-width: 100px; text-align: left;
       border: 1px solid var(--azul);
     }
-    .creditos-box span {
-      color: #fff;
-      font-weight: 400;
-      font-size: 1em;
-    }
-    .sub {
-      color: var(--azul);
-      font-size: 1em;
-      margin-top: 8px;
-      letter-spacing: 0.5px;
-    }
+    .creditos-box span { color: #fff; font-weight: 400; }
+
+    /* Info */
+    .sub { color: var(--azul); font-size: 1em; margin-top: 8px; }
     .info {
-      text-align: center;
-      margin: 0 8px 24px 8px;
+      text-align: center; margin: 0 8px 24px; padding: 12px 0;
+      background: #23272a; border-radius: 10px; box-shadow: 0 2px 8px #0005;
       font-size: 1.05em;
-      background: #23272a;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #0005;
-      padding: 12px 0 12px 0;
     }
     .btn {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 10px 22px;
+      display: inline-block; margin-top: 14px; padding: 10px 22px;
       background: linear-gradient(90deg, var(--azul) 60%, var(--vermelho) 100%);
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1em;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px #00bfff55;
-      border: none;
-      letter-spacing: 0.5px;
+      color: #fff; border-radius: 8px; text-decoration: none;
+      font-weight: bold; font-size: 1em; transition: box-shadow 0.2s;
     }
-    .btn:hover {
-      background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
-      color: #fff;
-      box-shadow: 0 4px 12px #ff2a2a55;
-    }
+    .btn:hover { box-shadow: 0 4px 12px #ff2a2a55; }
+
+    /* Sneak-peaks */
     .sneak-peaks {
-      background: #23272a;
-      border-radius: 10px;
-      margin: 24px auto 18px auto;
-      max-width: 900px;
-      padding: 18px 8px;
-      box-shadow: 0 2px 10px #0006;
+      background: #23272a; border-radius: 10px; margin: 24px auto 18px;
+      max-width: 900px; padding: 18px 8px; box-shadow: 0 2px 10px #0006;
     }
-    .sneak-peaks h2 {
-      color: var(--azul);
-      margin-top: 0;
-      margin-bottom: 12px;
-      text-align: center;
-      font-size: 1.2em;
-      letter-spacing: 1px;
-    }
-    .sneak-peaks .placeholder {
-      color: #aaa;
-      text-align: center;
-      font-size: 1em;
-      margin: 16px 0;
-    }
+    .sneak-peaks h2 { color: var(--azul); margin-bottom: 12px; text-align: center; }
     .sneak-peaks .videos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
-      margin-top: 10px;
+      display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
     }
-    .sneak-peaks video {
-      max-width: 260px;
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #000a;
-      background: #111;
-      outline: none;
-      border: 1.5px solid var(--azul);
+    .sneak-peaks .videos img,
+    .sneak-peaks .videos video {
+      max-width: 260px; width: 100%; border-radius: 10px;
+      box-shadow: 0 2px 8px #000a; border: 1.5px solid var(--azul);
       transition: border 0.2s, box-shadow 0.2s;
     }
-    .sneak-peaks video:focus, .sneak-peaks video:hover {
+    .sneak-peaks .videos img:hover,
+    .sneak-peaks .videos video:hover {
       border: 1.5px solid var(--vermelho);
       box-shadow: 0 4px 12px #ff2a2a55;
     }
-    .sneak-peaks .videos img {
-      max-width: 260px;
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #000a;
-      background: #111;
-      border: 1.5px solid var(--azul);
-      transition: border 0.2s, box-shadow 0.2s;
-    }
-    .sneak-peaks .videos img:hover {
-      border: 1.5px solid var(--vermelho);
-      box-shadow: 0 4px 12px #ff2a2a55;
-    }
+
+    /* Responsive */
     @media (max-width: 768px) {
-      .sneak-peaks .videos img {
-        width: 100%;
-        height: auto;
-        margin: 10px 0;
-      }
-      .sneak-peaks .videos {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-    footer {
-      font-size: 0.95em;
-      color: #aaa;
-      background: var(--cinza-bg);
-      border-top: 1px solid #222;
-      margin-top: 24px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 -2px 10px #0004;
-    }
-    @media (max-width: 900px) {
-      .banner { flex-direction: column; align-items: center; gap: 10px; }
-      .creditos-box { margin-left: 0; margin-top: 10px; }
-    }
-    @media (max-width: 600px) {
-      .banner img { 
-        max-width: 98vw;
-        width: auto;
-        height: 280px;
-        max-height: none;
-        object-fit: contain;
-        margin: 0 auto;
-      }
-      .creditos-box { font-size: 0.95em; padding: 7px 8px; }
-      .sneak-peaks .videos { gap: 7px; }
-      .sneak-peaks video { max-width: 98vw; }
-      .info { font-size: 0.95em; }
-      .btn { font-size: 0.95em; padding: 8px 12px; }
-      .sneak-peaks { padding: 8px 2vw; }
+      .banner img { width: 98vw; }
+      .sneak-peaks .videos { flex-direction: column; }
+      .sneak-peaks .videos img,
+      .sneak-peaks .videos video { max-width: 98vw; margin: 10px 0; }
     }
     @media (min-width: 769px) {
-      .banner img {
-        max-width: 1000px;
-        max-height: 400px; /* Limita a altura da blue lock.jpg */
-        margin: 0 auto; /* Centraliza a imagem */
-        display: block; /* Garante centralização */
-      }
-      .sneak-peaks .videos img {
-        max-height: 300px; /* Limita a altura de ui1.png e ui2.png */
-        width: auto; /* Mantém a proporção */
-      }
+      .banner { justify-content: center; }
+      .banner img { display: block; max-width: 1000px; max-height: 400px; }
+      .sneak-peaks .videos { justify-content: center; }
+      .sneak-peaks .videos img,
+      .sneak-peaks .videos video { max-height: 300px; width: auto; }
+    }
+
+    footer {
+      font-size: 0.95em; color: #aaa;
+      background: var(--cinza-bg); border-top: 1px solid #222;
+      margin-top: 24px; letter-spacing: 0.5px; box-shadow: 0 -2px 10px #0004;
     }
   </style>
 </head>
@@ -327,37 +161,49 @@
       <div class="loader-text">Carregando o site...</div>
     </div>
   </div>
+
   <header>
     <div class="flags-sugestao-bar">
-      <button class="sugestao-btn" onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSfHuoLX9s3U7EZMu9eVhLFB5hgsfGniyiq0DaXBRE4MwGKwDg/viewform'" target="_blank">Sugestão</button>
+      <button class="sugestao-btn"
+              onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfHuoLX9s3U7EZMu9eVhLFB5hgsfGniyiq0DaXBRE4MwGKwDg/viewform','_blank')">
+        Sugestão
+      </button>
       <div class="flags">
-        <button class="flag-btn" onclick="setLang('pt')"><img class="flag-img" src="https://flagcdn.com/br.svg" alt="Português"></button>
-        <button class="flag-btn" onclick="setLang('en')"><img class="flag-img" src="https://flagcdn.com/us.svg" alt="English"></button>
-        <button class="flag-btn" onclick="setLang('es')"><img class="flag-img" src="https://flagcdn.com/es.svg" alt="Español"></button>
+        <button class="flag-btn" onclick="setLang('pt')">
+          <img class="flag-img" src="https://flagcdn.com/br.svg" alt="Português">
+        </button>
+        <button class="flag-btn" onclick="setLang('en')">
+          <img class="flag-img" src="https://flagcdn.com/us.svg" alt="English">
+        </button>
+        <button class="flag-btn" onclick="setLang('es')">
+          <img class="flag-img" src="https://flagcdn.com/es.svg" alt="Español">
+        </button>
       </div>
     </div>
     <h1 id="title">Um novo Steal de futebol no Roblox!</h1>
     <p class="sub" id="subtitle">Prepare-se para o maior evento de Blue Lock do Roblox!</p>
   </header>
+
   <section class="banner">
     <img src="blue lock.jpg" alt="Capa do Evento Blue Lock" />
     <div class="creditos-box">
-      Créditos:<br>
-      <span>pouououjoia</span>
+      Créditos:<br><span>pouououjoia</span>
     </div>
   </section>
+
   <section class="info">
     <p id="desc">
       <strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
       Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
-      <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
+      <strong>Em breve:</strong> um grande <span style="color: var(--azul);">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
       Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:
     </p>
-    <a class="btn" id="discord-btn" href="https://discord.gg/NhNygrk4" target="_blank">Entrar no Discord</a>
+    <a class="btn" href="https://discord.gg/NhNygrk4" target="_blank">Entrar no Discord</a>
   </section>
+
   <section class="sneak-peaks">
     <h2 id="sneak-title">Sneak-peaks</h2>
-    <div class="placeholder" id="sneak-placeholder" style="display:none;">
+    <div class="placeholder" id="sneak-placeholder" style="display: none;">
       Em breve imagens e vídeos exclusivos do desenvolvimento!
     </div>
     <div class="videos">
@@ -369,18 +215,20 @@
       <video src="3.mp4" controls preload="metadata" poster="thumb3.jpg"></video>
     </div>
   </section>
+
   <footer>
     <p id="footer">© 2025 Steal a Football Player • Todos os direitos reservados</p>
   </footer>
+
   <script>
     const translations = {
       pt: {
         title: "Um novo Steal de futebol no Roblox!",
         subtitle: "Prepare-se para o maior evento de Blue Lock do Roblox!",
         desc: `<strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
-      Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
-      <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
-      Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:`,
+        Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
+        <strong>Em breve:</strong> um grande <span style="color: var(--azul);">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
+        Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:`,
         discord: "Entrar no Discord",
         sneak: "Sneak-peaks",
         sneakPlaceholder: "Em breve imagens e vídeos exclusivos do desenvolvimento!",
@@ -391,9 +239,9 @@
         title: "A new football Steal on Roblox!",
         subtitle: "Get ready for the biggest Blue Lock event on Roblox!",
         desc: `<strong>Steal a Football Player</strong> is a competitive football game on Roblox.<br>
-      Many new features, unique game modes and special events are being prepared for the community.<br><br>
-      <strong>Coming soon:</strong> a huge <span style="color:#00bfff;">Blue Lock Event</span> with exclusive challenges and prizes!<br><br>
-      Join our Discord to get updates, see sneak-peaks and secure your spot in the events:`,
+        Many new features, unique game modes and special events are being prepared for the community.<br><br>
+        <strong>Coming soon:</strong> a huge <span style="color: var(--azul);">Blue Lock Event</span> with exclusive challenges and prizes!<br><br>
+        Join our Discord to get updates, see sneak-peaks and secure your spot in the events:`,
         discord: "Join Discord",
         sneak: "Sneak-peaks",
         sneakPlaceholder: "Soon, exclusive images and videos from development!",
@@ -404,9 +252,9 @@
         title: "¡Un nuevo Steal de fútbol en Roblox!",
         subtitle: "¡Prepárate para el mayor evento de Blue Lock en Roblox!",
         desc: `<strong>Steal a Football Player</strong> es un juego de fútbol competitivo en Roblox.<br>
-      Muchas novedades, modos de juego únicos y eventos especiales están siendo preparados para la comunidad.<br><br>
-      <strong>Próximamente:</strong> un gran <span style="color:#00bfff;">Evento Blue Lock</span> con desafíos y premios exclusivos!<br><br>
-      Únete a nuestro Discord para recibir actualizaciones, ver sneak-peaks y asegurar tu lugar en los eventos:`,
+        Muchas novedades, modos de juego únicos y eventos especiales están siendo preparados para la comunidad.<br><br>
+        <strong>Próximamente:</strong> un gran <span style="color: var(--azul);">Evento Blue Lock</span> con desafíos y premios exclusivos!<br><br>
+        Únete a nuestro Discord para recibir actualizaciones, ver sneak-peaks y asegurar tu lugar en los eventos:`,
         discord: "Entrar al Discord",
         sneak: "Sneak-peaks",
         sneakPlaceholder: "¡Pronto imágenes y videos exclusivos del desarrollo!",
@@ -420,7 +268,7 @@
       document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').innerHTML = t.subtitle;
       document.getElementById('desc').innerHTML = t.desc;
-      document.getElementById('discord-btn').innerHTML = t.discord;
+      document.querySelector('.btn').innerHTML = t.discord;
       document.getElementById('sneak-title').innerHTML = t.sneak;
       document.getElementById('sneak-placeholder').innerHTML = t.sneakPlaceholder;
       document.getElementById('footer').innerHTML = t.footer;
@@ -429,19 +277,9 @@
 
     window.onload = () => {
       const loader = document.getElementById('loader-overlay');
-      console.log("Página carregada, adicionando classe hide");
       loader.classList.add('hide');
-      loader.addEventListener('transitionend', () => {
-        console.log("Transição finalizada, setando display none");
-        loader.style.display = 'none';
-      }, { once: true });
-      // Fallback: remove o loader após 5 segundos se o transitionend não for disparado
-      setTimeout(() => {
-        if (loader.style.display !== 'none') {
-          console.log("Fallback: setando display none após 5s");
-          loader.style.display = 'none';
-        }
-      }, 5000);
+      loader.addEventListener('transitionend', () => loader.style.display = 'none', { once: true });
+      setTimeout(() => { if (loader.style.display !== 'none') loader.style.display = 'none'; }, 5000);
       setLang('pt');
     };
   </script>
