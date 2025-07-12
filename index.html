@@ -6,7 +6,6 @@
   <title>SPDM ANTI-RAID</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
@@ -21,8 +20,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem 5rem;
-      position: relative;
+      padding: 2rem 1rem 4rem;
     }
 
     header {
@@ -34,13 +32,13 @@
     header img.bot-image {
       max-width: 160px;
       border-radius: 20px;
-      box-shadow: 0 0 25px #660000cc;
+      box-shadow: 0 0 25px #990000cc;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     header img.bot-image:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 50px #990000cc;
+      box-shadow: 0 0 50px #ff0000cc;
     }
 
     header h1 {
@@ -56,6 +54,22 @@
       max-width: 600px;
       color: #bb3333;
       text-shadow: 0 0 4px #660000;
+    }
+
+    .assinatura-centralizada {
+      margin-top: 0.5rem;
+      text-align: center;
+      font-size: 1rem;
+      font-style: italic;
+      color: #cc1111;
+      text-shadow: 0 0 3px #000, 0 0 6px #ff0000;
+      user-select: none;
+      animation: sangueFade 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes sangueFade {
+      0%   { opacity: 0.6; text-shadow: 0 0 5px #330000; }
+      100% { opacity: 1; text-shadow: 0 0 15px #990000; }
     }
 
     main {
@@ -117,7 +131,8 @@
       user-select: none;
     }
 
-    .invite-btn:hover, .invite-btn:focus {
+    .invite-btn:hover,
+    .invite-btn:focus {
       background: #cc0000;
       box-shadow: 0 0 45px #ff2222;
       outline: none;
@@ -133,61 +148,16 @@
       user-select: none;
     }
 
-    /* Assinatura personalizada */
-    .assinatura-wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      padding-right: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .assinatura {
-      font-size: 0.95rem;
-      font-style: italic;
-      color: #ff1a1a;
-      text-shadow: 0 0 3px #000, 0 0 8px #ff0000;
-      position: relative;
-      animation: glitch 2.5s infinite;
-      user-select: none;
-    }
-
-    /* Glitch */
-    @keyframes glitch {
-      0% {
-        text-shadow: 2px 2px #ff0000, -2px -2px #000;
-      }
-      25% {
-        text-shadow: -1px 1px #770000, 2px -2px #111;
-      }
-      50% {
-        text-shadow: 1px -1px #cc0000, -1px 2px #000;
-      }
-      75% {
-        text-shadow: -2px 2px #aa0000, 1px 1px #111;
-      }
-      100% {
-        text-shadow: 2px -2px #ff0000, -2px 1px #000;
-      }
-    }
-
     @media (max-width: 400px) {
       header h1 {
         font-size: 2.2rem;
       }
-
       .feature-card h3 {
         font-size: 1.3rem;
       }
-
       .invite-btn {
         font-size: 1.2rem;
         padding: 0.9rem 2rem;
-      }
-
-      .assinatura-wrapper {
-        justify-content: center;
-        padding-right: 0;
       }
     }
   </style>
@@ -197,9 +167,7 @@
     <img src="https://arceusxexecutor.com/wp-content/uploads/2025/05/ArceusX-Executor.webp" alt="SPDM ANTI-RAID" class="bot-image" />
     <h1>SPDM ANTI-RAID</h1>
     <p>Proteja seu servidor Discord com o bot mais sombrio e sanguinário do mercado.</p>
-    <div class="assinatura-wrapper">
-      <p class="assinatura">By: DeathTeam / Deathbringer</p>
-    </div>
+    <p class="assinatura-centralizada">By: DeathTeam / Deathbringer</p>
   </header>
 
   <main>
@@ -207,27 +175,22 @@
       <h3>🚨 Detecção de contas novas suspeitas</h3>
       <p>Conta criada há menos de 20 dias? O SPDM ANTI-RAID já levanta o alerta e impede invasões.</p>
     </div>
-
     <div class="feature-card">
       <h3>🔇 Sistema automático de mute</h3>
       <p>Silencia automaticamente spammers e repetidores, mantendo seu servidor limpo e seguro.</p>
     </div>
-
     <div class="feature-card">
       <h3>⚠️ Alertas configuráveis</h3>
       <p>Receba avisos no canal que você escolher, direto na sua central de comando.</p>
     </div>
-
     <div class="feature-card">
       <h3>🛠️ Comandos para silenciar em massa</h3>
       <p>Comandos poderosos para controlar sua comunidade sem esforço, dando mute geral quando precisar.</p>
     </div>
-
     <div class="feature-card">
       <h3>🔧 Configuração fácil via Slash Commands</h3>
       <p>Use comandos simples para configurar o bot e manter tudo sob controle, sem complicação.</p>
     </div>
-
     <div class="feature-card">
       <h3>🔒 Imunidade para cargos Owner e Co-owner</h3>
       <p>Quem manda no pedaço não leva mute, garantindo que seus líderes continuem no controle.</p>
