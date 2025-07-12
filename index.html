@@ -66,7 +66,7 @@
       box-shadow: 0 2px 12px #fff5;
     }
     @keyframes loader-bounce {
-      to { transform: translateY(-18px);}
+      to { transform: translateY(-18px); }
     }
     .loader-text {
       margin-top: 22px;
@@ -293,7 +293,7 @@
   </div>
   <header>
     <div class="flags-sugestao-bar">
-      <button class="sugestao-btn" id="open-sugestao" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfHuoLX9s3U7EZMu9eVhLFB5hgsfGniyiq0DaXBRE4MwGKwDg/viewform?edit2=2_ABaOnud3KKfvXGpEKKY5fBnTZ6HGrQmQ9J9SbRkfEfrMyL6wyOWpyJLhmUpv8VVx5w&pli=1', '_blank')">Sugestão</button>
+      <button class="sugestao-btn" onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSfHuoLX9s3U7EZMu9eVhLFB5hgsfGniyiq0DaXBRE4MwGKwDg/viewform'" target="_blank">Sugestão</button>
       <div class="flags">
         <button class="flag-btn" onclick="setLang('pt')"><img class="flag-img" src="https://flagcdn.com/br.svg" alt="Português"></button>
         <button class="flag-btn" onclick="setLang('en')"><img class="flag-img" src="https://flagcdn.com/us.svg" alt="English"></button>
@@ -383,18 +383,29 @@
       const t = translations[lang];
       document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').innerHTML = t.subtitle;
-      document.getElementById('desc').innerHTML Streets = t.desc;
+      document.getElementById('desc').innerHTML = t.desc;
       document.getElementById('discord-btn').innerHTML = t.discord;
       document.getElementById('sneak-title').innerHTML = t.sneak;
       document.getElementById('sneak-placeholder').innerHTML = t.sneakPlaceholder;
       document.getElementById('footer').innerHTML = t.footer;
-      document.getElementById('open-sugestao').innerHTML = t.sugestao;
+      document.querySelector('.sugestao-btn').innerHTML = t.sugestao;
     }
 
     window.onload = () => {
+      const loader = document.getElementById('loader-overlay');
+      console.log("Página carregada, adicionando classe hide");
+      loader.classList.add('hide');
+      loader.addEventListener('transitionend', () => {
+        console.log("Transição finalizada, setando display none");
+        loader.style.display = 'none';
+      }, { once: true });
+      // Fallback: remove o loader após 5 segundos se o transitionend não for disparado
       setTimeout(() => {
-        document.getElementById('loader-overlay').classList.add('hide');
-      }, 1000);
+        if (loader.style.display !== 'none') {
+          console.log("Fallback: setando display none após 5s");
+          loader.style.display = 'none';
+        }
+      }, 5000);
       setLang('pt');
     };
   </script>
