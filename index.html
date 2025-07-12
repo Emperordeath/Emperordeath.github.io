@@ -20,7 +20,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem 5rem;
+      padding: 2rem 1rem 4rem;
+      overflow-x: hidden;
+      user-select: none;
     }
     header {
       text-align: center;
@@ -49,6 +51,9 @@
       max-width: 600px;
       color: #bb3333;
       text-shadow: 0 0 4px #660000;
+      position: relative;
+      left: 0;
+      transition: left 0.3s ease;
     }
 
     main {
@@ -124,101 +129,33 @@
       color: #660000;
       text-align: center;
       user-select: none;
-      position: relative;
-      padding-top: 1rem;
     }
 
-    /* Efeito Glitch na assinatura */
-    .assinatura-glitch {
-      margin-top: 0.5rem;
-      text-align: center;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ff1a1a;
-      position: relative;
-      user-select: none;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-shadow:
-        2px 0 red,
-        -2px 0 cyan;
-      animation: glitchAnim 2s infinite;
-    }
-
-    .assinatura-glitch::before,
-    .assinatura-glitch::after {
-      content: attr(data-text);
+    /* Fantasminhas */
+    .ghost {
       position: absolute;
-      left: 0;
-      right: 0;
-      opacity: 0.8;
-      clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+      width: 30px;
+      height: 40px;
+      pointer-events: none;
+      background: url('https://i.imgur.com/VHjK7xM.png') no-repeat center/contain;
+      opacity: 0.85;
+      animation: ghostFloat 2.5s ease forwards;
+      user-select: none;
+      z-index: 9999;
     }
 
-    .assinatura-glitch::before {
-      top: -2px;
-      left: 2px;
-      color: #ff0000;
-      text-shadow: -2px 0 red;
-      animation: glitchAnimBefore 2s infinite;
-    }
-
-    .assinatura-glitch::after {
-      top: 2px;
-      left: -2px;
-      color: #00ffff;
-      text-shadow: 2px 0 cyan;
-      animation: glitchAnimAfter 2s infinite;
-    }
-
-    @keyframes glitchAnim {
+    @keyframes ghostFloat {
       0% {
-        transform: translate(0);
-      }
-      20% {
-        transform: translate(-2px, 2px);
-      }
-      40% {
-        transform: translate(-2px, -2px);
-      }
-      60% {
-        transform: translate(2px, 2px);
-      }
-      80% {
-        transform: translate(2px, -2px);
-      }
-      100% {
-        transform: translate(0);
-      }
-    }
-
-    @keyframes glitchAnimBefore {
-      0% {
-        clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-        transform: translate(0);
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
       }
       50% {
-        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-        transform: translate(-1px, -1px);
+        opacity: 0.6;
+        transform: translateY(-30px) scale(1.1);
       }
       100% {
-        clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-        transform: translate(0);
-      }
-    }
-
-    @keyframes glitchAnimAfter {
-      0% {
-        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-        transform: translate(0);
-      }
-      50% {
-        clip-path: polygon(0 55%, 100% 55%, 100% 70%, 0 70%);
-        transform: translate(1px, 1px);
-      }
-      100% {
-        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-        transform: translate(0);
+        opacity: 0;
+        transform: translateY(-60px) scale(1.2);
       }
     }
 
@@ -233,9 +170,6 @@
       .invite-btn {
         font-size: 1.2rem;
         padding: 0.9rem 2rem;
-      }
-      .assinatura-glitch {
-        font-size: 1rem;
       }
     }
   </style>
@@ -287,7 +221,43 @@
 
   <footer>
     <p>© 2025 SPDM ANTI-RAID. Feito pra proteger sua comunidade Discord, no sangue e na sombra.</p>
-    <p class="assinatura-glitch" data-text="By: DeathTeam / Deathbringer">By: DeathTeam / Deathbringer</p>
   </footer>
+
+  <script>
+    const maxGhosts = 4;
+    const ghostImg = 'https://i.imgur.com/VHjK7xM.png';
+
+    function createGhost(x, y) {
+      const ghost = document.createElement('div');
+      ghost.classList.add('ghost');
+      ghost.style.left = `${x - 15}px`;
+      ghost.style.top = `${y - 40}px`;
+      ghost.style.backgroundImage = `url(${ghostImg})`;
+      document.body.appendChild(ghost);
+
+      ghost.addEventListener('animationend', () => {
+        ghost.remove();
+      });
+    }
+
+    function spawnGhosts(x, y) {
+      for(let i = 0; i < maxGhosts; i++) {
+        setTimeout(() => {
+          const offsetX = (Math.random() - 0.5) * 80;
+          const offsetY = (Math.random() - 0.5) * 80;
+          createGhost(x + offsetX, y + offsetY);
+        }, i * 150);
+      }
+    }
+
+    window.addEventListener('click', e => {
+      spawnGhosts(e.clientX, e.clientY);
+    });
+
+    window.addEventListener('touchstart', e => {
+      const touch = e.touches[0];
+      spawnGhosts(touch.clientX, touch.clientY);
+    });
+  </script>
 </body>
 </html>
