@@ -10,131 +10,238 @@
       --vermelho: #ff2a2a;
       --cinza-escuro: #23272a;
       --cinza-bg: #181a1b;
+      --cinza-borda: #363636;
+      --shadow: 0 8px 32px #000a;
+      --radius: 16px;
     }
-
+    html { scroll-behavior: smooth; }
     body {
       background: linear-gradient(135deg, #181a1b 60%, #23272a 100%);
       color: #f1f1f1;
       font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
+      min-height: 100vh;
     }
-
-    header {
+    #loader-overlay {
+      position: fixed;
+      z-index: 99999;
+      background: linear-gradient(135deg, #181a1b 60%, #23272a 100%);
+      width: 100vw;
+      height: 100vh;
+      top: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s;
+      opacity: 1;
+      pointer-events: all;
+    }
+    #loader-overlay.hide {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.7s;
+    }
+    .loader-dots {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+    .loader-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--azul);
+      animation: loader-bounce 1.2s infinite alternate;
+      box-shadow: 0 2px 12px #00bfff55;
+    }
+    .loader-dot:nth-child(2) {
+      background: var(--vermelho);
+      animation-delay: .2s;
+      box-shadow: 0 2px 12px #ff2a2a55;
+    }
+    .loader-dot:nth-child(3) {
+      background: #fff;
+      animation-delay: .4s;
+      box-shadow: 0 2px 12px #fff5;
+    }
+    @keyframes loader-bounce {
+      to { transform: translateY(-18px); }
+    }
+    .loader-text {
+      margin-top: 22px;
+      color: #fff;
+      font-size: 1.1em;
+      letter-spacing: 1.5px;
+      font-weight: 500;
+      opacity: 0.8;
       text-align: center;
-      padding: 20px;
+      text-shadow: 0 2px 8px #0008;
+    }
+    header, footer {
+      text-align: center;
+      padding: 20px 0 10px 0;
       background: var(--cinza-escuro);
+      position: relative;
+      box-shadow: 0 2px 16px #0004;
     }
-
-    h1 {
-      margin-bottom: 0.5em;
+    .flags-sugestao-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      margin: 0 16px 0 0;
+      position: absolute;
+      right: 0;
+      top: 14px;
+      z-index: 10;
     }
-
-    .sub {
-      color: var(--azul);
+    .flags { display: flex; gap: 8px; align-items: center; }
+    .flag-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+      transition: transform 0.1s;
+    }
+    .flag-btn:active { transform: scale(0.95); }
+    .flag-img {
+      width: 28px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1.5px solid var(--azul);
+      object-fit: cover;
+    }
+    .sugestao-btn {
+      background: linear-gradient(90deg, var(--azul) 0%, var(--vermelho) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 14px;
       font-size: 1em;
-      margin-top: 0;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      letter-spacing: 0.5px;
     }
-
+    .sugestao-btn:hover {
+      background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
+    }
     .banner {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       align-items: flex-start;
-      gap: 20px;
-      margin: 30px 0;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 18px 0;
     }
-
     .banner img {
       width: 540px;
-      max-width: 100%;
+      max-width: 98vw;
       height: auto;
       max-height: 300px;
-      object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 4px 18px #000b, 0 0 0 2px var(--azul);
-      margin-left: 20px;
+      background: #111;
+      object-fit: contain;
+      transition: box-shadow 0.3s;
     }
-
+    .banner img:hover {
+      box-shadow: 0 8px 32px #00bfff88, 0 0 0 4px var(--vermelho);
+    }
     .creditos-box {
-      background: var(--cinza-escuro);
-      padding: 12px 20px;
+      background: #23272a;
       border-radius: 10px;
+      padding: 10px 18px;
+      box-shadow: 0 2px 8px #0007;
       color: var(--azul);
       font-weight: bold;
+      font-size: 1em;
+      min-width: 100px;
       border: 1px solid var(--azul);
-      max-height: 100px;
     }
-
     .creditos-box span {
       color: #fff;
       font-weight: 400;
     }
-
+    .sub {
+      color: var(--azul);
+      font-size: 1em;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
     .info {
       text-align: center;
+      margin: 0 8px 24px 8px;
+      font-size: 1.05em;
       background: #23272a;
-      margin: 0 20px 30px 20px;
-      padding: 20px;
       border-radius: 10px;
+      box-shadow: 0 2px 8px #0005;
+      padding: 12px 0 12px 0;
     }
-
     .btn {
       display: inline-block;
-      margin-top: 16px;
-      padding: 10px 20px;
-      background: linear-gradient(90deg, var(--azul), var(--vermelho));
-      color: white;
+      margin-top: 14px;
+      padding: 10px 22px;
+      background: linear-gradient(90deg, var(--azul) 60%, var(--vermelho) 100%);
+      color: #fff;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 1em;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #00bfff55;
       border: none;
-      cursor: pointer;
     }
-
+    .btn:hover {
+      background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
+      box-shadow: 0 4px 12px #ff2a2a55;
+    }
     .sneak-peaks {
       background: #23272a;
       border-radius: 10px;
-      margin: 24px auto;
+      margin: 24px auto 18px auto;
       max-width: 900px;
       padding: 18px 8px;
       box-shadow: 0 2px 10px #0006;
     }
-
     .sneak-peaks h2 {
       color: var(--azul);
+      margin-top: 0;
+      margin-bottom: 12px;
       text-align: center;
-      margin-bottom: 16px;
+      font-size: 1.2em;
+      letter-spacing: 1px;
     }
-
     .sneak-imgs {
       display: flex;
       justify-content: center;
-      gap: 14px;
-      margin-bottom: 24px;
       flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 18px;
     }
-
     .sneak-imgs img {
-      max-width: 220px;
+      max-width: 260px;
       width: 100%;
-      height: auto;
-      max-height: 160px;
       border-radius: 10px;
-      object-fit: contain;
-      border: 1.5px solid var(--azul);
-      background: #111;
       box-shadow: 0 2px 8px #000a;
-      transition: all 0.2s ease-in-out;
+      background: #111;
+      border: 1.5px solid var(--azul);
+      transition: border 0.2s, box-shadow 0.2s;
     }
-
-    .videos {
+    .sneak-imgs img:hover {
+      border: 1.5px solid var(--vermelho);
+      box-shadow: 0 4px 12px #ff2a2a55;
+    }
+    .sneak-peaks .videos {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
       justify-content: center;
+      gap: 14px;
     }
-
-    .videos video {
+    .sneak-peaks video {
       max-width: 260px;
       width: 100%;
       border-radius: 10px;
@@ -143,66 +250,67 @@
       outline: none;
       border: 1.5px solid var(--azul);
     }
-
+    .sneak-peaks video:hover {
+      border: 1.5px solid var(--vermelho);
+    }
     footer {
-      text-align: center;
-      font-size: 0.9em;
-      padding: 18px;
+      font-size: 0.95em;
       color: #aaa;
       background: var(--cinza-bg);
-      margin-top: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .banner img {
-        margin-left: 0;
-      }
-
-      .sneak-imgs {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .videos {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .videos video {
-        max-width: 96vw;
-      }
+      border-top: 1px solid #222;
+      margin-top: 24px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -2px 10px #0004;
+      text-align: center;
+      padding: 10px 0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Um novo Steal de futebol no Roblox!</h1>
-    <p class="sub">Prepare-se para o maior evento de<br>Blue Lock do Roblox!</p>
-  </header>
-
-  <section class="banner">
-    <img src="blue lock.jpg" alt="Capa do Evento Blue Lock" />
-    <div class="creditos-box">
-      Créditos:<br>
-      <span>pouououjoia</span>
+  <div id="loader-overlay">
+    <div>
+      <div class="loader-dots">
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+      </div>
+      <div class="loader-text">Carregando o site...</div>
     </div>
-  </section>
-
+  </div>
+  <header>
+    <div class="flags-sugestao-bar">
+      <button class="sugestao-btn" onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSfHuoLX9s3U7EZMu9eVhLFB5hgsfGniyiq0DaXBRE4MwGKwDg/viewform'" target="_blank">Sugestão</button>
+      <div class="flags">
+        <button class="flag-btn" onclick="setLang('pt')"><img class="flag-img" src="https://flagcdn.com/br.svg" alt="Português"></button>
+        <button class="flag-btn" onclick="setLang('en')"><img class="flag-img" src="https://flagcdn.com/us.svg" alt="English"></button>
+        <button class="flag-btn" onclick="setLang('es')"><img class="flag-img" src="https://flagcdn.com/es.svg" alt="Español"></button>
+      </div>
+    </div>
+    <h1 id="title">Um novo Steal de futebol no Roblox!</h1>
+    <p class="sub" id="subtitle">Prepare-se para o maior evento de Blue Lock do Roblox!</p>
+    <div class="banner">
+      <img src="blue lock.jpg" alt="Capa do Evento Blue Lock" />
+      <div class="creditos-box">
+        Créditos:<br>
+        <span>pouououjoia</span>
+      </div>
+    </div>
+  </header>
   <section class="info">
-    <p><strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
+    <p id="desc">
+      <strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
       Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
       <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
       Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:
     </p>
-    <a class="btn" href="https://discord.gg/NhNygrk4" target="_blank">Entrar no Discord</a>
+    <a class="btn" id="discord-btn" href="https://discord.gg/NhNygrk4" target="_blank">Entrar no Discord</a>
   </section>
-
   <section class="sneak-peaks">
-    <h2>Sneak-peaks</h2>
+    <h2 id="sneak-title">Sneak-peaks</h2>
     <div class="sneak-imgs">
-      <img src="sneak.png" alt="Sneak Espada" />
-      <img src="ui1.png" alt="Sneak UI 1" />
-      <img src="ui2.png" alt="Sneak UI 2" />
+      <img src="sneak.png" alt="Sneak Peak" />
+      <img src="ui1.png" alt="UI Sneak 1" />
+      <img src="ui2.png" alt="UI Sneak 2" />
     </div>
     <div class="videos">
       <video src="1.mp4" controls preload="metadata" poster="thumb1.jpg"></video>
@@ -210,9 +318,47 @@
       <video src="3.mp4" controls preload="metadata" poster="thumb3.jpg"></video>
     </div>
   </section>
-
   <footer>
-    © 2025 Steal a Football Player • Todos os direitos reservados
+    <p id="footer">© 2025 Steal a Football Player • Todos os direitos reservados</p>
   </footer>
+  <script>
+    const translations = {
+      pt: {
+        title: "Um novo Steal de futebol no Roblox!",
+        subtitle: "Prepare-se para o maior evento de Blue Lock do Roblox!",
+        desc: `<strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
+        Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
+        <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
+        Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:`,
+        discord: "Entrar no Discord",
+        sneak: "Sneak-peaks",
+        footer: "© 2025 Steal a Football Player • Todos os direitos reservados",
+        sugestao: "Sugestão"
+      }
+    };
+    function setLang(lang) {
+      const t = translations[lang];
+      document.getElementById('title').innerHTML = t.title;
+      document.getElementById('subtitle').innerHTML = t.subtitle;
+      document.getElementById('desc').innerHTML = t.desc;
+      document.getElementById('discord-btn').innerHTML = t.discord;
+      document.getElementById('sneak-title').innerHTML = t.sneak;
+      document.getElementById('footer').innerHTML = t.footer;
+      document.querySelector('.sugestao-btn').innerHTML = t.sugestao;
+    }
+    window.onload = () => {
+      const loader = document.getElementById('loader-overlay');
+      loader.classList.add('hide');
+      loader.addEventListener('transitionend', () => {
+        loader.style.display = 'none';
+      }, { once: true });
+      setTimeout(() => {
+        if (loader.style.display !== 'none') {
+          loader.style.display = 'none';
+        }
+      }, 5000);
+      setLang('pt');
+    };
+  </script>
 </body>
 </html>
