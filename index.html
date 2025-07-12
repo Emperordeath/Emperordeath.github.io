@@ -234,6 +234,7 @@
       gap: 14px;
       justify-content: center;
       margin-top: 10px;
+      align-items: flex-start;
     }
     .sneak-peaks video {
       max-width: 260px;
@@ -303,6 +304,9 @@
       .sneak-peaks { padding: 8px 2vw; }
     }
     @media (min-width: 769px) {
+      body {
+        margin-left: 10%; /* Move todo o conteúdo 10% para a direita */
+      }
       .banner img {
         max-width: 1000px;
         max-height: 400px; /* Limita a altura da blue lock.jpg */
@@ -312,6 +316,20 @@
       .sneak-peaks .videos img {
         max-height: 300px; /* Limita a altura de ui1.png e ui2.png */
         width: auto; /* Mantém a proporção */
+      }
+      .sneak-peaks .videos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center; /* Centraliza os itens */
+        margin-top: 10px;
+        align-items: flex-start; /* Alinha os itens no topo */
+      }
+      .sneak-peaks .videos img,
+      .sneak-peaks .videos video {
+        flex: 1 1 calc(33.33% - 14px); /* Cada item ocupa ~33% da largura, ajustado pelo gap */
+        max-width: 260px; /* Limita a largura máxima */
+        height: auto; /* Mantém a proporção */
       }
     }
   </style>
@@ -404,9 +422,9 @@
         title: "¡Un nuevo Steal de fútbol en Roblox!",
         subtitle: "¡Prepárate para el mayor evento de Blue Lock en Roblox!",
         desc: `<strong>Steal a Football Player</strong> es un juego de fútbol competitivo en Roblox.<br>
-      Muchas novedades, modos de juego únicos y eventos especiales están siendo preparados para la comunidad.<br><br>
-      <strong>Próximamente:</strong> un gran <span style="color:#00bfff;">Evento Blue Lock</span> con desafíos y premios exclusivos!<br><br>
-      Únete a nuestro Discord para recibir actualizaciones, ver sneak-peaks y asegurar tu lugar en los eventos:`,
+      Muchas novedades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
+      <strong>Próximamente:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
+      Únete a nuestro Discord para receber actualizações, ver sneak-peaks y asegurar tu lugar en los eventos:`,
         discord: "Entrar al Discord",
         sneak: "Sneak-peaks",
         sneakPlaceholder: "¡Pronto imágenes y videos exclusivos del desarrollo!",
