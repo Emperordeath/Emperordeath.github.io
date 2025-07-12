@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -263,6 +263,20 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
       box-shadow: 0 -2px 10px #0004;
       text-align: center;
       padding: 10px 0;
+    }
+
+    /* Ajustes para PC e Notebook (telas maiores que 768px) */
+    @media (min-width: 768px) {
+      .banner {
+        /* Move a imagem Blue Lock um pouco para a direita */
+        padding-left: 40px;
+      }
+      
+      .sneak-imgs img {
+        /* Diminui ligeiramente a altura das imagens do sneak-peaks */
+        max-height: 180px;
+        object-fit: cover;
+      }
     }
   </style>
 </head>
