@@ -3,202 +3,529 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SPDM ANTI-RAID</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
+  <title>Steal a Football Player</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --azul: #00bfff;
+      --vermelho: #ff2a2a;
+      --cinza-escuro: #23272a;
+      --cinza-bg: #181a1b;
+      --cinza-borda: #363636;
+      --shadow: 0 8px 32px #000a;
+      --radius: 16px;
     }
+    html { scroll-behavior: smooth; }
     body {
-      background: linear-gradient(135deg, #110000, #220000);
-      font-family: 'Montserrat', sans-serif;
-      color: #ff4444;
+      background: linear-gradient(135deg, #181a1b 60%, #23272a 100%);
+      color: #f1f1f1;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
       min-height: 100vh;
+    }
+    #loader-overlay {
+      position: fixed;
+      z-index: 99999;
+      background: linear-gradient(135deg, #181a1b 60%, #23272a 100%);
+      width: 100vw;
+      height: 100vh;
+      top: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s;
+      opacity: 1;
+      pointer-events: all;
+    }
+    #loader-overlay.hide {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.7s;
+    }
+    .loader-dots {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+    .loader-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--azul);
+      animation: loader-bounce 1.2s infinite alternate;
+      box-shadow: 0 2px 12px #00bfff55;
+    }
+    .loader-dot:nth-child(2) {
+      background: var(--vermelho);
+      animation-delay: .2s;
+      box-shadow: 0 2px 12px #ff2a2a55;
+    }
+    .loader-dot:nth-child(3) {
+      background: #fff;
+      animation-delay: .4s;
+      box-shadow: 0 2px 12px #fff5;
+    }
+    @keyframes loader-bounce {
+      to { transform: translateY(-18px);}
+    }
+    .loader-text {
+      margin-top: 22px;
+      color: #fff;
+      font-size: 1.1em;
+      letter-spacing: 1.5px;
+      font-weight: 500;
+      opacity: 0.8;
+      text-align: center;
+      text-shadow: 0 2px 8px #0008;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    header, footer {
+      text-align: center;
+      padding: 20px 0 10px 0;
+      background: var(--cinza-escuro);
+      position: relative;
+      box-shadow: 0 2px 16px #0004;
+    }
+    .flags-sugestao-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      margin: 0 16px 0 0;
+      position: absolute;
+      right: 0;
+      top: 14px;
+      z-index: 10;
+    }
+    .flags { display: flex; gap: 8px; align-items: center; }
+    .flag-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+      transition: transform 0.1s;
+    }
+    .flag-btn:active { transform: scale(0.95); }
+    .flag-img {
+      width: 28px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1.5px solid var(--azul);
+      background: #fff;
+      object-fit: cover;
+    }
+    .sugestao-btn {
+      background: linear-gradient(90deg, var(--azul) 0%, var(--vermelho) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0005;
+      letter-spacing: 0.5px;
+    }
+    .sugestao-btn:hover {
+      background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
+      color: #fff;
+    }
+    .banner {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 24px 0 12px 0;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .banner img {
+      width: 540px;
+      max-width: 98vw;
+      max-height: 260px;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px #000b, 0 0 0 2px var(--azul);
+      background: #111;
+      object-fit: cover;
+      transition: box-shadow 0.3s;
+    }
+    .banner img:hover {
+      box-shadow: 0 8px 32px #00bfff88, 0 0 0 4px var(--vermelho);
+    }
+    .creditos-box {
+      background: #23272a;
+      border-radius: 10px;
+      padding: 10px 18px;
+      box-shadow: 0 2px 8px #0007;
+      color: var(--azul);
+      font-weight: bold;
+      font-size: 1em;
+      min-width: 100px;
+      margin-top: 8px;
+      text-align: left;
+      border: 1px solid var(--azul);
+    }
+    .creditos-box span {
+      color: #fff;
+      font-weight: 400;
+      font-size: 1em;
+    }
+    .sub {
+      color: var(--azul);
+      font-size: 1em;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+    .info {
+      text-align: center;
+      margin: 0 8px 24px 8px;
+      font-size: 1.05em;
+      background: #23272a;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #0005;
+      padding: 12px 0 12px 0;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 22px;
+      background: linear-gradient(90deg, var(--azul) 60%, var(--vermelho) 100%);
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1em;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #00bfff55;
+      border: none;
+      letter-spacing: 0.5px;
+    }
+    .btn:hover {
+      background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px #ff2a2a55;
+    }
+    .sneak-peaks {
+      background: #23272a;
+      border-radius: 10px;
+      margin: 24px auto 18px auto;
+      max-width: 900px;
+      padding: 18px 8px;
+      box-shadow: 0 2px 10px #0006;
+    }
+    .sneak-peaks h2 {
+      color: var(--azul);
+      margin-top: 0;
+      margin-bottom: 12px;
+      text-align: center;
+      font-size: 1.2em;
+      letter-spacing: 1px;
+    }
+    .sneak-peaks .placeholder {
+      color: #aaa;
+      text-align: center;
+      font-size: 1em;
+      margin: 16px 0;
+    }
+    .sneak-peaks .videos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .sneak-peaks video {
+      max-width: 260px;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #000a;
+      background: #111;
+      outline: none;
+      border: 1.5px solid var(--azul);
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .sneak-peaks video:focus, .sneak-peaks video:hover {
+      border: 1.5px solid var(--vermelho);
+      box-shadow: 0 4px 12px #ff2a2a55;
+    }
+    .sugestao-modal-bg {
+      display: none;
+      position: fixed;
+      z-index: 100000;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .sugestao-modal-bg.active { display: flex; }
+    .container_chat_bot {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem 5rem;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-      user-select: none;
-    }
-    header img.bot-image {
-      max-width: 160px;
-      border-radius: 20px;
-      box-shadow: 0 0 25px #990000cc;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    header img.bot-image:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 50px #ff0000cc;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin-top: 1rem;
-      color: #cc0000;
-      text-shadow: 0 0 8px #880000;
-    }
-    header p.description {
-      margin-top: 0.6rem;
-      font-size: 1.2rem;
-      max-width: 600px;
-      color: #bb3333;
-      text-shadow: 0 0 4px #660000;
-    }
-    header p.assinatura {
-      margin-top: 1rem;
-      font-family: 'UnifrakturCook', cursive;
-      font-size: 1.4rem;
-      color: #ff1a1a;
-      letter-spacing: 0.05em;
-      user-select: none;
-      text-shadow: 2px 2px 5px #660000aa;
-    }
-
-    main {
-      max-width: 1000px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 1.6rem;
-    }
-
-    .feature-card {
-      background: #220000dd;
-      border: 2px solid #660000;
-      border-radius: 15px;
-      padding: 1.6rem 1.4rem;
-      box-shadow: 0 0 20px #550000bb;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: default;
-    }
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 35px #bb0000cc;
-    }
-    .feature-card h3 {
-      color: #ff2222;
-      font-size: 1.6rem;
-      margin-bottom: 0.8rem;
-      text-shadow: 0 0 6px #990000;
-    }
-    .feature-card p {
-      color: #dd5555;
-      font-size: 1.1rem;
-      line-height: 1.5;
-      text-shadow: 0 0 3px #660000;
-    }
-    .feature-card li {
-      margin-bottom: 0.5rem;
-    }
-
-    .invite-section {
-      margin-top: 3rem;
-      width: 100%;
-      text-align: center;
-      user-select: none;
-    }
-    .invite-btn {
-      display: inline-block;
-      background: #7f0000;
-      color: #ffdddd;
-      font-weight: 700;
-      font-size: 1.4rem;
-      padding: 1rem 3rem;
-      border-radius: 40px;
-      box-shadow: 0 0 25px #aa0000;
-      border: 2px solid #bb0000;
-      text-decoration: none;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-    }
-    .invite-btn:hover, .invite-btn:focus {
-      background: #cc0000;
-      box-shadow: 0 0 45px #ff2222;
-      outline: none;
-      color: #fff0f0;
-      cursor: pointer;
-    }
-
-    footer {
-      margin-top: 4rem;
-      font-size: 0.9rem;
-      color: #660000;
-      text-align: center;
-      user-select: none;
+      max-width: 98vw;
+      width: 320px;
+      background: #23272a;
+      border-radius: var(--radius);
+      padding: 1.5px;
+      overflow: visible;
+      box-shadow: var(--shadow);
       position: relative;
-      padding-top: 1rem;
+      margin: 0 auto;
+      border: 1.5px solid var(--azul);
+      box-sizing: border-box;
     }
-
-    @media (max-width: 400px) {
-      header h1 {
-        font-size: 2.2rem;
-      }
-      .feature-card h3 {
-        font-size: 1.3rem;
-      }
-      .invite-btn {
-        font-size: 1.2rem;
-        padding: 0.9rem 2rem;
-      }
-      header p.assinatura {
-        font-size: 1.1rem;
-      }
+    .container-chat-options {
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      width: 100%;
+      overflow: hidden;
+      padding: 12px 8px 8px 8px;
+      box-sizing: border-box;
+    }
+    .container-chat-options .chat-bot {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+    }
+    .container-chat-options .chat-bot textarea {
+      background-color: #23272a;
+      border-radius: 10px;
+      border: 1.5px solid var(--azul);
+      width: 100%;
+      min-width: 0;
+      min-height: 54px;
+      max-height: 110px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 10px;
+      resize: vertical;
+      outline: none;
+      margin-bottom: 6px;
+      transition: border 0.2s;
+      box-shadow: 0 2px 6px #00bfff22;
+      box-sizing: border-box;
+    }
+    .container-chat-options .chat-bot textarea:focus { border: 1.5px solid var(--vermelho); }
+    .container-chat-options .chat-bot textarea::placeholder { color: #f3f6fd; opacity: 0.7; }
+    .container-chat-options .chat-bot textarea:focus::placeholder { color: #363636; }
+    .container-chat-options .options {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+    }
+    .container-chat-options .btn-submit {
+      display: flex;
+      padding: 2px 10px;
+      background: var(--azul);
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 1em;
+      transition: background 0.15s;
+    }
+    .container-chat-options .btn-submit:hover { background: var(--vermelho);}
+    .container-chat-options .char-count {
+      font-size: 0.95em;
+      color: #aaa;
+      margin-right: auto;
+      margin-left: 2px;
+    }
+    .container_chat_bot .tags {
+      padding: 8px 0 0 0;
+      display: flex;
+      color: #ffffff;
+      font-size: 11px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .container_chat_bot .tags span {
+      padding: 4px 8px;
+      background-color: #1b1b1b;
+      border: 1px solid var(--cinza-borda);
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      margin-bottom: 3px;
+      transition: background 0.2s, border 0.2s;
+    }
+    .container_chat_bot .tags span:hover {
+      background: var(--azul);
+      border: 1px solid var(--vermelho);
+      color: #fff;
+    }
+    footer {
+      font-size: 0.95em;
+      color: #aaa;
+      background: var(--cinza-bg);
+      border-top: 1px solid #222;
+      margin-top: 24px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -2px 10px #0004;
+    }
+    @media (max-width: 900px) {
+      .banner { flex-direction: column; align-items: center; gap: 10px; }
+      .creditos-box { margin-left: 0; margin-top: 10px; }
+    }
+    @media (max-width: 600px) {
+      .banner img { max-width: 98vw; width: 98vw; max-height: 120px; }
+      .creditos-box { font-size: 0.95em; padding: 7px 8px; }
+      .sneak-peaks .videos { gap: 7px; }
+      .sneak-peaks video { max-width: 98vw; }
+      .info { font-size: 0.95em; }
+      .btn { font-size: 0.95em; padding: 8px 12px; }
+      .sneak-peaks { padding: 8px 2vw; }
+      .container_chat_bot { width: 98vw; }
     }
   </style>
 </head>
 <body>
+  <div id="loader-overlay">
+    <div>
+      <div class="loader-dots">
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+      </div>
+      <div class="loader-text">Carregando o site...</div>
+    </div>
+  </div>
   <header>
-    <img src="https://arceusxexecutor.com/wp-content/uploads/2025/05/ArceusX-Executor.webp" alt="SPDM ANTI-RAID" class="bot-image" />
-    <h1>SPDM ANTI-RAID</h1>
-    <p class="description">Proteja seu servidor Discord com o bot mais rápido e gratuito do mercado.</p>
-    <p class="assinatura">By: DeathTeam,𝔇𝖊𝖆𝖙𝖍𝖇𝖗𝖎𝖓𝖌𝖊𝖗🇮🇹(Owner) </p>
+    <div class="flags-sugestao-bar">
+      <button class="sugestao-btn" id="open-sugestao"></button>
+      <div class="flags">
+        <button class="flag-btn" onclick="setLang('pt')"><img class="flag-img" src="https://flagcdn.com/br.svg" alt="Português"></button>
+        <button class="flag-btn" onclick="setLang('en')"><img class="flag-img" src="https://flagcdn.com/us.svg" alt="English"></button>
+        <button class="flag-btn" onclick="setLang('es')"><img class="flag-img" src="https://flagcdn.com/es.svg" alt="Español"></button>
+      </div>
+    </div>
+    <h1 id="title">Um novo Steal de futebol no Roblox!</h1>
+    <p class="sub" id="subtitle">Prepare-se para o maior evento de Blue Lock do Roblox!</p>
   </header>
-
-  <main>
-    <div class="feature-card">
-      <h3>🚨 Detecção de contas novas suspeitas</h3>
-      <p>Conta criada há menos de 20 dias? O SPDM levanta o alerta.</p>
+  <section class="banner">
+    <img src="blue lock.jpg" alt="Capa do Evento Blue Lock" />
+    <div class="creditos-box">
+      Créditos:<br>
+      <span>pouououjoia</span>
     </div>
-
-    <div class="feature-card">
-      <h3>🔇 Sistema automático de mute</h3>
-      <p>Silencia automaticamente spammers e repetidores, mantendo seu servidor limpo e seguro.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>⚠️ Alertas configuráveis</h3>
-      <p>Receba avisos no canal que você escolher, direto na sua central de comando.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>🛠️ Comandos para silenciar em massa</h3>
-      <p>Comandos poderosos para controlar sua comunidade sem esforço, dando mute geral quando precisar.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>🔧 Configuração fácil via Slash Commands</h3>
-      <p>Use comandos simples para configurar o bot e manter tudo sob controle, sem complicação.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>🔒 Imunidade para cargos Owner e Co-owner</h3>
-      <p>não leva mute, garantindo que seus líderes continuem no controle.</p>
-    </div>
-  </main>
-
-  <section class="invite-section">
-    <a href="https://discord.com/oauth2/authorize?client_id=1391545640022179932&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noopener" class="invite-btn">
-      Adquira Gratis o SPDM ANTI-RAID agora
-    </a>
   </section>
-
+  <section class="info">
+    <p id="desc">
+      <strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
+      Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
+      <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
+      Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:
+    </p>
+    <a class="btn" id="discord-btn" href="https://discord.gg/NhNygrk4" target="_blank">Entrar no Discord</a>
+  </section>
+  <section class="sneak-peaks">
+    <h2 id="sneak-title">Sneak-peaks</h2>
+    <div class="placeholder" id="sneak-placeholder" style="display:none;">
+      Em breve imagens e vídeos exclusivos do desenvolvimento!
+    </div>
+    <div class="videos">
+      <video src="1.mp4" controls preload="metadata" poster="thumb1.jpg"></video>
+      <video src="2.mp4" controls preload="metadata" poster="thumb2.jpg"></video>
+      <video src="3.mp4" controls preload="metadata" poster="thumb3.jpg"></video>
+    </div>
+  </section>
   <footer>
-    <p>© 2025 SPDM ANTI-RAID. Feito pra proteger sua comunidade do Discord.</p>
+    <p id="footer">&copy; 2025 Steal a Football Player • Todos os direitos reservados</p>
   </footer>
+  <script>
+    const translations = {
+      pt: {
+        title: "Um novo Steal de futebol no Roblox!",
+        subtitle: "Prepare-se para o maior evento de Blue Lock do Roblox!",
+        desc: `<strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
+      Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
+      <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
+      Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:`,
+        discord: "Entrar no Discord",
+        sneak: "Sneak-peaks",
+        sneakPlaceholder: "Em breve imagens e vídeos exclusivos do desenvolvimento!",
+        footer: "&copy; 2025 Steal a Football Player • Todos os direitos reservados",
+        sugestao: "Sugestão",
+        placeholder: "Digite sua sugestão (máx. 100 caracteres)...",
+        tags: ["Novo modo de jogo", "Evento especial"]
+      },
+      en: {
+        title: "A new football Steal on Roblox!",
+        subtitle: "Get ready for the biggest Blue Lock event on Roblox!",
+        desc: `<strong>Steal a Football Player</strong> is a competitive football game on Roblox.<br>
+      Many new features, unique game modes and special events are being prepared for the community.<br><br>
+      <strong>Coming soon:</strong> a huge <span style="color:#00bfff;">Blue Lock Event</span> with exclusive challenges and prizes!<br><br>
+      Join our Discord to get updates, see sneak-peaks and secure your spot in the events:`,
+        discord: "Join Discord",
+        sneak: "Sneak-peaks",
+        sneakPlaceholder: "Soon, exclusive images and videos from development!",
+        footer: "&copy; 2025 Steal a Football Player • All rights reserved",
+        sugestao: "Suggestion",
+        placeholder: "Type your suggestion (max. 100 characters)...",
+        tags: ["New game mode", "Special event"]
+      },
+      es: {
+        title: "¡Un nuevo Steal de fútbol en Roblox!",
+        subtitle: "¡Prepárate para el mayor evento de Blue Lock en Roblox!",
+        desc: `<strong>Steal a Football Player</strong> es un juego de fútbol competitivo en Roblox.<br>
+      Muchas novedades, modos de juego únicos y eventos especiales están siendo preparados para la comunidad.<br><br>
+      <strong>Próximamente:</strong> un gran <span style="color:#00bfff;">Evento Blue Lock</span> con desafíos y premios exclusivos!<br><br>
+      Únete a nuestro Discord para recibir actualizaciones, ver sneak-peaks y asegurar tu lugar en los eventos:`,
+        discord: "Entrar al Discord",
+        sneak: "Sneak-peaks",
+        sneakPlaceholder: "¡Pronto imágenes y videos exclusivos del desarrollo!",
+        footer: "&copy; 2025 Steal a Football Player • Todos los derechos reservados",
+        sugestao: "Sugerencia",
+        placeholder: "Escribe tu sugestão (máx. 100 caracteres)...",
+        tags: ["Nuevo modo de juego", "Evento especial"]
+      }
+    };
+
+    // Gera e salva um ID único no navegador, se não existir
+    let userId = localStorage.getItem('userId');
+    if (!userId) {
+      userId = crypto.randomUUID();
+      localStorage.setItem('userId', userId);
+    }
+
+    function setLang(lang) {
+      document.getElementById('title').innerHTML = translations[lang].title;
+      document.getElementById('subtitle').innerHTML = translations[lang].subtitle;
+      document.getElementById('desc').innerHTML = translations[lang].desc;
+      document.getElementById('discord-btn').innerHTML = translations[lang].discord;
+      document.getElementById('sneak-title').innerHTML = translations[lang].sneak;
+      document.getElementById('sneak-placeholder').innerHTML = translations[lang].sneakPlaceholder;
+      document.getElementById('footer').innerHTML = translations[lang].footer;
+      document.getElementById('open-sugestao').innerText = translations[lang].sugestao;
+    }
+
+    // Redireciona para o Google Forms ao clicar em "Sugestão"
+    document.getElementById('open-sugestao').onclick = function() {
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLSfHuoLX9s3U7EZMu9eVhLFB5hgsfGniyiq0DaXBRE4MwGKwDg/viewform', '_blank');
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('lang');
+      if (saved && translations[saved]) setLang(saved);
+      else {
+        const nav = navigator.language.slice(0,2);
+        if (translations[nav]) setLang(nav);
+        else setLang('pt');
+      }
+      setTimeout(() => {
+        document.getElementById('loader-overlay').classList.add('hide');
+        setTimeout(() => {
+          document.getElementById('loader-overlay').style.display = 'none';
+        }, 700);
+      }, 1200);
+    });
+  </script>
 </body>
 </html>
