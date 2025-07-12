@@ -77,6 +77,7 @@
       opacity: 0.8;
       text-align: center;
       text-shadow: 0 2px 8px #0008;
+      font-family: 'Segoe UI', Arial, sans-serif;
     }
     header, footer {
       text-align: center;
@@ -111,6 +112,7 @@
       height: 18px;
       border-radius: 4px;
       border: 1.5px solid var(--azul);
+      background: #fff;
       object-fit: cover;
     }
     .sugestao-btn {
@@ -127,14 +129,15 @@
     }
     .sugestao-btn:hover {
       background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
+      color: #fff;
     }
     .banner {
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      flex-wrap: wrap;
+      margin: 24px 0 12px 0;
       gap: 18px;
-      margin: 18px 0;
+      flex-wrap: wrap;
     }
     .banner img {
       width: 540px;
@@ -159,18 +162,20 @@
       font-weight: bold;
       font-size: 1em;
       min-width: 100px;
+      margin-top: 8px;
+      text-align: left;
       border: 1px solid var(--azul);
     }
     .creditos-box span {
       color: #fff;
       font-weight: 400;
+      font-size: 1em;
     }
     .sub {
       color: var(--azul);
       font-size: 1em;
       margin-top: 8px;
       letter-spacing: 0.5px;
-      text-align: center;
     }
     .info {
       text-align: center;
@@ -191,12 +196,14 @@
       text-decoration: none;
       font-weight: bold;
       font-size: 1em;
-      transition: background 0.2s, box-shadow 0.2s;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 8px #00bfff55;
       border: none;
+      letter-spacing: 0.5px;
     }
     .btn:hover {
       background: linear-gradient(90deg, var(--vermelho) 0%, var(--azul) 100%);
+      color: #fff;
       box-shadow: 0 4px 12px #ff2a2a55;
     }
     .sneak-peaks {
@@ -215,31 +222,18 @@
       font-size: 1.2em;
       letter-spacing: 1px;
     }
-    .sneak-imgs {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-    .sneak-imgs img {
-      max-width: 260px;
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #000a;
-      background: #111;
-      border: 1.5px solid var(--azul);
-      transition: border 0.2s, box-shadow 0.2s;
-    }
-    .sneak-imgs img:hover {
-      border: 1.5px solid var(--vermelho);
-      box-shadow: 0 4px 12px #ff2a2a55;
+    .sneak-peaks .placeholder {
+      color: #aaa;
+      text-align: center;
+      font-size: 1em;
+      margin: 16px 0;
     }
     .sneak-peaks .videos {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 14px;
+      justify-content: center;
+      margin-top: 10px;
     }
     .sneak-peaks video {
       max-width: 260px;
@@ -249,9 +243,35 @@
       background: #111;
       outline: none;
       border: 1.5px solid var(--azul);
+      transition: border 0.2s, box-shadow 0.2s;
     }
-    .sneak-peaks video:hover {
+    .sneak-peaks video:focus, .sneak-peaks video:hover {
       border: 1.5px solid var(--vermelho);
+      box-shadow: 0 4px 12px #ff2a2a55;
+    }
+    .sneak-peaks .videos img {
+      max-width: 260px;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #000a;
+      background: #111;
+      border: 1.5px solid var(--azul);
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .sneak-peaks .videos img:hover {
+      border: 1.5px solid var(--vermelho);
+      box-shadow: 0 4px 12px #ff2a2a55;
+    }
+    @media (max-width: 768px) {
+      .sneak-peaks .videos img {
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+      }
+      .sneak-peaks .videos {
+        flex-direction: column;
+        align-items: center;
+      }
     }
     footer {
       font-size: 0.95em;
@@ -261,8 +281,38 @@
       margin-top: 24px;
       letter-spacing: 0.5px;
       box-shadow: 0 -2px 10px #0004;
-      text-align: center;
-      padding: 10px 0;
+    }
+    @media (max-width: 900px) {
+      .banner { flex-direction: column; align-items: center; gap: 10px; }
+      .creditos-box { margin-left: 0; margin-top: 10px; }
+    }
+    @media (max-width: 600px) {
+      .banner img { 
+        max-width: 98vw;
+        width: auto;
+        height: 280px;
+        max-height: none;
+        object-fit: contain;
+        margin: 0 auto;
+      }
+      .creditos-box { font-size: 0.95em; padding: 7px 8px; }
+      .sneak-peaks .videos { gap: 7px; }
+      .sneak-peaks video { max-width: 98vw; }
+      .info { font-size: 0.95em; }
+      .btn { font-size: 0.95em; padding: 8px 12px; }
+      .sneak-peaks { padding: 8px 2vw; }
+    }
+    @media (min-width: 769px) {
+      .banner img {
+        max-width: 1000px;
+        max-height: 400px; /* Limita a altura da blue lock.jpg */
+        margin: 0 auto; /* Centraliza a imagem */
+        display: block; /* Garante centralização */
+      }
+      .sneak-peaks .videos img {
+        max-height: 300px; /* Limita a altura de ui1.png e ui2.png */
+        width: auto; /* Mantém a proporção */
+      }
     }
   </style>
 </head>
@@ -288,14 +338,14 @@
     </div>
     <h1 id="title">Um novo Steal de futebol no Roblox!</h1>
     <p class="sub" id="subtitle">Prepare-se para o maior evento de Blue Lock do Roblox!</p>
-    <div class="banner">
-      <img src="blue lock.jpg" alt="Capa do Evento Blue Lock" />
-      <div class="creditos-box">
-        Créditos:<br>
-        <span>pouououjoia</span>
-      </div>
-    </div>
   </header>
+  <section class="banner">
+    <img src="blue lock.jpg" alt="Capa do Evento Blue Lock" />
+    <div class="creditos-box">
+      Créditos:<br>
+      <span>pouououjoia</span>
+    </div>
+  </section>
   <section class="info">
     <p id="desc">
       <strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
@@ -307,12 +357,13 @@
   </section>
   <section class="sneak-peaks">
     <h2 id="sneak-title">Sneak-peaks</h2>
-    <div class="sneak-imgs">
-      <img src="sneak.png" alt="Sneak Peak" />
-      <img src="ui1.png" alt="UI Sneak 1" />
-      <img src="ui2.png" alt="UI Sneak 2" />
+    <div class="placeholder" id="sneak-placeholder" style="display:none;">
+      Em breve imagens e vídeos exclusivos do desenvolvimento!
     </div>
     <div class="videos">
+      <img src="espadasneak.png" alt="Sneak Peak - Espada" />
+      <img src="ui1.png" alt="Sneak Peak - UI 1" />
+      <img src="ui2.png" alt="Sneak Peak - UI 2" />
       <video src="1.mp4" controls preload="metadata" poster="thumb1.jpg"></video>
       <video src="2.mp4" controls preload="metadata" poster="thumb2.jpg"></video>
       <video src="3.mp4" controls preload="metadata" poster="thumb3.jpg"></video>
@@ -327,15 +378,43 @@
         title: "Um novo Steal de futebol no Roblox!",
         subtitle: "Prepare-se para o maior evento de Blue Lock do Roblox!",
         desc: `<strong>Steal a Football Player</strong> é um jogo de futebol competitivo no Roblox.<br>
-        Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
-        <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
-        Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:`,
+      Muitas novidades, modos de jogo únicos e eventos especiais estão sendo preparados para a comunidade.<br><br>
+      <strong>Em breve:</strong> um grande <span style="color:#00bfff;">Evento Blue Lock</span> com desafios e prêmios exclusivos!<br><br>
+      Participe do nosso Discord para acompanhar atualizações, ver sneak-peaks e garantir sua vaga nos eventos:`,
         discord: "Entrar no Discord",
         sneak: "Sneak-peaks",
+        sneakPlaceholder: "Em breve imagens e vídeos exclusivos do desenvolvimento!",
         footer: "© 2025 Steal a Football Player • Todos os direitos reservados",
         sugestao: "Sugestão"
+      },
+      en: {
+        title: "A new football Steal on Roblox!",
+        subtitle: "Get ready for the biggest Blue Lock event on Roblox!",
+        desc: `<strong>Steal a Football Player</strong> is a competitive football game on Roblox.<br>
+      Many new features, unique game modes and special events are being prepared for the community.<br><br>
+      <strong>Coming soon:</strong> a huge <span style="color:#00bfff;">Blue Lock Event</span> with exclusive challenges and prizes!<br><br>
+      Join our Discord to get updates, see sneak-peaks and secure your spot in the events:`,
+        discord: "Join Discord",
+        sneak: "Sneak-peaks",
+        sneakPlaceholder: "Soon, exclusive images and videos from development!",
+        footer: "© 2025 Steal a Football Player • All rights reserved",
+        sugestao: "Suggestion"
+      },
+      es: {
+        title: "¡Un nuevo Steal de fútbol en Roblox!",
+        subtitle: "¡Prepárate para el mayor evento de Blue Lock en Roblox!",
+        desc: `<strong>Steal a Football Player</strong> es un juego de fútbol competitivo en Roblox.<br>
+      Muchas novedades, modos de juego únicos y eventos especiales están siendo preparados para la comunidad.<br><br>
+      <strong>Próximamente:</strong> un gran <span style="color:#00bfff;">Evento Blue Lock</span> con desafíos y premios exclusivos!<br><br>
+      Únete a nuestro Discord para recibir actualizaciones, ver sneak-peaks y asegurar tu lugar en los eventos:`,
+        discord: "Entrar al Discord",
+        sneak: "Sneak-peaks",
+        sneakPlaceholder: "¡Pronto imágenes y videos exclusivos del desarrollo!",
+        footer: "© 2025 Steal a Football Player • Todos los derechos reservados",
+        sugestao: "Sugerencia"
       }
     };
+
     function setLang(lang) {
       const t = translations[lang];
       document.getElementById('title').innerHTML = t.title;
@@ -343,17 +422,23 @@
       document.getElementById('desc').innerHTML = t.desc;
       document.getElementById('discord-btn').innerHTML = t.discord;
       document.getElementById('sneak-title').innerHTML = t.sneak;
+      document.getElementById('sneak-placeholder').innerHTML = t.sneakPlaceholder;
       document.getElementById('footer').innerHTML = t.footer;
       document.querySelector('.sugestao-btn').innerHTML = t.sugestao;
     }
+
     window.onload = () => {
       const loader = document.getElementById('loader-overlay');
+      console.log("Página carregada, adicionando classe hide");
       loader.classList.add('hide');
       loader.addEventListener('transitionend', () => {
+        console.log("Transição finalizada, setando display none");
         loader.style.display = 'none';
       }, { once: true });
+      // Fallback: remove o loader após 5 segundos se o transitionend não for disparado
       setTimeout(() => {
         if (loader.style.display !== 'none') {
+          console.log("Fallback: setando display none após 5s");
           loader.style.display = 'none';
         }
       }, 5000);
