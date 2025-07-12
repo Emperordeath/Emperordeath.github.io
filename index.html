@@ -143,10 +143,11 @@
       width: 540px;
       max-width: 98vw;
       height: auto;
+      max-height: 300px;
       border-radius: 12px;
       box-shadow: 0 4px 18px #000b, 0 0 0 2px var(--azul);
       background: #111;
-      object-fit: cover;
+      object-fit: contain;
       transition: box-shadow 0.3s;
     }
     .banner img:hover {
@@ -377,9 +378,11 @@
     @media (max-width: 600px) {
       .banner img { 
         max-width: 98vw;
-        width: 98vw;
-        height: 180px;
-        object-fit: cover;
+        width: auto;
+        height: 280px;
+        max-height: none;
+        object-fit: contain;
+        margin: 0 auto;
       }
       .creditos-box { font-size: 0.95em; padding: 7px 8px; }
       .sneak-peaks .videos { gap: 7px; }
