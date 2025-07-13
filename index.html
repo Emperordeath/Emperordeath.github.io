@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -89,19 +90,18 @@
 
     header {
       background: var(--dark-gray);
-      padding: 15px 0;
+      padding: 15px 20px;
       text-align: center;
       box-shadow: var(--shadow-light);
       position: relative;
     }
 
     .flags-sugestao-bar {
-      position: absolute;
-      top: 10px;
-      right: 20px;
       display: flex;
       gap: 12px;
       align-items: center;
+      justify-content: flex-end;
+      margin-top: 5px;
     }
 
     .flag-btn {
@@ -157,7 +157,7 @@
       justify-content: center;
       align-items: center;
       padding: 20px 10px;
-      gap: 20px;
+      gap: 15px;
       flex-wrap: wrap;
     }
 
@@ -183,6 +183,7 @@
       color: var(--primary-blue);
       font-weight: 600;
       text-align: center;
+      max-width: 200px;
     }
 
     .creditos-box span {
@@ -240,7 +241,7 @@
 
     .videos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 15px;
       justify-items: center;
     }
@@ -276,19 +277,26 @@
     @media (max-width: 768px) {
       h1 { font-size: 1.5em; }
       .sub { font-size: 1em; }
-      .banner img { max-height: 300px; }
-      .creditos-box { padding: 10px; }
-      .info { padding: 15px; }
+      .banner img { max-height: 250px; }
+      .creditos-box { padding: 10px; max-width: 150px; font-size: 0.9em; }
+      .info { padding: 15px; margin: 15px auto; }
       .btn { padding: 8px 15px; font-size: 0.9em; }
       .sneak-peaks { padding: 15px; margin: 20px auto; }
-      .videos img, .videos video { max-width: 100%; }
+      .videos { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+      .videos img, .videos video { max-width: 100%; max-height: 200px; }
+      .flags-sugestao-bar { gap: 8px; }
     }
 
     @media (max-width: 480px) {
-      .banner { padding: 10px; }
-      .creditos-box { font-size: 0.9em; }
-      .info { margin: 15px; }
+      .banner { padding: 10px; gap: 10px; }
+      .banner img { max-height: 200px; }
+      .creditos-box { padding: 8px; max-width: 120px; }
+      .info { margin: 10px; padding: 10px; font-size: 0.9em; }
       .sneak-peaks h2 { font-size: 1.2em; }
+      .videos { grid-template-columns: 1fr; gap: 10px; }
+      .videos img, .videos video { max-height: 150px; }
+      .flags-sugestao-bar { flex-direction: column; gap: 5px; }
+      .sugestao-btn { font-size: 0.8em; padding: 4px 8px; }
     }
   </style>
 </head>
