@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Em breve...</title>
+  <title>Site em Reforma</title>
   <style>
     * {
       margin: 0;
@@ -21,16 +21,15 @@
       justify-content: center;
       height: 100vh;
       background: radial-gradient(circle, #1a1a1a, #000000);
-      overflow: hidden;
+      text-align: center;
+      padding: 20px;
     }
 
     h1 {
-      font-size: 3rem;
-      text-align: center;
-      letter-spacing: 3px;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
       color: #ff0000;
       text-shadow: 0 0 15px #ff0000, 0 0 30px #8b0000;
-      margin-bottom: 20px;
     }
 
     .glitch {
@@ -44,6 +43,13 @@
       50% { text-shadow: 2px -2px #ff0000, -2px 2px #00ffff; }
       75% { text-shadow: -2px -2px #ff0000, 2px 2px #00ffff; }
       100% { text-shadow: 2px 2px #ff0000, -2px -2px #00ffff; }
+    }
+
+    #countdown {
+      font-size: 1.8rem;
+      color: #ffffff;
+      margin-top: 30px;
+      text-shadow: 0 0 10px #ff0000;
     }
 
     a.discord-link {
@@ -66,8 +72,12 @@
     footer {
       font-size: 0.9rem;
       color: #333;
-      position: absolute;
-      bottom: 15px;
+      margin-top: 30px;
+    }
+
+    @media(max-width: 500px) {
+      h1 { font-size: 1.8rem; }
+      #countdown { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -75,9 +85,49 @@
 
   <h1>ESTOU REFORMULANDO O SITE<br><span class="glitch">0_0</span></h1>
 
-  <a class="discord-link" href="https://discord.gg/dvV4SHkTpg" target="_blank">⚒️ Entre no Discord</a>
+  <div id="countdown"></div>
+
+  <a class="discord-link" href="https://discord.gg/dvV4SHkTpg" target="_blank">💀 Entre no Discord</a>
 
   <footer>© 2025 IamEmperorDeath</footer>
+
+  <!-- Sons -->
+  <audio id="tickSound" src="https://www.soundjay.com/clock/sounds/clock-ticking-1.mp3" preload="auto"></audio>
+  <audio id="finishSound" src="https://www.soundjay.com/button/sounds/button-3.mp3" preload="auto"></audio>
+
+  <script>
+    const countdown = document.getElementById('countdown');
+    const tickSound = document.getElementById('tickSound');
+    const finishSound = document.getElementById('finishSound');
+
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 5); // 5 dias a partir de agora
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance <= 0) {
+        countdown.innerHTML = "O projeto renasceu!";
+        finishSound.play();
+        clearInterval(timer);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s restantes`;
+
+      tickSound.currentTime = 0;
+      tickSound.play();
+    }
+
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 
 </body>
 </html>
