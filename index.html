@@ -100,15 +100,8 @@
     const tickSound = document.getElementById('tickSound');
     const finishSound = document.getElementById('finishSound');
 
-    // Definir ou recuperar a data final
-    let targetDate = localStorage.getItem('deathCountdownTarget');
-    if (!targetDate) {
-      const newTarget = new Date();
-      newTarget.setDate(newTarget.getDate() + 5);
-      targetDate = newTarget.toISOString();
-      localStorage.setItem('deathCountdownTarget', targetDate);
-    }
-    targetDate = new Date(targetDate);
+    // Data final fixa (20/07/2025 às 18:00)
+    const targetDate = new Date('2025-07-20T18:00:00');
 
     function updateCountdown() {
       const now = new Date().getTime();
