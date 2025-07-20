@@ -13,9 +13,9 @@
       --light-bg: #1a2022;
       --text-color: #f5f6f5;
       --accent-gradient: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-      --shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      --border-radius: 12px;
-      --transition: all 0.4s ease;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      --border-radius: 10px;
+      --transition: all 0.3s ease;
     }
 
     * {
@@ -40,7 +40,7 @@
       width: 100vw;
       height: 100vh;
       z-index: -1;
-      background: linear-gradient(180deg, #0a1a2f 0%, var(--dark-bg) 100%);
+      background: linear-gradient(180deg, #0e1a2a 0%, var(--dark-bg) 100%);
     }
 
     #loader-overlay {
@@ -65,9 +65,9 @@
     }
 
     .loader-spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid var(--primary-blue);
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--primary-blue);
       border-top-color: var(--primary-red);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -78,15 +78,15 @@
     }
 
     .loader-text {
-      margin-top: 15px;
-      font-size: 1.3em;
+      margin-top: 12px;
+      font-size: 1.2em;
       font-weight: 600;
       color: var(--text-color);
     }
 
     header {
       background: var(--light-bg);
-      padding: 20px 40px;
+      padding: 15px 30px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -97,16 +97,16 @@
     }
 
     .logo {
-      font-size: 2.2em;
+      font-size: 2em;
       font-weight: 700;
       color: var(--primary-blue);
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
     }
 
     .nav-bar {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 15px;
     }
 
     .flag-btn {
@@ -117,12 +117,12 @@
     }
 
     .flag-btn:hover {
-      transform: scale(1.15);
+      transform: scale(1.1);
     }
 
     .flag-img {
-      width: 32px;
-      height: 22px;
+      width: 28px;
+      height: 20px;
       border-radius: 4px;
       border: 1px solid var(--primary-blue);
     }
@@ -131,7 +131,7 @@
       background: var(--accent-gradient);
       color: var(--text-color);
       border: none;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
@@ -139,48 +139,46 @@
     }
 
     .sugestao-btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow);
     }
 
     .banner {
       max-width: 1200px;
-      margin: 40px auto;
-      padding: 20px;
+      margin: 30px auto;
+      padding: 15px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 30px;
+      gap: 25px;
       flex-wrap: wrap;
       border-radius: var(--border-radius);
-      background: linear-gradient(135deg, var(--light-bg), #1c2a2e);
+      background: var(--light-bg);
       box-shadow: var(--shadow);
       position: relative;
-      border: 2px solid var(--primary-blue);
-      overflow: hidden;
+      border: 1px solid var(--primary-blue);
     }
 
     .banner img {
       max-width: 100%;
-      max-height: 550px;
+      max-height: 500px;
       object-fit: cover;
       border-radius: var(--border-radius);
       transition: var(--transition);
     }
 
     .banner img:hover {
-      transform: scale(1.03);
-      filter: brightness(1.1);
+      transform: scale(1.02);
     }
 
     .creditos-box {
       background: var(--light-bg);
-      padding: 15px;
+      padding: 12px;
       border-radius: var(--border-radius);
       color: var(--primary-blue);
       font-weight: 600;
       text-align: center;
-      max-width: 200px;
+      max-width: 180px;
       border: 1px solid var(--primary-blue);
     }
 
@@ -191,8 +189,8 @@
 
     .info {
       max-width: 1000px;
-      margin: 40px auto;
-      padding: 30px;
+      margin: 30px auto;
+      padding: 25px;
       background: var(--light-bg);
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
@@ -200,20 +198,20 @@
     }
 
     .info h1 {
-      font-size: 2.8em;
+      font-size: 2.5em;
       color: var(--primary-blue);
-      margin-bottom: 15px;
-      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
     }
 
     .info p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
+      font-size: 1.1em;
+      margin-bottom: 15px;
     }
 
     .btn {
       display: inline-block;
-      padding: 12px 24px;
+      padding: 10px 20px;
       background: var(--accent-gradient);
       color: var(--text-color);
       text-decoration: none;
@@ -223,14 +221,14 @@
     }
 
     .btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow);
     }
 
     .sneak-peaks {
       max-width: 1200px;
-      margin: 40px auto;
-      padding: 30px;
+      margin: 30px auto;
+      padding: 25px;
       background: var(--light-bg);
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
@@ -238,9 +236,9 @@
     }
 
     .sneak-peaks h2 {
-      font-size: 2.2em;
+      font-size: 2em;
       color: var(--primary-blue);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .sneak-cards {
@@ -248,14 +246,14 @@
       justify-content: center;
       gap: 20px;
       flex-wrap: wrap;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .sneak-card {
       background: var(--dark-bg);
       border-radius: var(--border-radius);
-      padding: 20px;
-      width: 400px;
+      padding: 15px;
+      width: 380px;
       transition: var(--transition);
       cursor: pointer;
       position: relative;
@@ -263,26 +261,26 @@
     }
 
     .sneak-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow);
     }
 
     .sneak-card img {
       width: 100%;
-      height: 200px;
+      height: 180px;
       object-fit: cover;
       border-radius: var(--border-radius);
-      margin-bottom: 15px;
-    }
-
-    .sneak-card h3 {
-      font-size: 1.4em;
-      color: var(--primary-blue);
       margin-bottom: 10px;
     }
 
+    .sneak-card h3 {
+      font-size: 1.3em;
+      color: var(--primary-blue);
+      margin-bottom: 8px;
+    }
+
     .sneak-card p {
-      font-size: 1em;
+      font-size: 0.95em;
       color: var(--text-color);
     }
 
@@ -292,7 +290,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.6);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -307,12 +305,12 @@
     .sneak-card-overlay span {
       color: var(--text-color);
       font-weight: 600;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
 
     footer {
       background: var(--light-bg);
-      padding: 20px;
+      padding: 15px;
       text-align: center;
       box-shadow: var(--shadow);
     }
@@ -320,7 +318,7 @@
     .footer-links {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       margin-top: 10px;
     }
 
@@ -336,26 +334,26 @@
     }
 
     @media (max-width: 768px) {
-      header { padding: 15px 20px; }
-      .logo { font-size: 1.8em; }
-      .nav-bar { gap: 10px; }
-      .info h1 { font-size: 2.2em; }
-      .info p { font-size: 1em; }
-      .sneak-peaks h2 { font-size: 1.8em; }
-      .banner img { max-height: 350px; }
-      .creditos-box { max-width: 150px; font-size: 0.9em; }
-      .sneak-card { width: 300px; }
-      .sneak-card img { height: 150px; }
+      header { padding: 12px 15px; }
+      .logo { font-size: 1.6em; }
+      .nav-bar { gap: 8px; }
+      .info h1 { font-size: 2em; }
+      .info p { font-size: 0.95em; }
+      .sneak-peaks h2 { font-size: 1.6em; }
+      .banner img { max-height: 300px; }
+      .creditos-box { max-width: 140px; font-size: 0.85em; }
+      .sneak-card { width: 280px; }
+      .sneak-card img { height: 140px; }
     }
 
     @media (max-width: 480px) {
-      header { flex-direction: column; gap: 10px; }
-      .nav-bar { flex-direction: column; gap: 8px; }
-      .info { padding: 20px; }
-      .sneak-peaks { padding: 20px; }
-      .banner img { max-height: 250px; }
-      .creditos-box { max-width: 120px; font-size: 0.8em; }
-      .btn { padding: 10px 20px; font-size: 0.9em; }
+      header { flex-direction: column; gap: 8px; }
+      .nav-bar { flex-direction: column; gap: 6px; }
+      .info { padding: 15px; }
+      .sneak-peaks { padding: 15px; }
+      .banner img { max-height: 200px; }
+      .creditos-box { max-width: 110px; font-size: 0.75em; }
+      .btn { padding: 8px 16px; font-size: 0.85em; }
       .sneak-card { width: 100%; }
       .sneak-card img { height: 120px; }
     }
@@ -399,8 +397,8 @@
     <h2 id="sneak-title">Sneak Peaks</h2>
     <div class="sneak-cards">
       <div class="sneak-card">
-        <img src="https://via.placeholder.com/400x200?text=Evento+Blue+Lock" alt="Evento Blue Lock">
-        <h3>Evento Blue Lock</h3>
+        <img src="https://via.placeholder.com/380x180?text=Próximo+Evento+Blue+Lock" alt="Próximo Evento Blue Lock">
+        <h3>Próximo Evento Blue Lock</h3>
         <p>Participe de desafios exclusivos!</p>
         <div class="sneak-card-overlay">
           <span>Em Breve!</span>
@@ -465,6 +463,11 @@
       document.getElementById('footer').textContent = t.footer;
       document.querySelector('.sugestao-btn').textContent = t.sugestao;
       document.getElementById('sneak-btn').textContent = t.sneakBtn;
+      const card = document.querySelector('.sneak-card h3');
+      card.textContent = lang === 'en' ? 'Next Blue Lock Event' : (lang === 'es' ? 'Próximo Evento Blue Lock' : 'Próximo Evento Blue Lock');
+      const img = document.querySelector('.sneak-card img');
+      img.alt = lang === 'en' ? 'Next Blue Lock Event' : (lang === 'es' ? 'Próximo Evento Blue Lock' : 'Próximo Evento Blue Lock');
+      img.src = `https://via.placeholder.com/380x180?text=${encodeURIComponent(lang === 'en' ? 'Next+Blue+Lock+Event' : (lang === 'es' ? 'Próximo+Evento+Blue+Lock' : 'Próximo+Evento+Blue+Lock'))}`;
     }
 
     const canvas = document.getElementById('particle-bg');
@@ -476,25 +479,25 @@
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = Math.random() * 0.4 - 0.2;
-        this.speedY = Math.random() * 0.4 - 0.2;
+        this.size = Math.random() * 1.5 + 0.3;
+        this.speedX = Math.random() * 0.3 - 0.15;
+        this.speedY = Math.random() * 0.3 - 0.15;
       }
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        if (this.size > 0.1) this.size -= 0.005;
+        if (this.size > 0.1) this.size -= 0.003;
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
       draw() {
-        ctx.fillStyle = 'rgba(30, 144, 255, 0.4)';
+        ctx.fillStyle = 'rgba(30, 144, 255, 0.3)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
       }
     }
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 20; i++) {
       particles.push(new Particle());
     }
     function animateParticles() {
