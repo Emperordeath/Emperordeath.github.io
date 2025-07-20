@@ -31,6 +31,10 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      transform: scale(0.9);
+      transform-origin: 0 0;
+      width: 100vw;
+      height: 100vh;
     }
 
     #particle-bg {
@@ -40,7 +44,7 @@
       width: 100vw;
       height: 100vh;
       z-index: -1;
-      background: linear-gradient(180deg, #0e1a2a 0%, var(--dark-bg) 100%);
+      background: linear-gradient(180deg, #1a0033, #0a1a2f, #0d0d1a);
     }
 
     #loader-overlay {
@@ -250,14 +254,33 @@
     }
 
     .sneak-card {
-      background: var(--dark-bg);
+      background: linear-gradient(135deg, #0e1a2a, var(--dark-bg));
       border-radius: var(--border-radius);
       padding: 15px;
       width: 380px;
-      transition: var(--transition);
-      cursor: pointer;
+      height: 250px;
       position: relative;
       overflow: hidden;
+      border: 1px solid var(--primary-blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sneak-card-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .sneak-card-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
     }
 
     .sneak-card:hover {
@@ -265,23 +288,16 @@
       box-shadow: var(--shadow);
     }
 
-    .sneak-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: var(--border-radius);
+    .sneak-card h3 {
+      font-size: 1.5em;
+      color: var(--primary-blue);
       margin-bottom: 10px;
     }
 
-    .sneak-card h3 {
-      font-size: 1.3em;
-      color: var(--primary-blue);
-      margin-bottom: 8px;
-    }
-
     .sneak-card p {
-      font-size: 0.95em;
+      font-size: 1em;
       color: var(--text-color);
+      margin-bottom: 15px;
     }
 
     .sneak-card-overlay {
@@ -290,12 +306,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.8);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       transition: var(--transition);
+      z-index: 2;
     }
 
     .sneak-card:hover .sneak-card-overlay {
@@ -305,7 +322,8 @@
     .sneak-card-overlay span {
       color: var(--text-color);
       font-weight: 600;
-      font-size: 1.1em;
+      font-size: 1.2em;
+      text-transform: uppercase;
     }
 
     footer {
@@ -342,8 +360,8 @@
       .sneak-peaks h2 { font-size: 1.6em; }
       .banner img { max-height: 300px; }
       .creditos-box { max-width: 140px; font-size: 0.85em; }
-      .sneak-card { width: 280px; }
-      .sneak-card img { height: 140px; }
+      .sneak-card { width: 280px; height: 200px; }
+      body { transform: scale(0.9); }
     }
 
     @media (max-width: 480px) {
@@ -354,8 +372,8 @@
       .banner img { max-height: 200px; }
       .creditos-box { max-width: 110px; font-size: 0.75em; }
       .btn { padding: 8px 16px; font-size: 0.85em; }
-      .sneak-card { width: 100%; }
-      .sneak-card img { height: 120px; }
+      .sneak-card { width: 100%; height: 180px; }
+      body { transform: scale(0.9); }
     }
   </style>
 </head>
@@ -390,18 +408,20 @@
       <strong>Em breve:</strong> um grande <span style="color: var(--primary-blue);">Evento Blue Lock</span> com desafios e prêmios exclusivos! <br><br>
       Participe do nosso Discord para acompanhar atualizações e garantir sua vaga nos eventos:
     </p>
-    <a class="btn" id="discord-btn" href="https://discord.gg/NhNygrk4" target="_blank">Entrar no Discord</a>
+    <a class="btn" id="discord-btn" href="https://discord.gg/MpnaTjGf6M" target="_blank">Entrar no Discord</a>
   </section>
 
   <section class="sneak-peaks">
     <h2 id="sneak-title">Sneak Peaks</h2>
     <div class="sneak-cards">
       <div class="sneak-card">
-        <img src="https://via.placeholder.com/380x180?text=Próximo+Evento+Blue+Lock" alt="Próximo Evento Blue Lock">
-        <h3>Próximo Evento Blue Lock</h3>
-        <p>Participe de desafios exclusivos!</p>
+        <canvas class="sneak-card-canvas"></canvas>
+        <div class="sneak-card-content">
+          <h3>Próximo Evento Blue Lock</h3>
+          <p>Participe de desafios exclusivos!</p>
+        </div>
         <div class="sneak-card-overlay">
-          <span>Em Breve!</span>
+          <span>Chegando em Breve!</span>
         </div>
       </div>
     </div>
@@ -411,7 +431,7 @@
   <footer>
     <p id="footer">© 2025 Steal a Football Player • Todos os direitos reservados</p>
     <div class="footer-links">
-      <a href="https://discord.gg/NhNygrk4" target="_blank">Discord</a>
+      <a href="https://discord.gg/MpnaTjGf6M" target="_blank">Discord</a>
       <a href="https://youtube.com/@slaegegd?si=l6hTcjB5vzzSjOmH" target="_blank">YouTube</a>
       <a href="https://sneak-peaks.github.io" target="_blank">Sneak Peaks</a>
     </div>
@@ -443,12 +463,12 @@
       },
       es: {
         title: "¡Un nuevo Steal de fútbol en Roblox!",
-        desc: `<strong>Steal a Football Player</strong> es un juego de fútbol competitivo en Roblox. Muchas novedades, modos de jogo únicos y eventos especiais estão sendo preparados para a comunidade. <br><br>
+        desc: `<strong>Steal a Football Player</strong> es un juego de fútbol competitivo en Roblox. Muchas novidades, modos de jogo únicos y eventos especiais estão sendo preparados para a comunidade. <br><br>
         <strong>Próximamente:</strong> un gran <span style="color: var(--primary-blue);">Evento Blue Lock</span> con desafíos y premios exclusivos! <br><br>
-        Únete a nuestro Discord para recibir actualizaciones y asegurar tu lugar en los eventos:`,
+        Únete a nuestro Discord para receber actualizações e asegurar tu lugar en los eventos:`,
         discord: "Entrar al Discord",
         sneak: "Sneak Peaks",
-        footer: "© 2025 Steal a Football Player • Todos los derechos reservados",
+        footer: "© 2025 Steal a Football Player • Todos los direitos reservados",
         sugestao: "Sugerencia",
         sneakBtn: "Ver Más Sneak Peaks"
       }
@@ -465,9 +485,6 @@
       document.getElementById('sneak-btn').textContent = t.sneakBtn;
       const card = document.querySelector('.sneak-card h3');
       card.textContent = lang === 'en' ? 'Next Blue Lock Event' : (lang === 'es' ? 'Próximo Evento Blue Lock' : 'Próximo Evento Blue Lock');
-      const img = document.querySelector('.sneak-card img');
-      img.alt = lang === 'en' ? 'Next Blue Lock Event' : (lang === 'es' ? 'Próximo Evento Blue Lock' : 'Próximo Evento Blue Lock');
-      img.src = `https://via.placeholder.com/380x180?text=${encodeURIComponent(lang === 'en' ? 'Next+Blue+Lock+Event' : (lang === 'es' ? 'Próximo+Evento+Blue+Lock' : 'Próximo+Evento+Blue+Lock'))}`;
     }
 
     const canvas = document.getElementById('particle-bg');
@@ -479,25 +496,26 @@
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 1.5 + 0.3;
-        this.speedX = Math.random() * 0.3 - 0.15;
-        this.speedY = Math.random() * 0.3 - 0.15;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.speedY = Math.random() * 0.4 - 0.2;
+        this.color = `rgba(${Math.random() * 100 + 100}, ${Math.random() * 50}, ${Math.random() * 150 + 100}, 0.4)`;
       }
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        if (this.size > 0.1) this.size -= 0.003;
+        if (this.size > 0.1) this.size -= 0.004;
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
       draw() {
-        ctx.fillStyle = 'rgba(30, 144, 255, 0.3)';
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
       }
     }
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
       particles.push(new Particle());
     }
     function animateParticles() {
@@ -513,6 +531,46 @@
       canvas.height = window.innerHeight;
     });
     animateParticles();
+
+    const cardCanvas = document.querySelector('.sneak-card-canvas');
+    const cardCtx = cardCanvas.getContext('2d');
+    cardCanvas.width = 380;
+    cardCanvas.height = 250;
+    const cardParticles = [];
+    class CardParticle {
+      constructor() {
+        this.x = Math.random() * cardCanvas.width;
+        this.y = Math.random() * cardCanvas.height;
+        this.size = Math.random() * 1 + 0.2;
+        this.speedX = Math.random() * 0.2 - 0.1;
+        this.speedY = Math.random() * 0.2 - 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.size > 0.1) this.size -= 0.002;
+        if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > cardCanvas.height) this.speedY *= -1;
+      }
+      draw() {
+        cardCtx.fillStyle = 'rgba(30, 144, 255, 0.2)';
+        cardCtx.beginPath();
+        cardCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        cardCtx.fill();
+      }
+    }
+    for (let i = 0; i < 15; i++) {
+      cardParticles.push(new CardParticle());
+    }
+    function animateCardParticles() {
+      cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
+      cardParticles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateCardParticles);
+    }
+    animateCardParticles();
 
     window.onload = () => {
       const loader = document.getElementById('loader-overlay');
