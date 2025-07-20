@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Site em Reforma</title>
   <style>
     * {
@@ -38,11 +38,21 @@
     }
 
     @keyframes glitch {
-      0% { text-shadow: 2px 2px #ff0000, -2px -2px #00ffff; }
-      25% { text-shadow: -2px 2px #ff0000, 2px -2px #00ffff; }
-      50% { text-shadow: 2px -2px #ff0000, -2px 2px #00ffff; }
-      75% { text-shadow: -2px -2px #ff0000, 2px 2px #00ffff; }
-      100% { text-shadow: 2px 2px #ff0000, -2px -2px #00ffff; }
+      0% {
+        text-shadow: 2px 2px #ff0000, -2px -2px #00ffff;
+      }
+      25% {
+        text-shadow: -2px 2px #ff0000, 2px -2px #00ffff;
+      }
+      50% {
+        text-shadow: 2px -2px #ff0000, -2px 2px #00ffff;
+      }
+      75% {
+        text-shadow: -2px -2px #ff0000, 2px 2px #00ffff;
+      }
+      100% {
+        text-shadow: 2px 2px #ff0000, -2px -2px #00ffff;
+      }
     }
 
     #countdown {
@@ -75,59 +85,88 @@
       margin-top: 30px;
     }
 
-    @media(max-width: 500px) {
-      h1 { font-size: 1.8rem; }
-      #countdown { font-size: 1.2rem; }
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      #countdown {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-
-  <h1>ESTOU REFORMULANDO O SITE<br><span class="glitch">0_0</span></h1>
+  <h1>
+    ESTOU REFORMULANDO O SITE<br /><span class="glitch">0_0</span>
+  </h1>
 
   <div id="countdown"></div>
 
-  <a class="discord-link" href="https://discord.gg/dvV4SHkTpg" target="_blank">💀 Entre no Discord</a>
+  <a
+    class="discord-link"
+    href="https://discord.gg/dvV4SHkTpg"
+    target="_blank"
+    >💀 Entre no Discord</a
+  >
 
   <footer>© 2025 IamEmperorDeath</footer>
 
   <!-- Sons -->
-  <audio id="tickSound" src="https://www.soundjay.com/clock/sounds/clock-ticking-1.mp3" preload="auto"></audio>
-  <audio id="finishSound" src="https://www.soundjay.com/button/sounds/button-3.mp3" preload="auto"></audio>
+  <audio
+    id="tickSound"
+    src="https://www.soundjay.com/clock/sounds/clock-ticking-1.mp3"
+    preload="auto"
+  ></audio>
+  <audio
+    id="finishSound"
+    src="https://www.soundjay.com/button/sounds/button-3.mp3"
+    preload="auto"
+  ></audio>
 
   <script>
-    const countdown = document.getElementById('countdown');
-    const tickSound = document.getElementById('tickSound');
-    const finishSound = document.getElementById('finishSound');
+    const countdown = document.getElementById("countdown");
+    const tickSound = document.getElementById("tickSound");
+    const finishSound = document.getElementById("finishSound");
 
-    // Data final global fixa: 25/07/2025 às 18:00 UTC
-    const targetDate = new Date('2025-07-25T18:00:00Z');
+    // Data fixa local: 25/07/2025 às 18:00
+    const targetDate = new Date(2025, 6, 25, 18, 0, 0);
+
+    let finished = false;
 
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate.getTime() - now;
 
-      if (distance <= 0) {
+      if (distance <= 0 && !finished) {
         countdown.innerHTML = "O projeto renasceu!";
         finishSound.play();
+        finished = true;
         clearInterval(timer);
+        return;
+      } else if (distance <= 0) {
+        // Já terminou, nada mais a fazer
         return;
       }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s restantes`;
 
-      tickSound.currentTime = 0;
+      // Tocar som tic tac sincronizado com o segundo
+      if (!tickSound.paused) {
+        tickSound.pause();
+        tickSound.currentTime = 0;
+      }
       tickSound.play();
     }
 
     const timer = setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
-
 </body>
 </html>
