@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Simples</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="auth-forms">
+    <h2>Registrar</h2>
+    <input type="text" id="reg-username" placeholder="Usuário" />
+    <input type="email" id="reg-email" placeholder="Email" />
+    <input type="password" id="reg-password" placeholder="Senha" />
+    <button id="btn-register">Registrar</button>
+    <div id="reg-message"></div>
+
+    <hr />
+
+    <h2>Login</h2>
+    <input type="email" id="login-email" placeholder="Email" />
+    <input type="password" id="login-password" placeholder="Senha" />
+    <button id="btn-login">Entrar</button>
+    <div id="login-message"></div>
+  </div>
+
+  <div id="profile" class="hidden">
+    <h2>Perfil</h2>
+    <p><strong>Usuário:</strong> <span id="profile-username"></span></p>
+    <p><strong>Email:</strong> <span id="profile-email"></span></p>
+    <button id="btn-logout">Sair</button>
+    <div id="profile-message"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
