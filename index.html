@@ -1,897 +1,215 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BZuk 1.7 - Linguagem de Programação Brasileira</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* Variáveis de cores e estilos - Tema Brasil/Japão Dark */
-        :root {
-            --primary: #2E8B57; /* Verde Brasil */
-            --primary-dark: #1f6b44;
-            --secondary: #FF9933; /* Laranja */
-            --secondary-dark: #e07b22;
-            --accent: #3D5A80; /* Azul tecnológico */
-            --japan-red: #BC002D; /* Vermelho japonês */
-            --brasil-blue: #002776; /* Azul do Brasil */
-            --brasil-yellow: #FEDF00; /* Amarelo do Brasil */
-            --dark-bg: #121212;
-            --dark-card: #1e1e1e;
-            --dark-border: #333;
-            --text-light: #f0f0f0;
-            --text-muted: #aaa;
-        }
-        
-        /* Reset e estilos base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-color: var(--dark-bg);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(46, 139, 87, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(188, 0, 45, 0.1) 0%, transparent 20%);
-        }
-        
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        ul {
-            list-style: none;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
-            color: white;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 153, 51, 0.3);
-            font-size: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-            box-shadow: none;
-        }
-        
-        .btn-outline:hover {
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
-            color: white;
-        }
-        
-        .btn-japan {
-            background: linear-gradient(135deg, var(--japan-red), #9d0024);
-            box-shadow: 0 4px 15px rgba(188, 0, 45, 0.3);
-        }
-        
-        .btn-japan:hover {
-            box-shadow: 0 8px 25px rgba(188, 0, 45, 0.4);
-        }
-        
-        .btn-brasil {
-            background: linear-gradient(135deg, var(--brasil-blue), #001a4d);
-            box-shadow: 0 4px 15px rgba(0, 39, 118, 0.3);
-        }
-        
-        .btn-brasil:hover {
-            box-shadow: 0 8px 25px rgba(0, 39, 118, 0.4);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.8rem;
-            color: var(--text-light);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-            font-weight: 800;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(to right, var(--secondary), var(--japan-red));
-            border-radius: 3px;
-        }
-        
-        .section-title p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 30px auto 0;
-            line-height: 1.8;
-        }
-        
-        /* Header */
-        header {
-            background-color: rgba(18, 18, 18, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 18px 0;
-            border-bottom: 1px solid var(--dark-border);
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-text {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(to right, var(--primary), var(--japan-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            letter-spacing: 1px;
-        }
-        
-        .nav-menu {
-            display: flex;
-        }
-        
-        .nav-menu li {
-            margin-left: 35px;
-            position: relative;
-        }
-        
-        .nav-menu a {
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            font-size: 1.1rem;
-        }
-        
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--japan-red));
-            transition: width 0.3s;
-            border-radius: 2px;
-        }
-        
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-        
-        .nav-menu a:hover {
-            color: var(--secondary);
-        }
-        
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 1.8rem;
-            color: var(--text-light);
-            transition: color 0.3s;
-        }
-        
-        .hamburger:hover {
-            color: var(--secondary);
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9)), url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            color: white;
-            padding-top: 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(46, 139, 87, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(188, 0, 45, 0.1) 0%, transparent 40%);
-            pointer-events: none;
-        }
-        
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 25px;
-            line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            font-weight: 800;
-            background: linear-gradient(to right, var(--text-light), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .hero-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--japan-red), #9d0024);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(188, 0, 45, 0.3);
-        }
-        
-        /* About Section */
-        .about {
-            padding: 120px 0;
-            background-color: var(--dark-bg);
-            position: relative;
-        }
-        
-        .about::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(to bottom, transparent, var(--dark-bg));
-            pointer-events: none;
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-text h3 {
-            font-size: 2.2rem;
-            color: var(--text-light);
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
-        
-        .about-text p {
-            margin-bottom: 20px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-        
-        .about-features {
-            margin-top: 40px;
-        }
-        
-        .feature {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .feature i {
-            color: var(--secondary);
-            font-size: 1.5rem;
-            margin-right: 20px;
-            width: 30px;
-        }
-        
-        .about-image {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-        
-        .about-image img {
-            max-width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--dark-border);
-        }
-        
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--primary), transparent);
-            border-radius: 10px;
-            z-index: -1;
-        }
-        
-        .about-image::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: -20px;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--japan-red), transparent);
-            border-radius: 10px;
-            z-index: -1;
-        }
-        
-        /* Code Example Section */
-        .code-example {
-            padding: 120px 0;
-            background-color: rgba(30, 30, 30, 0.5);
-            position: relative;
-        }
-        
-        .code-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background: var(--dark-card);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--dark-border);
-        }
-        
-        .code-header {
-            background: linear-gradient(135deg, #2d2d2d, #252525);
-            color: white;
-            padding: 18px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--dark-border);
-        }
-        
-        .code-header span {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1rem;
-        }
-        
-        .code-content {
-            padding: 0;
-        }
-        
-        pre {
-            margin: 0;
-            border-radius: 0;
-        }
-        
-        code {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1rem;
-        }
-        
-        .hljs {
-            padding: 25px;
-            background: #1e1e1e !important;
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 120px 0;
-            background-color: var(--dark-bg);
-            position: relative;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: linear-gradient(145deg, #1e1e1e, #252525);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            padding: 40px 30px;
-            text-align: center;
-            border: 1px solid var(--dark-border);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(46, 139, 87, 0.1), rgba(188, 0, 45, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: -1;
-        }
-        
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
-        }
-        
-        .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
-            background: linear-gradient(to right, var(--primary), var(--japan-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            color: var(--text-light);
-            font-weight: 700;
-        }
-        
-        .feature-card p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        
-        /* Download Section */
-        .download {
-            padding: 140px 0;
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(30, 30, 30, 0.9)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
-            color: white;
-            text-align: center;
-            position: relative;
-        }
-        
-        .download::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 70% 20%, rgba(46, 139, 87, 0.2) 0%, transparent 30%),
-                        radial-gradient(circle at 30% 80%, rgba(188, 0, 45, 0.2) 0%, transparent 30%);
-            pointer-events: none;
-        }
-        
-        .download h2 {
-            color: white;
-            margin-bottom: 30px;
-        }
-        
-        .download p {
-            margin-bottom: 40px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-        
-        .version-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--japan-red), #9d0024);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-size: 1rem;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(188, 0, 45, 0.3);
-        }
-        
-        .contact-info {
-            margin-top: 50px;
-            background: rgba(30, 30, 30, 0.7);
-            padding: 30px;
-            border-radius: 15px;
-            display: inline-block;
-            border: 1px solid var(--dark-border);
-        }
-        
-        .contact-info p {
-            margin: 15px 0;
-            font-size: 1.1rem;
-        }
-        
-        .contact-info a {
-            color: var(--secondary);
-            transition: color 0.3s;
-        }
-        
-        .contact-info a:hover {
-            color: var(--primary);
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #0f0f0f;
-            color: white;
-            padding: 80px 0 30px;
-            border-top: 1px solid var(--dark-border);
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 50px;
-            margin-bottom: 60px;
-        }
-        
-        .footer-col h3 {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            position: relative;
-            padding-bottom: 15px;
-            color: white;
-            font-weight: 700;
-        }
-        
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 4px;
-            background: linear-gradient(to right, var(--secondary), var(--japan-red));
-            border-radius: 2px;
-        }
-        
-        .footer-col p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        
-        .footer-links li {
-            margin-bottom: 15px;
-        }
-        
-        .footer-links a {
-            color: var(--text-muted);
-            transition: color 0.3s;
-            font-size: 1.1rem;
-        }
-        
-        .footer-links a:hover {
-            color: var(--secondary);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-        
-        .social-links a {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #1e1e1e, #252525);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--dark-border);
-        }
-        
-        .social-links a:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid var(--dark-border);
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-        
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .floating {
-            animation: float 5s ease-in-out infinite;
-        }
-        
-        /* Responsividade */
-        @media (max-width: 1200px) {
-            .hero h1 {
-                font-size: 3.5rem;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .about-image {
-                margin-top: 50px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-menu {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                background-color: rgba(18, 18, 18, 0.95);
-                backdrop-filter: blur(10px);
-                width: 100%;
-                flex-direction: column;
-                padding: 30px;
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-                transition: 0.4s;
-                z-index: 999;
-                border-top: 1px solid var(--dark-border);
-            }
-            
-            .nav-menu.active {
-                left: 0;
-            }
-            
-            .nav-menu li {
-                margin: 20px 0;
-            }
-            
-            .hamburger {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .hero-buttons .btn {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .section-title h2 {
-                font-size: 2.2rem;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                height: auto;
-                padding: 120px 0 80px;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-            
-            .feature-icon {
-                font-size: 2.8rem;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BZuk 1.7 — Linguagem Brasileira • Beta Alfa</title>
+
+<!-- Fonts & Icons (CDN, opcionais mas padrão para visual melhor) -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  /* ========== Theme variables ========== */
+  :root{
+    --bg:#081018;
+    --card:#0e1720;
+    --muted:#9aa4af;
+    --text:#e6eef6;
+    --accent-1:#2E8B57; /* verde Brasil */
+    --accent-2:#BC002D; /* vermelho japonês */
+    --accent-3:#FF9933; /* laranja */
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+    --radius: 14px;
+    --maxw:1200px;
+  }
+
+  /* ========== Reset ========== */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(46,139,87,0.06), transparent),
+                radial-gradient(900px 500px at 90% 90%, rgba(188,0,45,0.05), transparent),
+                var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:28px;}
+
+  /* ========== Header ========== */
+  header{
+    position:fixed;left:0;right:0;top:12px;
+    z-index:60;backdrop-filter: blur(8px);
+  }
+  .nav{
+    max-width:var(--maxw);margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .brand{
+    display:flex;gap:14px;align-items:center;
+  }
+  .logo{
+    width:48px;height:48px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:white;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    font-family: "Montserrat";
+  }
+  .brand h1{font-size:1.05rem;margin:0;letter-spacing:0.4px}
+  .brand p{margin:0;font-size:0.75rem;color:var(--muted);font-weight:600}
+
+  nav.menu{display:flex;gap:22px;align-items:center}
+  .menu a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px;border-radius:8px;transition:all .25s}
+  .menu a:hover{color:var(--text);background:var(--glass);transform:translateY(-3px);box-shadow:0 6px 20px rgba(2,8,18,0.6)}
+
+  .cta-group{display:flex;gap:10px;align-items:center}
+  .btn{
+    padding:10px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:700;
+    background:linear-gradient(135deg,var(--accent-3),#e07b22);color:#081018;
+    box-shadow:0 8px 26px rgba(224,123,34,0.12);transition:transform .18s,box-shadow .18s;
+  }
+  .btn:hover{transform:translateY(-4px)}
+  .btn-ghost{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:8px 12px;border-radius:10px}
+
+  /* ========== Hero ========== */
+  .hero{
+    min-height:78vh;display:grid;align-items:center;gap:28px;padding-top:82px;
+  }
+  .hero-inner{display:flex;gap:36px;align-items:center;justify-content:space-between}
+  .hero-left{flex:1;max-width:680px}
+  .badge{
+    display:inline-block;padding:8px 12px;border-radius:999px;font-weight:700;font-size:0.85rem;
+    background:linear-gradient(90deg,var(--accent-2),var(--accent-1));color:white;box-shadow:0 8px 30px rgba(0,0,0,0.45);
+  }
+  h2.title{font-size:2.8rem;margin:18px 0 8px;line-height:1.02}
+  p.lead{color:var(--muted);font-size:1.05rem;margin-bottom:22px}
+
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+  .pill{display:inline-flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--glass);border:1px solid var(--glass-2);font-weight:700;color:var(--text);}
+
+  /* preview card */
+  .preview{
+    width:420px;max-width:42%;min-width:280px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 30px 80px rgba(2,8,20,0.6);
+  }
+  .term-top{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+  .dots{display:flex;gap:6px}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .d-red{background:#ff605c}.d-yellow{background:#ffbd2e}.d-green{background:#28ca42}
+  pre.code{background:transparent;color:var(--text);font-family:'Roboto Mono', monospace;font-size:0.9rem;white-space:pre-wrap;margin:0;line-height:1.5}
+
+  /* ========== Sections ========== */
+  section{padding:48px 0;border-radius:12px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(3,8,18,0.6)}
+  .card h4{margin:0 0 8px}
+  .card p{color:var(--muted);margin:0;font-size:0.95rem}
+
+  /* versions style */
+  .versions{display:flex;gap:18px;flex-wrap:wrap}
+  .vers-box{flex:1;min-width:260px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:20px;border-radius:12px;border-left:4px solid var(--glass-2)}
+
+  /* features list */
+  .features-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .feat{display:flex;gap:12px;align-items:flex-start}
+  .feat i{font-size:20px;color:var(--accent-1);min-width:28px}
+
+  /* example code style */
+  .code-slab{background:#07101a;border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);font-family:'Roboto Mono',monospace;color:#cfe9ff;font-size:0.95rem;white-space:pre-wrap}
+
+  /* contact / footer */
+  .contact-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+  .socials a{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-2);color:var(--text);text-decoration:none;font-weight:700}
+  footer{margin-top:28px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.02);color:var(--muted);font-size:0.95rem;text-align:center;padding-bottom:36px}
+
+  /* responsive */
+  @media (max-width:980px){
+    .hero-inner{flex-direction:column-reverse;align-items:center}
+    .preview{max-width:92%}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    nav.menu{display:none}
+  }
+  @media (max-width:600px){
+    .cards{grid-template-columns:1fr}
+    .features-list{grid-template-columns:1fr}
+    .brand p{display:none}
+    .title{font-size:1.9rem}
+    header .nav{padding:8px 12px}
+    .preview{width:96%}
+    .hero{padding-top:96px}
+    .menu-toggle{display:block}
+  }
+
+  /* small helper animations */
+  .reveal{opacity:0;transform:translateY(10px);transition:all .6s cubic-bezier(.2,.9,.2,1)}
+  .reveal.show{opacity:1;transform:none}
+  .muted{color:var(--muted)}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-                <div class="logo-text">BZuk 1.7</div>
-            </div>
-            
-            <ul class="nav-menu">
-                <li><a href="#home">Início</a></li>
-                <li><a href="#about">Sobre</a></li>
-                <li><a href="#code">Exemplos</a></li>
-                <li><a href="#features">Características</a></li>
-                <li><a href="#download">Download</a></li>
-            </ul>
-            
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
+
+<header>
+  <div class="nav wrap" role="navigation" aria-label="Main Navigation">
+    <div class="brand" aria-hidden="false">
+      <div class="logo">BZ</div>
+      <div>
+        <h1>BZuk <span class="muted" style="font-weight:600;font-size:0.92rem">1.7 • Beta Alfa</span></h1>
+        <p class="muted">Feito por 1 pessoa • 15 anos • 4 dias</p>
+      </div>
+    </div>
+
+    <nav class="menu" aria-label="menu">
+      <a href="#about">Sobre</a>
+      <a href="#features">Funcionalidades</a>
+      <a href="#versions">Versões</a>
+      <a href="#example">Exemplo</a>
+      <a href="#download">Download</a>
+    </nav>
+
+    <div class="cta-group">
+      <a class="btn-ghost" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;GitHub</a>
+      <a class="btn" href="#download">Download</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <div class="hero-left reveal" id="hero-left">
+        <span class="badge">Desenvolvido por 1 pessoa • 15 anos • 4 dias</span>
+        <h2 class="title">BZuk — a linguagem brasileira para aprender rápido e criar com estilo</h2>
+        <p class="lead">Interpretador Beta Alfa (Linux/PC). Primeiro lançamento: versão parecida com Python (fácil). Futuro: versão com performance C++-like. Projeto pequeno, humano e em rápida evolução.</p>
+
+        <div class="hero-actions">
+          <a class="btn" href="#download">Download Linux / PC</a>
+          <button class="btn-ghost" disabled aria-disabled="true"><i class="fa fa-mobile-alt"></i>&nbsp;Em breve: Celular</button>
+          <a class="pill" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><i class="fab fa-discord"></i> Discord</a>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">Versão Beta - Em Desenvolvimento</div>
-                <h1>BZuk 1.7 - Linguagem de Programação Brasileira</h1>
-                <p>Uma linguagem moderna, rápida e intuitiva com sintaxe em português. Combinando a eficiência do C++ com a simplicidade do Python.</p>
-                <div class="hero-buttons">
-                    <a href="#download" class="btn"><i class="fas fa-download"></i> Primeira Versão (Python)</a>
-                    <a href="#code" class="btn btn-outline">Ver Exemplos</a>
-                    <a href="https://github.com/Emperordeath" class="btn btn-japan"><i class="fab fa-github"></i> GitHub</a>
-                </div>
-            </div>
+        <div style="margin-top:20px;color:var(--muted);font-size:0.95rem">
+          <strong style="color:var(--text)">Roadmap:</strong> <span class="muted">1) Python-like (agora) → 2) C++-like (após finalização)</span>
         </div>
-    </section>
+      </div>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>Sobre a BZuk</h2>
-                <p>Conheça a linguagem que está sendo desenvolvida com orgulho brasileiro e precisão japonesa</p>
-            </div>
-            
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>1 ano de desenvolvimento - Fase Beta</h3>
-                    <p>BZuk é uma linguagem de programação que está em desenvolvimento há 1 ano, atualmente em sua fase beta inicial. Esta primeira versão é baseada em Python, com planos para uma versão nativa em C++ no futuro.</p>
-                    <p>Com sintaxe em português e palavras abreviadas de forma intuitiva, BZuk é perfeita para iniciantes e experts que desejam uma linguagem rápida e expressiva.</p>
-                    
-                    <div class="about-features">
-                        <div class="feature">
-                            <i class="fas fa-bolt"></i>
-                            <span>Primeira versão em Python - Futura versão em C++ com alta performance</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-language"></i>
-                            <span>Sintaxe em português com palavras abreviadas intuitivas</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-code"></i>
-                            <span>Poucas linhas para fazer muito (igual Lua)</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-heart"></i>
-                            <span>Orgulho brasileiro com influência da precisão japonesa</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="about-image floating">
-                    <img src="https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Linguagem de Programação BZuk">
-                </div>
-            </div>
+      <aside class="preview reveal" id="preview-aside" aria-hidden="false">
+        <div class="term-top">
+          <div class="dots"><span class="dot d-red"></span><span class="dot d-yellow"></span><span class="dot d-green"></span></div>
+          <div style="margin-left:auto;color:var(--muted);font-weight:700;font-size:0.85rem">Terminal • BZuk</div>
         </div>
-    </section>
 
-    <!-- Code Example Section -->
-    <section class="code-example" id="code">
-        <div class="container">
-            <div class="section-title">
-                <h2>Exemplos de Código</h2>
-                <p>Veja como é fácil e intuitivo programar com BZuk - Linguagem em fase beta com recursos limitados</p>
-            </div>
-            
-            <div class="code-container">
-                <div class="code-header">
-                    <span>exemplo.bz</span>
-                    <span>BZuk 1.7 Beta</span>
-                </div>
-                <div class="code-content">
-                    <pre><code class="language-javascript">// BZuk - Interpretador Beta 1.8
-// Linguagem em desenvolvimento - Versão atual em Python
-
+        <pre class="code" aria-hidden="false">
+// exemplo.bz — demo
 let nome = ler="Qual seu nome?"
 const idade = ler="Qual sua idade?", numero
 let status = "ativo"
@@ -899,120 +217,216 @@ const pais = "Brasil"
 
 impri("nome, idade, status, pais")
 
-nome = "Outro nome"      // Ok, let pode mudar
-// idade = 99            // Erro! Constante não pode ser alterada
-status = "inativo"       // Ok
+rp(cidade)
+impri("cidade")
 
-rp(cidade)               // Ler input para variável cidade
-impri("cidade")          // Imprimir valor da variável cidade
-
-se idade MN 18,          // Se idade Maior ou igual (MN) a 18
+se idade MN 18,
     impri("Você é maior de idade!")
 senão,
     impri("Você é menor de 18!")
 
-repi-3,                  // Repetir 3 vezes
-    impri("Loop rápido!")</code></pre>
-                </div>
-            </div>
-        </div>
-    </section>
+repi-3,
+    impri("Loop rápido!")
+        </pre>
+      </aside>
+    </div>
+  </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Características Principais</h2>
-                <p>Descubra o que faz da BZuk uma linguagem especial - Mesmo em fase inicial de desenvolvimento</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-comment"></i>
-                    </div>
-                    <h3>Sintaxe em Português</h3>
-                    <p>Use palavras em português e abreviações intuitivas como "impri" para print, "ler" para input e "se" para if.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tachometer-alt"></i>
-                    </div>
-                    <h3>Alta Performance Futura</h3>
-                    <p>Versão atual em Python. Próxima versão em C++ para velocidade comparável com sintaxe simplificada.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3>Fácil de Aprender</h3>
-                    <p>Perfeita para iniciantes, com conceitos simplificados e documentação em português.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Poucas Linhas</h3>
-                    <p>Escreva programas complexos com menos código, seguindo a filosofia do Lua.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Tipagem Flexível</h3>
-                    <p>Sistema de tipos que oferece flexibilidade quando precisa e segurança quando necessário.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe-americas"></i>
-                    </div>
-                    <h3>Feita no Brasil</h3>
-                    <p>Orgulho brasileiro com influência da precisão e eficiência japonesa. 15 anos de desenvolvimento.</p>
-                </div>
-            </div>
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <h3>Sobre o BZuk</h3>
+        <p class="muted">BZuk é uma linguagem criada para tornar o aprendizado de programação acessível, com sintaxe em português e comandos intuitivos. O projeto é pequeno e ágil: feito por uma única pessoa (15 anos) e em rápido desenvolvimento — feedback e colaboradores são bem-vindos no Discord.</p>
+      </div>
+      <div style="max-width:420px;min-width:240px">
+        <div class="card">
+          <h4 style="margin-bottom:8px">Fatos rápidos</h4>
+          <p class="muted" style="margin-bottom:10px">• Plataforma: Linux / Windows (desktop) — mobile em planejamento<br>• Versão atual: 1.7 Beta Alfa<br>• Desenvolvedor: 1 pessoa • 15 anos • 4 dias</p>
+          <div style="display:flex;gap:8px">
+            <a class="socials" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><span class="pill"><i class="fab fa-github"></i>&nbsp;GitHub</span></a>
+            <a class="socials" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><span class="pill"><i class="fab fa-discord"></i>&nbsp;Discord</span></a>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Download Section -->
-    <section class="download" id="download">
-        <div class="container">
-            <div class="section-title">
-                <h2>Comece a Programar em BZuk</h2>
-                <p>Experimente a primeira versão em Python - Em breve versão nativa em C++</p>
-            </div>
-            
-            <div class="version-badge">Versão 1.7 Beta (Python)</div>
-            
-            <p>Esta é a primeira versão interpretada em Python, perfeita para testar a linguagem e seus conceitos. A versão nativa em C++ está em desenvolvimento.</p>
-            
-            <div class="hero-buttons">
-                <a href="#" class="btn"><i class="fas fa-download"></i> Download Interpretador Python</a>
-                <a href="#" class="btn btn-outline">Documentação</a>
-                <a href="https://github.com/Emperordeath" class="btn btn-japan"><i class="fab fa-github"></i> GitHub</a>
-                <a href="https://discord.gg/A3aMaYaQjh" class="btn btn-brasil"><i class="fab fa-discord"></i> Discord</a>
-            </div>
-            
-            <div class="contact-info">
-                <p><i class="fas fa-envelope"></i> <a href="mailto:studioscripts2024@gmail.com">studioscripts2024@gmail.com</a></p>
-                <p><i class="fab fa-discord"></i> <a href="https://discord.gg/A3aMaYaQjh">https://discord.gg/A3aMaYaQjh</a></p>
-                <p><i class="fab fa-github"></i> <a href="https://github.com/Emperordeath">https://github.com/Emperordeath</a></p>
-            </div>
+  <!-- FEATURES -->
+  <section id="features" class="reveal">
+    <h3>Funcionalidades</h3>
+    <div class="cards" style="margin-top:18px">
+      <div class="card">
+        <h4>Sintaxe em Português</h4>
+        <p class="muted">Comandos como <code>impri()</code>, <code>ler=</code>, <code>se</code>, <code>repi-n</code> tornam a curva de aprendizado menor.</p>
+      </div>
+      <div class="card">
+        <h4>Variáveis & Constantes</h4>
+        <p class="muted">Suporte a <code>let</code> e <code>const</code> com proteção contra reatribuição de constantes.</p>
+      </div>
+      <div class="card">
+        <h4>Foco em Aprendizagem</h4>
+        <p class="muted">Primeira versão focada em legibilidade e facilidade (ideal para estudantes e iniciantes).</p>
+      </div>
+    </div>
+
+    <div style="margin-top:22px" class="reveal">
+      <h4>Recursos adicionais</h4>
+      <div class="features-list" style="margin-top:12px">
+        <div class="feat"><i class="fa fa-terminal"></i><div><strong>Entrada/saída</strong><div class="muted">impri(), ler, rp()</div></div></div>
+        <div class="feat"><i class="fa fa-check-circle"></i><div><strong>Controle</strong><div class="muted">se / senão, repi-n</div></div></div>
+        <div class="feat"><i class="fa fa-cogs"></i><div><strong>Fácil de estender</strong><div class="muted">Código do interpretador modular e comentado</div></div></div>
+        <div class="feat"><i class="fa fa-flag"></i><div><strong>Roadmap</strong><div class="muted">Python-like → C++-like (mais performática)</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERSIONS -->
+  <section id="versions" class="reveal">
+    <h3>Versões planejadas</h3>
+    <div class="versions" style="margin-top:16px">
+      <div class="vers-box">
+        <h4>Versão 1 — "Python-like" (ATUAL)</h4>
+        <p class="muted">Interpretador linha-a-linha, sintaxe simples e legível. Ideal para aprendizado e prototipagem. Mais lenta mas muito fácil de usar.</p>
+        <ul class="muted" style="margin-top:10px">
+          <li>• Lançamento inicial (em desenvolvimento)</li>
+          <li>• Código simples, foco em clareza</li>
+        </ul>
+      </div>
+      <div class="vers-box">
+        <h4>Versão 2 — "C++-like" (FUTURA)</h4>
+        <p class="muted">Mesma sintaxe visual, mas com backend compilado/otimizado para performance. Será desenvolvida após finalizar a primeira versão.</p>
+        <ul class="muted" style="margin-top:10px">
+          <li>• Melhor performance e consumo de memória</li>
+          <li>• Ideal para produção e scripts complexos</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAMPLE -->
+  <section id="example" class="reveal">
+    <h3>Exemplo prático (exemplo.bz)</h3>
+    <div style="margin-top:12px" class="code-slab">
+let nome = ler="Qual seu nome?"
+const idade = ler="Qual sua idade?", numero
+let status = "ativo"
+const pais = "Brasil"
+
+impri("nome, idade, status, pais")
+
+rp(cidade)
+impri("cidade")
+
+se idade MN 18,
+    impri("Você é maior de idade!")
+senão,
+    impri("Você é menor de 18!")
+
+repi-3,
+    impri("Loop rápido!")
+    </div>
+    <p class="muted" style="margin-top:10px">Esse exemplo demonstra entrada, impressão, condições e loop simples.</p>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="reveal">
+    <h3>Download</h3>
+    <div style="margin-top:12px" class="contact-row">
+      <div style="max-width:640px">
+        <p class="muted">A versão atual é para **Linux/PC** (Windows compatível). A versão para celular ainda não existe — estará “Em breve”.</p>
+        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="#" onclick="alert('Substitua este link pelo binário / instalador do seu repositório GitHub.');return false;">Download Linux / PC</a>
+          <button class="btn-ghost" disabled aria-disabled="true">Em breve: Mobile</button>
         </div>
-    </section>
+      </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>BZuk Language</h3>
-                    <p>Uma linguagem de programação brasileira moderna, rápida e intuitiva com sintaxe em português. 15 anos de desenvolvimento.</p>
-                    <div class="social-links">
-                        <a href="https://github.com/Emperordeath"><i class="fab fa-github"></i></a>
-                        <a href="https://discord.gg/A3aMa
-                        
+      <div style="min-width:220px">
+        <div class="card">
+          <h4>Como instalar (exemplo)</h4>
+          <p class="muted">Baixe o interpretador (arquivo .zip / .tar.gz), extraia e execute via terminal: <code class="muted">node bzuk.js exemplo.bz</code> (ou use o binário conforme instruções futuras).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="reveal">
+    <h3>Contato</h3>
+    <div style="margin-top:12px;display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+      <div style="min-width:280px">
+        <p class="muted">Contribuições, issues ou perguntas? Acesse o GitHub ou junte-se ao Discord.</p>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <a class="socials" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+          <a class="socials" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><i class="fab fa-discord"></i> Discord</a>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:220px">
+        <div class="card">
+          <h4>Informações</h4>
+          <p class="muted">Desenvolvedor: 1 pessoa • 15 anos<br>Tempo de desenvolvimento: 4 dias</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div style="margin-top:10px">© <span id="year"></span> BZuk • Interpretador Beta Alfa • Desenvolvido por 1 pessoa (15 anos). <span class="muted">Versão: 1.7 • Linux/PC</span></div>
+  </footer>
+
+</main>
+
+<script>
+  // set year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Simple reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting) e.target.classList.add('show');
+    }
+  }, {threshold: 0.12});
+  revealEls.forEach(el=>obs.observe(el));
+
+  // Smooth anchor scrolling for in-page nav
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', (ev)=>{
+      const href = a.getAttribute('href');
+      if(href.length>1){
+        ev.preventDefault();
+        const target = document.querySelector(href);
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  // Mobile menu fallback
+  // If small screen, show a minimal toggle
+  (function(){
+    const mq = window.matchMedia('(max-width:980px)');
+    const existing = document.querySelector('nav.menu');
+    if(mq.matches && existing){
+      // create toggle
+      const nav = existing;
+      const container = document.querySelector('.nav');
+      const toggle = document.createElement('button');
+      toggle.className = 'menu-toggle btn-ghost';
+      toggle.innerHTML = '<i class="fa fa-bars"></i>';
+      toggle.style.display = 'inline-flex';
+      toggle.style.alignItems = 'center';
+      toggle.style.gap = '8px';
+      toggle.onclick = ()=> {
+        if(nav.style.display === 'flex'){ nav.style.display = 'none';
+        } else { nav.style.display = 'flex'; nav.style.flexDirection = 'column'; nav.style.gap='10px'; nav.style.background='linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02))'; nav.style.padding='12px'; nav.style.borderRadius='12px'; }
+      };
+      container.appendChild(toggle);
+      // hide original menu initially
+      nav.style.display = 'none';
+    }
+  })();
+</script>
+</body>
+</html>
+
