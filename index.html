@@ -2,214 +2,263 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BZuk 1.7 — Linguagem Brasileira • Beta Alfa</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>BZuk — Interpretador • Beta Alfa</title>
 
-<!-- Fonts & Icons (CDN, opcionais mas padrão para visual melhor) -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
+<!-- Fonts + Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Roboto+Mono:wght@300;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-  /* ========== Theme variables ========== */
-  :root{
-    --bg:#081018;
-    --card:#0e1720;
-    --muted:#9aa4af;
-    --text:#e6eef6;
-    --accent-1:#2E8B57; /* verde Brasil */
-    --accent-2:#BC002D; /* vermelho japonês */
-    --accent-3:#FF9933; /* laranja */
-    --glass: rgba(255,255,255,0.03);
-    --glass-2: rgba(255,255,255,0.02);
-    --radius: 14px;
-    --maxw:1200px;
-  }
+/* ================= THEME & RESET ================= */
+:root{
+  --bg1:#02040a;
+  --bg2:#07121b;
+  --glass: rgba(255,255,255,0.03);
+  --muted:#9aa6b4;
+  --text:#eaf4ff;
+  --accent-a:#2E8B57; /* verde */
+  --accent-b:#BC002D; /* vermelho */
+  --accent-c:#FF9933; /* laranja */
+  --accent-d:#0066ff; /* azul para contrastes */
+  --card-blur: 8px;
+  --radius:16px;
+  --maxw:1200px;
+  --shadow: 0 30px 90px rgba(2,6,14,0.8);
+  --ease: cubic-bezier(.22,.95,.14,1);
+  --particle-color: rgba(255,255,255,0.06);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color:var(--text);
+  background: radial-gradient(900px 500px at 8% 12%, rgba(46,139,87,0.06), transparent),
+              radial-gradient(700px 400px at 92% 88%, rgba(188,0,45,0.05), transparent),
+              linear-gradient(180deg,var(--bg1),var(--bg2));
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust:100%;
+  overflow-x:hidden;
+}
 
-  /* ========== Reset ========== */
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(46,139,87,0.06), transparent),
-                radial-gradient(900px 500px at 90% 90%, rgba(188,0,45,0.05), transparent),
-                var(--bg);
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    line-height:1.5;
-    -webkit-tap-highlight-color: transparent;
-  }
+/* page canvas background full-screen */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:0.85}
 
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:28px;}
+/* container */
+.wrap{position:relative;z-index:10;max-width:var(--maxw);margin:0 auto;padding:28px 20px}
 
-  /* ========== Header ========== */
-  header{
-    position:fixed;left:0;right:0;top:12px;
-    z-index:60;backdrop-filter: blur(8px);
-  }
-  .nav{
-    max-width:var(--maxw);margin:0 auto;padding:12px 20px;
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-  }
-  .brand{
-    display:flex;gap:14px;align-items:center;
-  }
-  .logo{
-    width:48px;height:48px;border-radius:10px;
-    background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
-    display:flex;align-items:center;justify-content:center;font-weight:800;color:white;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-    font-family: "Montserrat";
-  }
-  .brand h1{font-size:1.05rem;margin:0;letter-spacing:0.4px}
-  .brand p{margin:0;font-size:0.75rem;color:var(--muted);font-weight:600}
+/* ================= HEADER ================= */
+.header{
+  position:fixed;left:0;right:0;top:12px;z-index:40;display:flex;justify-content:center;pointer-events:none;
+}
+.nav{
+  width:100%;max-width:var(--maxw);display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow:0 8px 30px rgba(0,0,0,0.6);backdrop-filter: blur(var(--card-blur));
+  border:1px solid rgba(255,255,255,0.03);pointer-events:auto;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;color:white;background:linear-gradient(135deg,var(--accent-a),var(--accent-b));
+  box-shadow:0 12px 40px rgba(0,0,0,0.6);
+}
+.brand h1{font-size:1.05rem;margin:0}
+.brand small{display:block;color:var(--muted);font-weight:600;font-size:0.78rem}
 
-  nav.menu{display:flex;gap:22px;align-items:center}
-  .menu a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px;border-radius:8px;transition:all .25s}
-  .menu a:hover{color:var(--text);background:var(--glass);transform:translateY(-3px);box-shadow:0 6px 20px rgba(2,8,18,0.6)}
+/* NAV LINKS with animated SVG underline */
+nav.menu{display:flex;gap:18px;align-items:center}
+.menu-link{position:relative;display:inline-flex;align-items:center;gap:8px;padding:6px 8px;color:var(--muted);text-decoration:none;font-weight:700;border-radius:8px;transition:transform .18s var(--ease)}
+.menu-link:hover{transform:translateY(-3px);color:var(--text)}
+.menu-link .underline{
+  position:absolute;left:0;right:0;bottom:-6px;height:4px;overflow:visible;pointer-events:none;
+}
+.menu-link svg{width:100%;height:8px;display:block;opacity:0.9}
 
-  .cta-group{display:flex;gap:10px;align-items:center}
-  .btn{
-    padding:10px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:700;
-    background:linear-gradient(135deg,var(--accent-3),#e07b22);color:#081018;
-    box-shadow:0 8px 26px rgba(224,123,34,0.12);transition:transform .18s,box-shadow .18s;
-  }
-  .btn:hover{transform:translateY(-4px)}
-  .btn-ghost{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:8px 12px;border-radius:10px}
+/* CTA group */
+.controls{display:flex;gap:10px;align-items:center}
+.btn{
+  position:relative;overflow:hidden;padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:800;
+  background:linear-gradient(135deg,var(--accent-c),#e07b22);color:#061018;box-shadow:0 12px 40px rgba(224,123,34,0.12);
+  transition:transform .18s var(--ease);
+}
+.btn:active{transform:translateY(-1px) scale(.998)}
+.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 12px;border-radius:10px;font-weight:700}
 
-  /* ========== Hero ========== */
-  .hero{
-    min-height:78vh;display:grid;align-items:center;gap:28px;padding-top:82px;
-  }
-  .hero-inner{display:flex;gap:36px;align-items:center;justify-content:space-between}
-  .hero-left{flex:1;max-width:680px}
-  .badge{
-    display:inline-block;padding:8px 12px;border-radius:999px;font-weight:700;font-size:0.85rem;
-    background:linear-gradient(90deg,var(--accent-2),var(--accent-1));color:white;box-shadow:0 8px 30px rgba(0,0,0,0.45);
-  }
-  h2.title{font-size:2.8rem;margin:18px 0 8px;line-height:1.02}
-  p.lead{color:var(--muted);font-size:1.05rem;margin-bottom:22px}
+/* discord-like button (polished) */
+.btn-discord{
+  background:linear-gradient(135deg,#7289da 0%, #6a7bd2 40%, #3c5fc3 100%);
+  color:white;padding:10px 12px;border-radius:12px;border:none;font-weight:800;display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 12px 40px rgba(66, 88, 255, 0.12);
+  transition:transform .22s var(--ease), box-shadow .22s var(--ease);
+}
+.btn-discord:hover{transform:translateY(-5px);box-shadow:0 28px 90px rgba(66,88,255,0.24)}
+.btn-discord .discord-lines{display:inline-block;height:2px;background:linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));width:44px;border-radius:2px}
 
-  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-  .pill{display:inline-flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--glass);border:1px solid var(--glass-2);font-weight:700;color:var(--text);}
+/* ================= HERO (rich) ================= */
+.hero{min-height:86vh;display:flex;align-items:center;padding-top:94px}
+.hero-grid{display:grid;grid-template-columns:1fr 480px;gap:36px;align-items:center;max-width:var(--maxw);margin:0 auto;width:100%}
+.hero-left{}
+.badge{
+  display:inline-block;padding:8px 12px;border-radius:999px;font-weight:800;background:linear-gradient(90deg,var(--accent-b),var(--accent-a));color:white;box-shadow:0 14px 50px rgba(0,0,0,0.55);
+  transform-origin:center center;animation:badgePop .9s cubic-bezier(.36,.9,.2,1) 0.2s both;
+}
+@keyframes badgePop{0%{transform:scale(.85);opacity:0}100%{transform:scale(1);opacity:1}}
+h2.title{font-size:3rem;margin:18px 0 12px;line-height:1.04}
+.title .glow{background:linear-gradient(90deg,var(--accent-a),var(--accent-b),var(--accent-c));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradShift 6s linear infinite}
+@keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+p.lead{color:var(--muted);font-size:1.02rem;margin-bottom:18px}
 
-  /* preview card */
-  .preview{
-    width:420px;max-width:42%;min-width:280px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,0.03);
-    box-shadow: 0 30px 80px rgba(2,8,20,0.6);
-  }
-  .term-top{display:flex;gap:10px;align-items:center;margin-bottom:14px}
-  .dots{display:flex;gap:6px}
-  .dot{width:11px;height:11px;border-radius:50%}
-  .d-red{background:#ff605c}.d-yellow{background:#ffbd2e}.d-green{background:#28ca42}
-  pre.code{background:transparent;color:var(--text);font-family:'Roboto Mono', monospace;font-size:0.9rem;white-space:pre-wrap;margin:0;line-height:1.5}
+/* ctas */
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.pill{background:rgba(255,255,255,0.02);padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);font-weight:800}
 
-  /* ========== Sections ========== */
-  section{padding:48px 0;border-radius:12px}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(3,8,18,0.6)}
-  .card h4{margin:0 0 8px}
-  .card p{color:var(--muted);margin:0;font-size:0.95rem}
+/* preview (heavy, animated) */
+.preview{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:18px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.term-top{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.dots{display:flex;gap:8px}
+.dot{width:11px;height:11px;border-radius:50%}
+.r{background:#ff605c}.y{background:#ffbd2e}.g{background:#28ca42}
+pre.typed{margin:0;color:#BFE9FF;font-family:'Roboto Mono',monospace;font-size:0.95rem;white-space:pre-wrap;line-height:1.45;min-height:220px}
 
-  /* versions style */
-  .versions{display:flex;gap:18px;flex-wrap:wrap}
-  .vers-box{flex:1;min-width:260px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:20px;border-radius:12px;border-left:4px solid var(--glass-2)}
+/* animated footer wave */
+.wave{
+  display:block;width:100%;height:64px;transform:translateY(8px);
+}
 
-  /* features list */
-  .features-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  .feat{display:flex;gap:12px;align-items:flex-start}
-  .feat i{font-size:20px;color:var(--accent-1);min-width:28px}
+/* ================= SECTIONS, CARDS ================= */
+section{padding:64px 0;border-radius:14px}
+.section-title{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);transition:transform .5s var(--ease), box-shadow .5s var(--ease);box-shadow:0 18px 50px rgba(2,8,18,0.5)}
+.card:hover{transform:translateY(-16px) rotateX(4deg);box-shadow:0 40px 120px rgba(2,8,18,0.7)}
+.card h4{margin:0 0 10px}
+.muted{color:var(--muted)}
 
-  /* example code style */
-  .code-slab{background:#07101a;border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);font-family:'Roboto Mono',monospace;color:#cfe9ff;font-size:0.95rem;white-space:pre-wrap}
+/* tilt attrib */
+[data-tilt]{transform-style:preserve-3d;will-change:transform;transition:transform 450ms var(--ease)}
 
-  /* contact / footer */
-  .contact-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-  .socials a{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-2);color:var(--text);text-decoration:none;font-weight:700}
-  footer{margin-top:28px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.02);color:var(--muted);font-size:0.95rem;text-align:center;padding-bottom:36px}
+/* code slab */
+.code-slab{background:linear-gradient(180deg,#03111a,#07161f);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);font-family:'Roboto Mono',monospace;color:#cfe9ff;font-size:0.95rem;white-space:pre-wrap}
 
-  /* responsive */
-  @media (max-width:980px){
-    .hero-inner{flex-direction:column-reverse;align-items:center}
-    .preview{max-width:92%}
-    .cards{grid-template-columns:repeat(2,1fr)}
-    nav.menu{display:none}
-  }
-  @media (max-width:600px){
-    .cards{grid-template-columns:1fr}
-    .features-list{grid-template-columns:1fr}
-    .brand p{display:none}
-    .title{font-size:1.9rem}
-    header .nav{padding:8px 12px}
-    .preview{width:96%}
-    .hero{padding-top:96px}
-    .menu-toggle{display:block}
-  }
+/* contact/social */
+.socials{display:flex;gap:12px;flex-wrap:wrap}
+.social{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03);text-decoration:none;color:var(--text);font-weight:800}
 
-  /* small helper animations */
-  .reveal{opacity:0;transform:translateY(10px);transition:all .6s cubic-bezier(.2,.9,.2,1)}
-  .reveal.show{opacity:1;transform:none}
-  .muted{color:var(--muted)}
+/* footer */
+footer{padding:28px 0;color:var(--muted);text-align:center;border-top:1px solid rgba(255,255,255,0.02);margin-top:18px}
+
+/* responsive */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:18px;padding:12px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  nav.menu{display:none}
+}
+@media (max-width:640px){
+  .cards{grid-template-columns:1fr}
+  h2.title{font-size:1.7rem}
+  .preview{width:100%}
+  .hero{padding-top:106px}
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="nav wrap" role="navigation" aria-label="Main Navigation">
-    <div class="brand" aria-hidden="false">
+<!-- PARTICLE CANVAS BACKGROUND -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<!-- NAV / HEADER -->
+<header class="header">
+  <div class="nav wrap" role="navigation" aria-label="Main nav">
+    <div class="brand">
       <div class="logo">BZ</div>
       <div>
-        <h1>BZuk <span class="muted" style="font-weight:600;font-size:0.92rem">1.7 • Beta Alfa</span></h1>
-        <p class="muted">Feito por 1 pessoa • 15 anos • 4 dias</p>
+        <h1>BZuk <small style="font-weight:700;color:var(--muted);font-size:0.86rem">Beta Alfa</small></h1>
+        <small class="muted">Desenvolvido por 1 pessoa • em desenvolvimento há 4 dias</small>
       </div>
     </div>
 
-    <nav class="menu" aria-label="menu">
-      <a href="#about">Sobre</a>
-      <a href="#features">Funcionalidades</a>
-      <a href="#versions">Versões</a>
-      <a href="#example">Exemplo</a>
-      <a href="#download">Download</a>
+    <nav class="menu" aria-label="In-page">
+      <!-- each .menu-link has inline SVG underline that animates on hover via stroke-dashoffset -->
+      <a class="menu-link" href="#about">Sobre
+        <span class="underline" aria-hidden="true">
+          <svg viewBox="0 0 100 8" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4 C30 10, 70 -2, 98 4" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0%" stop-color="#fff" stop-opacity="0.06"/>
+                <stop offset="50%" stop-color="#fff" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#fff" stop-opacity="0.06"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+      </a>
+      <a class="menu-link" href="#features">Funcionalidades
+        <span class="underline" aria-hidden="true">
+          <svg viewBox="0 0 100 8" preserveAspectRatio="none"><path d="M2 4 C30 10, 70 -2, 98 4" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linecap="round"></path></svg>
+        </span>
+      </a>
+      <a class="menu-link" href="#versions">Versões
+        <span class="underline" aria-hidden="true"><svg viewBox="0 0 100 8" preserveAspectRatio="none"><path d="M2 4 C30 10, 70 -2, 98 4" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linecap="round"></path></svg></span>
+      </a>
+      <a class="menu-link" href="#example">Exemplo
+        <span class="underline" aria-hidden="true"><svg viewBox="0 0 100 8" preserveAspectRatio="none"><path d="M2 4 C30 10, 70 -2, 98 4" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linecap="round"></path></svg></span>
+      </a>
+      <a class="menu-link" href="#download">Download
+        <span class="underline" aria-hidden="true"><svg viewBox="0 0 100 8" preserveAspectRatio="none"><path d="M2 4 C30 10, 70 -2, 98 4" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linecap="round"></path></svg></span>
+      </a>
     </nav>
 
-    <div class="cta-group">
-      <a class="btn-ghost" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;GitHub</a>
-      <a class="btn" href="#download">Download</a>
+    <div class="controls">
+      <a class="ghost" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;GitHub</a>
+      <a class="btn-discord" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener">
+        <i class="fab fa-discord"></i><span style="font-weight:800">Community</span>
+        <span class="discord-lines" aria-hidden="true" style="margin-left:8px"></span>
+      </a>
+      <button class="btn" id="menu-toggle" aria-expanded="false" title="Menu mobile"><i class="fa fa-bars" style="font-size:14px"></i></button>
     </div>
   </div>
 </header>
 
-<main class="wrap">
+<!-- MAIN CONTENT -->
+<main class="wrap" id="top" role="main" aria-label="Conteúdo principal">
 
   <!-- HERO -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-inner">
-      <div class="hero-left reveal" id="hero-left">
-        <span class="badge">Desenvolvido por 1 pessoa • 15 anos • 4 dias</span>
-        <h2 class="title">BZuk — a linguagem brasileira para aprender rápido e criar com estilo</h2>
-        <p class="lead">Interpretador Beta Alfa (Linux/PC). Primeiro lançamento: versão parecida com Python (fácil). Futuro: versão com performance C++-like. Projeto pequeno, humano e em rápida evolução.</p>
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="badge">Lançamento Beta • Experimente no desktop</div>
+        <h2 id="hero-title" class="title"><span class="glow">BZuk</span> — linguagem brasileira para prototipagem rápida</h2>
+        <p class="lead">Interpretador Beta Alfa disponível para Linux/PC. Versão inicial com sintaxe amigável; depois virá versão otimizada (C++-like). Visite o GitHub para releases e participe no Discord.</p>
 
-        <div class="hero-actions">
-          <a class="btn" href="#download">Download Linux / PC</a>
-          <button class="btn-ghost" disabled aria-disabled="true"><i class="fa fa-mobile-alt"></i>&nbsp;Em breve: Celular</button>
-          <a class="pill" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><i class="fab fa-discord"></i> Discord</a>
+        <div class="hero-ctas" style="margin-top:16px">
+          <a class="btn" href="#download" id="download-btn">Download Linux / PC</a>
+          <button class="ghost" disabled aria-disabled="true"><i class="fa fa-mobile-alt"></i>&nbsp;Mobile — em breve</button>
+          <a class="btn-discord" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><i class="fab fa-discord"></i>&nbsp;Entrar no Discord</a>
         </div>
 
-        <div style="margin-top:20px;color:var(--muted);font-size:0.95rem">
-          <strong style="color:var(--text)">Roadmap:</strong> <span class="muted">1) Python-like (agora) → 2) C++-like (após finalização)</span>
-        </div>
+        <div style="margin-top:16px;color:var(--muted);font-weight:700">Roadmap: <span class="muted">1) Python-like (atual) → 2) C++-like (após finalização)</span></div>
       </div>
 
-      <aside class="preview reveal" id="preview-aside" aria-hidden="false">
+      <aside class="preview" aria-hidden="false">
         <div class="term-top">
-          <div class="dots"><span class="dot d-red"></span><span class="dot d-yellow"></span><span class="dot d-green"></span></div>
-          <div style="margin-left:auto;color:var(--muted);font-weight:700;font-size:0.85rem">Terminal • BZuk</div>
+          <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+          <div style="margin-left:auto;font-weight:700;color:var(--muted)">Terminal • BZuk</div>
         </div>
-
-        <pre class="code" aria-hidden="false">
-// exemplo.bz — demo
+        <pre class="typed" id="typed-content">// exemplo.bz — demo
 let nome = ler="Qual seu nome?"
 const idade = ler="Qual sua idade?", numero
 let status = "ativo"
@@ -226,88 +275,45 @@ senão,
     impri("Você é menor de 18!")
 
 repi-3,
-    impri("Loop rápido!")
-        </pre>
+    impri("Loop rápido!")</pre>
       </aside>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="reveal">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap">
-      <div style="flex:1;min-width:260px">
-        <h3>Sobre o BZuk</h3>
-        <p class="muted">BZuk é uma linguagem criada para tornar o aprendizado de programação acessível, com sintaxe em português e comandos intuitivos. O projeto é pequeno e ágil: feito por uma única pessoa (15 anos) e em rápido desenvolvimento — feedback e colaboradores são bem-vindos no Discord.</p>
+  <section id="about" aria-labelledby="about-title">
+    <div class="section-title"><h3 id="about-title">Sobre o BZuk</h3></div>
+    <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-top:14px">
+      <div style="flex:1;min-width:240px">
+        <p class="muted">BZuk é uma linguagem com sintaxe em português, pensada para tornar a programação acessível. A primeira versão é interpretada, leve e focada em aprendizagem; a versão otimizada virá depois.</p>
       </div>
-      <div style="max-width:420px;min-width:240px">
-        <div class="card">
-          <h4 style="margin-bottom:8px">Fatos rápidos</h4>
-          <p class="muted" style="margin-bottom:10px">• Plataforma: Linux / Windows (desktop) — mobile em planejamento<br>• Versão atual: 1.7 Beta Alfa<br>• Desenvolvedor: 1 pessoa • 15 anos • 4 dias</p>
-          <div style="display:flex;gap:8px">
-            <a class="socials" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><span class="pill"><i class="fab fa-github"></i>&nbsp;GitHub</span></a>
-            <a class="socials" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><span class="pill"><i class="fab fa-discord"></i>&nbsp;Discord</span></a>
-          </div>
-        </div>
-      </div>
+      <div style="min-width:260px"><div class="card"><h4>Resumo</h4><p class="muted">• Plataforma: Linux / Windows (desktop)<br>• Desenvolvido por 1 pessoa • em desenvolvimento há 4 dias</p></div></div>
     </div>
   </section>
 
   <!-- FEATURES -->
-  <section id="features" class="reveal">
-    <h3>Funcionalidades</h3>
-    <div class="cards" style="margin-top:18px">
-      <div class="card">
-        <h4>Sintaxe em Português</h4>
-        <p class="muted">Comandos como <code>impri()</code>, <code>ler=</code>, <code>se</code>, <code>repi-n</code> tornam a curva de aprendizado menor.</p>
-      </div>
-      <div class="card">
-        <h4>Variáveis & Constantes</h4>
-        <p class="muted">Suporte a <code>let</code> e <code>const</code> com proteção contra reatribuição de constantes.</p>
-      </div>
-      <div class="card">
-        <h4>Foco em Aprendizagem</h4>
-        <p class="muted">Primeira versão focada em legibilidade e facilidade (ideal para estudantes e iniciantes).</p>
-      </div>
-    </div>
-
-    <div style="margin-top:22px" class="reveal">
-      <h4>Recursos adicionais</h4>
-      <div class="features-list" style="margin-top:12px">
-        <div class="feat"><i class="fa fa-terminal"></i><div><strong>Entrada/saída</strong><div class="muted">impri(), ler, rp()</div></div></div>
-        <div class="feat"><i class="fa fa-check-circle"></i><div><strong>Controle</strong><div class="muted">se / senão, repi-n</div></div></div>
-        <div class="feat"><i class="fa fa-cogs"></i><div><strong>Fácil de estender</strong><div class="muted">Código do interpretador modular e comentado</div></div></div>
-        <div class="feat"><i class="fa fa-flag"></i><div><strong>Roadmap</strong><div class="muted">Python-like → C++-like (mais performática)</div></div></div>
-      </div>
+  <section id="features" aria-labelledby="features-title">
+    <div class="section-title"><h3 id="features-title">Funcionalidades</h3></div>
+    <div class="cards">
+      <div class="card" data-tilt><h4>Sintaxe em Português</h4><p class="muted">Impri, ler, se, repi-n — comandos simples e diretos.</p></div>
+      <div class="card" data-tilt><h4>Variáveis & Constantes</h4><p class="muted">let / const com proteção de reatribuição.</p></div>
+      <div class="card" data-tilt><h4>Modularidade</h4><p class="muted">Fácil de estender com novas funções e bibliotecas.</p></div>
     </div>
   </section>
 
   <!-- VERSIONS -->
-  <section id="versions" class="reveal">
-    <h3>Versões planejadas</h3>
-    <div class="versions" style="margin-top:16px">
-      <div class="vers-box">
-        <h4>Versão 1 — "Python-like" (ATUAL)</h4>
-        <p class="muted">Interpretador linha-a-linha, sintaxe simples e legível. Ideal para aprendizado e prototipagem. Mais lenta mas muito fácil de usar.</p>
-        <ul class="muted" style="margin-top:10px">
-          <li>• Lançamento inicial (em desenvolvimento)</li>
-          <li>• Código simples, foco em clareza</li>
-        </ul>
-      </div>
-      <div class="vers-box">
-        <h4>Versão 2 — "C++-like" (FUTURA)</h4>
-        <p class="muted">Mesma sintaxe visual, mas com backend compilado/otimizado para performance. Será desenvolvida após finalizar a primeira versão.</p>
-        <ul class="muted" style="margin-top:10px">
-          <li>• Melhor performance e consumo de memória</li>
-          <li>• Ideal para produção e scripts complexos</li>
-        </ul>
-      </div>
+  <section id="versions" aria-labelledby="versions-title">
+    <div class="section-title"><h3 id="versions-title">Versões planejadas</h3></div>
+    <div class="versions" style="margin-top:12px">
+      <div class="vers"><h4>Versão 1 — Python-like (ATUAL)</h4><p class="muted">Interpretador linha-a-linha, foco em clareza e aprendizado.</p></div>
+      <div class="vers"><h4>Versão 2 — C++-like (FUTURA)</h4><p class="muted">Mesma sintaxe visual com backend otimizado para performance.</p></div>
     </div>
   </section>
 
   <!-- EXAMPLE -->
-  <section id="example" class="reveal">
-    <h3>Exemplo prático (exemplo.bz)</h3>
-    <div style="margin-top:12px" class="code-slab">
+  <section id="example" aria-labelledby="example-title">
+    <div class="section-title"><h3 id="example-title">Exemplo prático</h3></div>
+    <div class="code-slab" id="code-slab" style="margin-top:12px">
 let nome = ler="Qual seu nome?"
 const idade = ler="Qual sua idade?", numero
 let status = "ativo"
@@ -324,109 +330,303 @@ senão,
     impri("Você é menor de 18!")
 
 repi-3,
-    impri("Loop rápido!")
-    </div>
-    <p class="muted" style="margin-top:10px">Esse exemplo demonstra entrada, impressão, condições e loop simples.</p>
+    impri("Loop rápido!")</div>
   </section>
 
   <!-- DOWNLOAD -->
-  <section id="download" class="reveal">
-    <h3>Download</h3>
-    <div style="margin-top:12px" class="contact-row">
-      <div style="max-width:640px">
-        <p class="muted">A versão atual é para **Linux/PC** (Windows compatível). A versão para celular ainda não existe — estará “Em breve”.</p>
-        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn" href="#" onclick="alert('Substitua este link pelo binário / instalador do seu repositório GitHub.');return false;">Download Linux / PC</a>
-          <button class="btn-ghost" disabled aria-disabled="true">Em breve: Mobile</button>
+  <section id="download" aria-labelledby="download-title">
+    <div class="section-title"><h3 id="download-title">Download</h3></div>
+    <div style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+      <div style="flex:1;min-width:240px">
+        <p class="muted">Disponível apenas para <strong>Linux/PC</strong>. Clique para baixar ou visite o GitHub para releases (recomendo criar um Release no GitHub com binários)." </p>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <a class="btn" href="#" id="dl-linux" onclick="alert('Substitua por link do release GitHub');return false;">Download Linux / PC</a>
+          <button class="ghost" disabled aria-disabled="true">Em breve: Mobile</button>
         </div>
       </div>
-
-      <div style="min-width:220px">
-        <div class="card">
-          <h4>Como instalar (exemplo)</h4>
-          <p class="muted">Baixe o interpretador (arquivo .zip / .tar.gz), extraia e execute via terminal: <code class="muted">node bzuk.js exemplo.bz</code> (ou use o binário conforme instruções futuras).</p>
-        </div>
-      </div>
+      <div style="min-width:220px"><div class="card"><h4>Instalação (exemplo)</h4><p class="muted">Baixe e execute: <code class="muted">node bzuk.js exemplo.bz</code>. Instruções completas no repositório.</p></div></div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="reveal">
-    <h3>Contato</h3>
-    <div style="margin-top:12px;display:flex;gap:18px;align-items:center;flex-wrap:wrap">
-      <div style="min-width:280px">
-        <p class="muted">Contribuições, issues ou perguntas? Acesse o GitHub ou junte-se ao Discord.</p>
-        <div style="display:flex;gap:10px;margin-top:10px">
-          <a class="socials" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
-          <a class="socials" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><i class="fab fa-discord"></i> Discord</a>
+  <section id="contact" aria-labelledby="contact-title">
+    <div class="section-title"><h3 id="contact-title">Contato</h3></div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:12px">
+      <div style="min-width:240px">
+        <p class="muted">Contribua pelo GitHub ou participe do Discord para chat e suporte.</p>
+        <div class="socials" style="margin-top:10px">
+          <a class="social" href="https://github.com/Emperordeath" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+          <a class="social" href="https://discord.gg/A3aMaYaQjh" target="_blank" rel="noopener"><i class="fab fa-discord"></i> Discord</a>
         </div>
       </div>
-
-      <div style="flex:1;min-width:220px">
-        <div class="card">
-          <h4>Informações</h4>
-          <p class="muted">Desenvolvedor: 1 pessoa • 15 anos<br>Tempo de desenvolvimento: 4 dias</p>
-        </div>
-      </div>
+      <div style="min-width:220px"><div class="card"><h4>Projeto</h4><p class="muted">Desenvolvido por 1 pessoa • em desenvolvimento há 4 dias • Versão: 1.7 Beta Alfa</p></div></div>
     </div>
   </section>
 
-  <footer>
-    <div style="margin-top:10px">© <span id="year"></span> BZuk • Interpretador Beta Alfa • Desenvolvido por 1 pessoa (15 anos). <span class="muted">Versão: 1.7 • Linux/PC</span></div>
-  </footer>
-
+  <footer><div>© <span id="year"></span> BZuk — Interpretador Beta Alfa • Linux/PC</div></footer>
 </main>
 
+<!-- ================= SCRIPTS: particles, typing, tilt, underline anim, menu, ripple ================= -->
 <script>
-  // set year
-  document.getElementById('year').textContent = new Date().getFullYear();
+/* utility */
+const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Simple reveal on scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries)=>{
-    for(const e of entries){
-      if(e.isIntersecting) e.target.classList.add('show');
+/* SET YEAR */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ================= PARTICLES CANVAS =================
+   Lightweight particle system with lines between near particles.
+   Disabled or reduced on low-memory / mobile to keep things usable.
+*/
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = innerWidth;
+  let H = canvas.height = innerHeight;
+
+  // device heuristics
+  const deviceMemory = navigator.deviceMemory || 4;
+  const maxParticles = deviceMemory < 2 ? 30 : (innerWidth < 700 ? 50 : 110);
+  const density = Math.max(20, Math.min(maxParticles, Math.floor(maxParticles * (innerWidth / 1400))));
+  let particles = [];
+
+  function rand(min,max){return Math.random()*(max-min)+min}
+
+  function resize(){
+    W = canvas.width = innerWidth;
+    H = canvas.height = innerHeight;
+    // adapt count
+    particles = [];
+    for(let i=0;i<density;i++) particles.push(create())
+  }
+  window.addEventListener('resize', resize);
+
+  function create(){
+    return {
+      x: rand(0,W),
+      y: rand(0,H),
+      vx: rand(-0.3,0.3),
+      vy: rand(-0.3,0.3),
+      r: rand(0.6,1.6),
+      alpha: rand(0.08,0.25)
     }
-  }, {threshold: 0.12});
-  revealEls.forEach(el=>obs.observe(el));
+  }
+  if(!prefersReduced){ for(let i=0;i<density;i++) particles.push(create()) }
 
-  // Smooth anchor scrolling for in-page nav
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', (ev)=>{
-      const href = a.getAttribute('href');
-      if(href.length>1){
-        ev.preventDefault();
-        const target = document.querySelector(href);
-        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // subtle gradient overlay
+    const g = ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0, 'rgba(10,16,24,0.02)');
+    g.addColorStop(1, 'rgba(2,6,12,0.06)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,W,H);
+
+    // draw particles
+    for(let i=0;i<particles.length;i++){
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x < -10) p.x = W + 10;
+      if(p.x > W+10) p.x = -10;
+      if(p.y < -10) p.y = H + 10;
+      if(p.y > H+10) p.y = -10;
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    // lines between close particles
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        let a = particles[i], b = particles[j];
+        let dx = a.x - b.x, dy = a.y - b.y;
+        let d = Math.sqrt(dx*dx+dy*dy);
+        if(d < 120){
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(180,210,255,${(0.12*(1 - d/120))})`;
+          ctx.lineWidth = 0.8;
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
       }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  // only run heavy animation if not reduced-motion and enough pixels
+  if(!prefersReduced){
+    draw();
+    // responsive initial size
+    resize();
+  } else {
+    ctx.clearRect(0,0,W,H);
+    canvas.style.display = 'none';
+  }
+})();
+
+/* ================= TYPING EFFECT (improved) =================
+   Typing with line-aware pauses and cursor.
+*/
+(function(){
+  const el = document.getElementById('typed-content');
+  if(!el) return;
+  const raw = el.textContent.trim();
+  el.textContent = '';
+  let i=0, cursor=true;
+  function step(){
+    if(i<=raw.length){
+      el.textContent = raw.slice(0,i) + (cursor? '▌':'');
+      i++;
+      // slower for newlines and punctuation
+      let delay = 14 + Math.random()*8;
+      const ch = raw[i];
+      if(ch === '\n') delay = 70;
+      if(ch === ',' || ch === ';') delay += 30;
+      if(ch === '.') delay += 60;
+      setTimeout(step, delay);
+    } else {
+      // end — keep cursor blinking
+      setInterval(()=>{ cursor = !cursor; el.textContent = raw + (cursor? '▌':''); }, 500);
+    }
+  }
+  setTimeout(step, 700);
+})();
+
+/* ================= NAV UNDERLINE ANIMATION =================
+   Animate stroke-dashoffset when hovering links
+*/
+(function(){
+  document.querySelectorAll('.menu-link').forEach(link=>{
+    link.addEventListener('mouseenter', ()=>{
+      const svg = link.querySelector('svg path');
+      if(!svg) return;
+      const length = svg.getTotalLength();
+      svg.style.strokeDasharray = length;
+      svg.style.strokeDashoffset = length;
+      svg.style.transition = 'stroke-dashoffset .55s cubic-bezier(.2,.9,.2,1), opacity .4s';
+      requestAnimationFrame(()=> svg.style.strokeDashoffset = '0');
+    });
+    link.addEventListener('mouseleave', ()=>{
+      const svg = link.querySelector('svg path');
+      if(!svg) return;
+      const length = svg.getTotalLength();
+      svg.style.transition = 'stroke-dashoffset .45s cubic-bezier(.4,.2,.1,1)';
+      svg.style.strokeDashoffset = length;
+    });
+  })
+})();
+
+/* ================= TILT EFFECT (pointer) ================= */
+(function(){
+  const els = document.querySelectorAll('[data-tilt]');
+  els.forEach(el=>{
+    el.addEventListener('pointermove', (ev)=>{
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width/2;
+      const cy = r.top + r.height/2;
+      const dx = (ev.clientX - cx) / (r.width/2);
+      const dy = (ev.clientY - cy) / (r.height/2);
+      const rx = (dy * 8).toFixed(2);
+      const ry = (dx * -8).toFixed(2);
+      el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+      el.style.boxShadow = '0 40px 120px rgba(0,0,0,0.6)';
+    });
+    el.addEventListener('pointerleave', ()=> { el.style.transform = 'none'; el.style.boxShadow = ''; });
+  });
+})();
+
+/* ================= MOBILE MENU ================= */
+(function(){
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.querySelector('nav.menu');
+  toggle.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const open = menu.style.display === 'flex';
+    if(open){
+      menu.style.display = 'none';
+      toggle.setAttribute('aria-expanded','false');
+    } else {
+      menu.style.display = 'flex';
+      menu.style.flexDirection = 'column';
+      menu.style.gap = '10px';
+      menu.style.padding = '12px';
+      menu.style.borderRadius = '12px';
+      menu.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02))';
+      toggle.setAttribute('aria-expanded','true');
+      setTimeout(()=> document.addEventListener('click', outside));
+    }
+    function outside(ev){
+      if(!menu.contains(ev.target) && !toggle.contains(ev.target)){
+        menu.style.display = 'none';
+        toggle.setAttribute('aria-expanded','false');
+        document.removeEventListener('click', outside);
+      }
+    }
+  });
+})();
+
+/* ================= BUTTON RIPPLE ================= */
+(function(){
+  document.querySelectorAll('.btn, .btn-discord').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      const rect = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      const size = Math.max(rect.width, rect.height)*1.4;
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.position = 'absolute';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top  = (e.clientY - rect.top  - size/2) + 'px';
+      ripple.style.background = 'rgba(255,255,255,0.06)';
+      ripple.style.borderRadius = '50%';
+      ripple.style.transform = 'scale(0)';
+      ripple.style.transition = 'transform .6s var(--ease), opacity .6s var(--ease)';
+      ripple.style.pointerEvents = 'none';
+      ripple.style.zIndex = 30;
+      this.style.position = 'relative';
+      this.appendChild(ripple);
+      requestAnimationFrame(()=> ripple.style.transform = 'scale(1)');
+      setTimeout(()=> ripple.style.opacity = '0', 300);
+      setTimeout(()=> { try{ this.removeChild(ripple); } catch(e){} }, 900);
     });
   });
+})();
 
-  // Mobile menu fallback
-  // If small screen, show a minimal toggle
-  (function(){
-    const mq = window.matchMedia('(max-width:980px)');
-    const existing = document.querySelector('nav.menu');
-    if(mq.matches && existing){
-      // create toggle
-      const nav = existing;
-      const container = document.querySelector('.nav');
-      const toggle = document.createElement('button');
-      toggle.className = 'menu-toggle btn-ghost';
-      toggle.innerHTML = '<i class="fa fa-bars"></i>';
-      toggle.style.display = 'inline-flex';
-      toggle.style.alignItems = 'center';
-      toggle.style.gap = '8px';
-      toggle.onclick = ()=> {
-        if(nav.style.display === 'flex'){ nav.style.display = 'none';
-        } else { nav.style.display = 'flex'; nav.style.flexDirection = 'column'; nav.style.gap='10px'; nav.style.background='linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02))'; nav.style.padding='12px'; nav.style.borderRadius='12px'; }
-      };
-      container.appendChild(toggle);
-      // hide original menu initially
-      nav.style.display = 'none';
-    }
-  })();
+/* ================= REVEAL ON SCROLL ================= */
+(function(){
+  const items = document.querySelectorAll('section, .card, .preview, .code-slab');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        en.target.style.transition = 'opacity .8s var(--ease), transform .8s var(--ease)';
+        en.target.style.opacity = 1;
+        en.target.style.transform = 'none';
+        obs.unobserve(en.target);
+      }
+    });
+  }, {threshold:0.12});
+  items.forEach(it=>{
+    it.style.opacity = 0;
+    it.style.transform = 'translateY(14px)';
+    obs.observe(it);
+  });
+})();
+
+/* Accessibility: disable heavy features on low power / reduced motion */
+(function(){
+  if(prefersReduced){
+    // stop particles - already checked; just remove canvas
+    const c = document.getElementById('bg-canvas'); if(c) c.style.display='none';
+    // disable pointer transforms
+    document.querySelectorAll('[data-tilt]').forEach(e=>e.style.transition='none');
+  }
+})();
 </script>
+
 </body>
 </html>
 
