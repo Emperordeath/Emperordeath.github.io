@@ -6,8 +6,9 @@
     <title>BZuk 1.7 - Linguagem de Programação Brasileira</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Variáveis de cores e estilos - Tema Brasil/Japão */
+        /* Variáveis de cores e estilos - Tema Brasil/Japão Dark */
         :root {
             --primary: #2E8B57; /* Verde Brasil */
             --primary-dark: #1f6b44;
@@ -15,12 +16,13 @@
             --secondary-dark: #e07b22;
             --accent: #3D5A80; /* Azul tecnológico */
             --japan-red: #BC002D; /* Vermelho japonês */
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --text: #333;
-            --code-bg: #2d2d2d;
+            --brasil-blue: #002776; /* Azul do Brasil */
+            --brasil-yellow: #FEDF00; /* Amarelo do Brasil */
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-border: #333;
+            --text-light: #f0f0f0;
+            --text-muted: #aaa;
         }
         
         /* Reset e estilos base */
@@ -31,11 +33,14 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
-            background-color: #f5f5f5;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(46, 139, 87, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(188, 0, 45, 0.1) 0%, transparent 20%);
         }
         
         a {
@@ -56,20 +61,38 @@
         
         .btn {
             display: inline-block;
-            padding: 12px 28px;
+            padding: 14px 32px;
             background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
             color: white;
-            border-radius: 4px;
+            border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 153, 51, 0.3);
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 153, 51, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4);
         }
         
         .btn-outline {
@@ -90,50 +113,62 @@
         }
         
         .btn-japan:hover {
-            box-shadow: 0 6px 20px rgba(188, 0, 45, 0.4);
+            box-shadow: 0 8px 25px rgba(188, 0, 45, 0.4);
+        }
+        
+        .btn-brasil {
+            background: linear-gradient(135deg, var(--brasil-blue), #001a4d);
+            box-shadow: 0 4px 15px rgba(0, 39, 118, 0.3);
+        }
+        
+        .btn-brasil:hover {
+            box-shadow: 0 8px 25px rgba(0, 39, 118, 0.4);
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
         
         .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
+            font-size: 2.8rem;
+            color: var(--text-light);
             margin-bottom: 15px;
             position: relative;
             display: inline-block;
+            font-weight: 800;
         }
         
         .section-title h2::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 100px;
+            height: 5px;
             background: linear-gradient(to right, var(--secondary), var(--japan-red));
-            border-radius: 2px;
+            border-radius: 3px;
         }
         
         .section-title p {
-            color: var(--gray);
-            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-size: 1.2rem;
             max-width: 700px;
-            margin: 0 auto;
+            margin: 30px auto 0;
+            line-height: 1.8;
         }
         
         /* Header */
         header {
-            background-color: white;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background-color: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 15px 0;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--dark-border);
         }
         
         .header-container {
@@ -148,11 +183,13 @@
         }
         
         .logo-text {
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
             background: linear-gradient(to right, var(--primary), var(--japan-red));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
         }
         
         .nav-menu {
@@ -160,7 +197,7 @@
         }
         
         .nav-menu li {
-            margin-left: 30px;
+            margin-left: 35px;
             position: relative;
         }
         
@@ -168,6 +205,7 @@
             font-weight: 500;
             transition: color 0.3s;
             position: relative;
+            font-size: 1.1rem;
         }
         
         .nav-menu a::after {
@@ -176,9 +214,10 @@
             bottom: -5px;
             left: 0;
             width: 0;
-            height: 2px;
+            height: 3px;
             background: linear-gradient(to right, var(--primary), var(--japan-red));
             transition: width 0.3s;
+            border-radius: 2px;
         }
         
         .nav-menu a:hover::after {
@@ -186,61 +225,111 @@
         }
         
         .nav-menu a:hover {
-            color: var(--primary);
+            color: var(--secondary);
         }
         
         .hamburger {
             display: none;
             cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--dark);
+            font-size: 1.8rem;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+        
+        .hamburger:hover {
+            color: var(--secondary);
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+            background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9)), url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
             height: 100vh;
             display: flex;
             align-items: center;
             color: white;
             padding-top: 80px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(46, 139, 87, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(188, 0, 45, 0.1) 0%, transparent 40%);
+            pointer-events: none;
         }
         
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            margin-bottom: 25px;
             line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-weight: 800;
+            background: linear-gradient(to right, var(--text-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: var(--light);
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            color: var(--text-muted);
+            line-height: 1.8;
         }
         
         .hero-buttons {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--japan-red), #9d0024);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(188, 0, 45, 0.3);
         }
         
         /* About Section */
         .about {
-            padding: 100px 0;
-            background-color: white;
+            padding: 120px 0;
+            background-color: var(--dark-bg);
+            position: relative;
+        }
+        
+        .about::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--dark-bg));
+            pointer-events: none;
         }
         
         .about-content {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 60px;
         }
         
         .about-text {
@@ -248,71 +337,104 @@
         }
         
         .about-text h3 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-weight: 700;
         }
         
         .about-text p {
-            margin-bottom: 15px;
-            color: #555;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
         
         .about-features {
-            margin-top: 30px;
+            margin-top: 40px;
         }
         
         .feature {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .feature i {
             color: var(--secondary);
-            font-size: 1.2rem;
-            margin-right: 15px;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            width: 30px;
         }
         
         .about-image {
             flex: 1;
             text-align: center;
+            position: relative;
         }
         
         .about-image img {
             max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+        }
+        
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), transparent);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: -1;
+        }
+        
+        .about-image::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--japan-red), transparent);
+            border-radius: 10px;
+            z-index: -1;
         }
         
         /* Code Example Section */
         .code-example {
-            padding: 100px 0;
-            background-color: var(--light);
+            padding: 120px 0;
+            background-color: rgba(30, 30, 30, 0.5);
+            position: relative;
         }
         
         .code-container {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            background: white;
-            border-radius: 10px;
+            background: var(--dark-card);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
         }
         
         .code-header {
-            background: var(--code-bg);
+            background: linear-gradient(135deg, #2d2d2d, #252525);
             color: white;
-            padding: 15px 20px;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--dark-border);
         }
         
         .code-header span {
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
         }
         
         .code-content {
@@ -325,110 +447,177 @@
         }
         
         code {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.95rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
         }
         
         .hljs {
-            padding: 20px;
-            background: var(--code-bg) !important;
+            padding: 25px;
+            background: #1e1e1e !important;
         }
         
         /* Features Section */
         .features {
-            padding: 100px 0;
-            background-color: white;
+            padding: 120px 0;
+            background-color: var(--dark-bg);
+            position: relative;
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
         }
         
         .feature-card {
-            background: white;
-            border-radius: 10px;
+            background: linear-gradient(145deg, #1e1e1e, #252525);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
-            padding: 30px;
+            padding: 40px 30px;
             text-align: center;
-            border-top: 4px solid var(--primary);
+            border: 1px solid var(--dark-border);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(46, 139, 87, 0.1), rgba(188, 0, 45, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
         }
         
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
         }
         
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, var(--primary), var(--japan-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--dark);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-weight: 700;
         }
         
         .feature-card p {
-            color: var(--gray);
+            color: var(--text-muted);
             margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.1rem;
         }
         
         /* Download Section */
         .download {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 140px 0;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(30, 30, 30, 0.9)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
             color: white;
             text-align: center;
+            position: relative;
+        }
+        
+        .download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 20%, rgba(46, 139, 87, 0.2) 0%, transparent 30%),
+                        radial-gradient(circle at 30% 80%, rgba(188, 0, 45, 0.2) 0%, transparent 30%);
+            pointer-events: none;
         }
         
         .download h2 {
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         
         .download p {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
         }
         
         .version-badge {
             display: inline-block;
-            background: var(--japan-red);
+            background: linear-gradient(135deg, var(--japan-red), #9d0024);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(188, 0, 45, 0.3);
+        }
+        
+        .contact-info {
+            margin-top: 50px;
+            background: rgba(30, 30, 30, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            display: inline-block;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .contact-info p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        .contact-info a {
+            color: var(--secondary);
+            transition: color 0.3s;
+        }
+        
+        .contact-info a:hover {
+            color: var(--primary);
         }
         
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background-color: #0f0f0f;
             color: white;
-            padding: 70px 0 20px;
+            padding: 80px 0 30px;
+            border-top: 1px solid var(--dark-border);
         }
         
         .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
+            gap: 50px;
+            margin-bottom: 60px;
         }
         
         .footer-col h3 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             color: white;
+            font-weight: 700;
         }
         
         .footer-col h3::after {
@@ -437,23 +626,26 @@
             bottom: 0;
             left: 0;
             width: 40px;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(to right, var(--secondary), var(--japan-red));
+            border-radius: 2px;
         }
         
         .footer-col p {
-            color: #bbb;
-            margin-bottom: 15px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
             line-height: 1.8;
+            font-size: 1.1rem;
         }
         
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         
         .footer-links a {
-            color: #bbb;
+            color: var(--text-muted);
             transition: color 0.3s;
+            font-size: 1.1rem;
         }
         
         .footer-links a:hover {
@@ -463,40 +655,65 @@
         .social-links {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         
         .social-links a {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #1e1e1e, #252525);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--dark-border);
         }
         
         .social-links a:hover {
-            background-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
         }
         
         .copyright {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bbb;
-            font-size: 0.9rem;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
         }
         
         /* Responsividade */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+        
         @media (max-width: 992px) {
             .hero h1 {
-                font-size: 2.8rem;
+                font-size: 3rem;
             }
             
             .about-content {
                 flex-direction: column;
+            }
+            
+            .about-image {
+                margin-top: 50px;
             }
         }
         
@@ -505,13 +722,15 @@
                 position: fixed;
                 top: 80px;
                 left: -100%;
-                background-color: white;
+                background-color: rgba(18, 18, 18, 0.95);
+                backdrop-filter: blur(10px);
                 width: 100%;
                 flex-direction: column;
                 padding: 30px;
                 box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
                 transition: 0.4s;
                 z-index: 999;
+                border-top: 1px solid var(--dark-border);
             }
             
             .nav-menu.active {
@@ -519,7 +738,7 @@
             }
             
             .nav-menu li {
-                margin: 15px 0;
+                margin: 20px 0;
             }
             
             .hamburger {
@@ -527,16 +746,16 @@
             }
             
             .hero h1 {
-                font-size: 2.3rem;
+                font-size: 2.5rem;
             }
             
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
             
             .hero-buttons {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
             }
             
             .hero-buttons .btn {
@@ -545,7 +764,11 @@
             }
             
             .section-title h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -556,11 +779,19 @@
             }
             
             .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
                 font-size: 2rem;
             }
             
             .feature-icon {
-                font-size: 2rem;
+                font-size: 2.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -591,11 +822,13 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
+                <div class="hero-badge">Versão Beta - Em Desenvolvimento</div>
                 <h1>BZuk 1.7 - Linguagem de Programação Brasileira</h1>
-                <p>Uma linguagem moderna, rápida e intuitiva com sintaxe em português. Feita para ser fácil de aprender e poderosa para criar.</p>
+                <p>Uma linguagem moderna, rápida e intuitiva com sintaxe em português. Combinando a eficiência do C++ com a simplicidade do Python.</p>
                 <div class="hero-buttons">
-                    <a href="#download" class="btn">Começar Agora</a>
+                    <a href="#download" class="btn"><i class="fas fa-download"></i> Primeira Versão (Python)</a>
                     <a href="#code" class="btn btn-outline">Ver Exemplos</a>
+                    <a href="https://github.com/Emperordeath" class="btn btn-japan"><i class="fab fa-github"></i> GitHub</a>
                 </div>
             </div>
         </div>
@@ -606,36 +839,36 @@
         <div class="container">
             <div class="section-title">
                 <h2>Sobre a BZuk</h2>
-                <p>Conheça a linguagem que está revolucionando a programação no Brasil</p>
+                <p>Conheça a linguagem que está sendo desenvolvida com orgulho brasileiro e precisão japonesa</p>
             </div>
             
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Linguagem de Programação Brasileira</h3>
-                    <p>BZuk é uma linguagem de programação criada por um desenvolvedor brasileiro com ascendência japonesa, combinando a eficiência do C++ com a simplicidade do Python e Lua.</p>
+                    <h3>1 ano de desenvolvimento - Fase Beta</h3>
+                    <p>BZuk é uma linguagem de programação que está em desenvolvimento há 1 ano, atualmente em sua fase beta inicial. Esta primeira versão é baseada em Python, com planos para uma versão nativa em C++ no futuro.</p>
                     <p>Com sintaxe em português e palavras abreviadas de forma intuitiva, BZuk é perfeita para iniciantes e experts que desejam uma linguagem rápida e expressiva.</p>
                     
                     <div class="about-features">
                         <div class="feature">
                             <i class="fas fa-bolt"></i>
-                            <span>Rápida como C++ e fácil como Python</span>
+                            <span>Primeira versão em Python - Futura versão em C++ com alta performance</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-language"></i>
-                            <span>Sintaxe em português com palavras abreviadas</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Perfeita para iniciantes em programação</span>
+                            <span>Sintaxe em português com palavras abreviadas intuitivas</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-code"></i>
                             <span>Poucas linhas para fazer muito (igual Lua)</span>
                         </div>
+                        <div class="feature">
+                            <i class="fas fa-heart"></i>
+                            <span>Orgulho brasileiro com influência da precisão japonesa</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="about-image">
+                <div class="about-image floating">
                     <img src="https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Linguagem de Programação BZuk">
                 </div>
             </div>
@@ -647,16 +880,17 @@
         <div class="container">
             <div class="section-title">
                 <h2>Exemplos de Código</h2>
-                <p>Veja como é fácil e intuitivo programar com BZuk</p>
+                <p>Veja como é fácil e intuitivo programar com BZuk - Linguagem em fase beta com recursos limitados</p>
             </div>
             
             <div class="code-container">
                 <div class="code-header">
                     <span>exemplo.bz</span>
-                    <span>BZuk 1.7</span>
+                    <span>BZuk 1.7 Beta</span>
                 </div>
                 <div class="code-content">
-                    <pre><code class="language-javascript">// BZuk - Interpretador Beta Alfa 1.8
+                    <pre><code class="language-javascript">// BZuk - Interpretador Beta 1.8
+// Linguagem em desenvolvimento - Versão atual em Python
 
 let nome = ler="Qual seu nome?"
 const idade = ler="Qual sua idade?", numero
@@ -666,18 +900,18 @@ const pais = "Brasil"
 impri("nome, idade, status, pais")
 
 nome = "Outro nome"      // Ok, let pode mudar
-// idade = 99            // Vai dar erro, pois é const
+// idade = 99            // Erro! Constante não pode ser alterada
 status = "inativo"       // Ok
 
-rp(cidade)
-impri("cidade")
+rp(cidade)               // Ler input para variável cidade
+impri("cidade")          // Imprimir valor da variável cidade
 
-se idade MN 18,
+se idade MN 18,          // Se idade Maior ou igual (MN) a 18
     impri("Você é maior de idade!")
 senão,
     impri("Você é menor de 18!")
 
-repi-3,
+repi-3,                  // Repetir 3 vezes
     impri("Loop rápido!")</code></pre>
                 </div>
             </div>
@@ -689,7 +923,7 @@ repi-3,
         <div class="container">
             <div class="section-title">
                 <h2>Características Principais</h2>
-                <p>Descubra o que faz da BZuk uma linguagem especial</p>
+                <p>Descubra o que faz da BZuk uma linguagem especial - Mesmo em fase inicial de desenvolvimento</p>
             </div>
             
             <div class="features-grid">
@@ -698,15 +932,15 @@ repi-3,
                         <i class="fas fa-comment"></i>
                     </div>
                     <h3>Sintaxe em Português</h3>
-                    <p>Use palavras em português e abreviações intuitivas como "impri" para print e "ler" para input.</p>
+                    <p>Use palavras em português e abreviações intuitivas como "impri" para print, "ler" para input e "se" para if.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
-                    <h3>Alta Performance</h3>
-                    <p>Velocidade comparável ao C++ com uma sintaxe muito mais simples e amigável.</p>
+                    <h3>Alta Performance Futura</h3>
+                    <p>Versão atual em Python. Próxima versão em C++ para velocidade comparável com sintaxe simplificada.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -738,7 +972,7 @@ repi-3,
                         <i class="fas fa-globe-americas"></i>
                     </div>
                     <h3>Feita no Brasil</h3>
-                    <p>Orgulho brasileiro com influência da precisão e eficiência japonesa.</p>
+                    <p>Orgulho brasileiro com influência da precisão e eficiência japonesa. 15 anos de desenvolvimento.</p>
                 </div>
             </div>
         </div>
@@ -749,17 +983,24 @@ repi-3,
         <div class="container">
             <div class="section-title">
                 <h2>Comece a Programar em BZuk</h2>
-                <p>Baixe agora o interpretador e comece sua jornada na programação</p>
+                <p>Experimente a primeira versão em Python - Em breve versão nativa em C++</p>
             </div>
             
-            <div class="version-badge">Versão 1.7 Beta</div>
+            <div class="version-badge">Versão 1.7 Beta (Python)</div>
             
-            <p>Disponível para Windows, Linux e macOS. Totalmente gratuito e de código aberto.</p>
+            <p>Esta é a primeira versão interpretada em Python, perfeita para testar a linguagem e seus conceitos. A versão nativa em C++ está em desenvolvimento.</p>
             
             <div class="hero-buttons">
-                <a href="#" class="btn"><i class="fas fa-download"></i> Download para Windows</a>
+                <a href="#" class="btn"><i class="fas fa-download"></i> Download Interpretador Python</a>
                 <a href="#" class="btn btn-outline">Documentação</a>
-                <a href="#" class="btn btn-japan">GitHub</a>
+                <a href="https://github.com/Emperordeath" class="btn btn-japan"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://discord.gg/A3aMaYaQjh" class="btn btn-brasil"><i class="fab fa-discord"></i> Discord</a>
+            </div>
+            
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> <a href="mailto:studioscripts2024@gmail.com">studioscripts2024@gmail.com</a></p>
+                <p><i class="fab fa-discord"></i> <a href="https://discord.gg/A3aMaYaQjh">https://discord.gg/A3aMaYaQjh</a></p>
+                <p><i class="fab fa-github"></i> <a href="https://github.com/Emperordeath">https://github.com/Emperordeath</a></p>
             </div>
         </div>
     </section>
@@ -770,94 +1011,8 @@ repi-3,
             <div class="footer-container">
                 <div class="footer-col">
                     <h3>BZuk Language</h3>
-                    <p>Uma linguagem de programação brasileira moderna, rápida e intuitiva com sintaxe em português.</p>
+                    <p>Uma linguagem de programação brasileira moderna, rápida e intuitiva com sintaxe em português. 15 anos de desenvolvimento.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Links Rápidos</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">Início</a></li>
-                        <li><a href="#about">Sobre</a></li>
-                        <li><a href="#code">Exemplos</a></li>
-                        <li><a href="#features">Características</a></li>
-                        <li><a href="#download">Download</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Recursos</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentação</a></li>
-                        <li><a href="#">Tutoriais</a></li>
-                        <li><a href="#">Exemplos</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Contato</h3>
-                    <p><i class="fas fa-envelope"></i> contato@bzuklang.com.br</p>
-                    <p><i class="fab fa-github"></i> github.com/bzuklang</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Desenvolvido no Brasil</p>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 BZuk Language. Uma linguagem brasileira com orgulho!</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>
-        // Menu Mobile
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            hamburger.innerHTML = navMenu.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Fechar menu ao clicar em um link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
-        
-        // Highlight code
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.querySelectorAll('pre code').forEach((el) => {
-                hljs.highlightElement(el);
-            });
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (this.getAttribute('href') === '#') return;
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
-
+                        <a href="https://github.com/Emperordeath"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/A3aMa
+                        
