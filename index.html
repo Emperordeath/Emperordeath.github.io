@@ -23,6 +23,8 @@ body,html{height:100%;background:radial-gradient(ellipse at center,#000000 0%,#0
 .進捗{width:300px;height:4px;background:rgba(48,48,96,0.3);margin:20px 0;border-radius:2px;overflow:hidden}
 .進捗内{height:100%;background:linear-gradient(90deg,#303060,#404080);width:0%;transition:width 0.5s}
 .階層{font-size:0.9rem;margin-bottom:10px;color:#606090}
+.狂気{display:none;position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+.終局{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000;color:#ff0000;justify-content:center;align-items:center;font-size:3rem;z-index:10000}
 </style>
 </head>
 <body>
@@ -78,17 +80,61 @@ body,html{height:100%;background:radial-gradient(ellipse at center,#000000 0%,#0
 <div class="進捗"><div class="進捗内" id="進捗"></div></div>
 </div>
 
+<div id="狂気" class="狂気"></div>
+<div id="終局" class="終局">サイト=オフ</div>
+
 <script>
 var 現在階層=1;
 var 正解=["影の鍵","一二三","7","4","闇光"];
-function 検証(階層){var 入力値=document.getElementById("鍵"+階層).value;var 結果要素=document.getElementById("結果"+階層);if(入力値===正解[階層-1]){結果要素.textContent="✓ 正解 - 次の門へ進め";結果要素.style.color="#a0f0a0";setTimeout(function(){転移(階層);},1500);}else if(入力値===""){結果要素.textContent="答えを入力せよ";結果要素.style.color="#f0a0a0";}else{結果要素.textContent="✗ 謎解きを続けよ";結果要素.style.color="#f0a0a0";}}
-function 転移(現在){document.getElementById("界"+現在).style.display="none";if(現在<5){document.getElementById("界"+(現在+1)).style.display="flex";現在階層=現在+1;}else{document.getElementById("界5").style.display="flex";}document.getElementById("進捗").style.width=(現在/5*100)+"%";}
+var 狂気発動=false;
+
+function 検証(階層){var 入力値=document.getElementById("鍵"+階層).value;var 結果要素=document.getElementById("結果"+階層);if(入力値===正解[階層-1]){結果要素.textContent="✓ 正解";結果要素.style.color="#a0f0a0";if(階層===5){狂気開始();}else{setTimeout(function(){転移(階層);},800);}}else if(入力値===""){結果要素.textContent="答えを入力せよ";結果要素.style.color="#f0a0a0";}else{結果要素.textContent="✗ 謎解きを続けよ";結果要素.style.color="#f0a0a0";}}
+
+function 転移(現在){
+document.getElementById("界"+現在).style.animation="震 1s infinite";
+setTimeout(function(){
+document.getElementById("界"+現在).style.display="none";
+if(現在<5){document.getElementById("界"+(現在+1)).style.display="flex";現在階層=現在+1;}else{document.getElementById("界5").style.display="flex";}
+document.getElementById("進捗").style.width=(現在/5*100)+"%";
+},1000);
+}
+
+function 狂気開始(){
+if(狂気発動)return;
+狂気発動=true;
+var 狂気要素=document.getElementById("狂気");
+狂気要素.style.display="block";
+var 回数=0;
+var 狂気間隔=setInterval(function(){
+回数++;
+var 色=Math.random()>0.5?"#ff0000":"#00ffff";
+var 影=Math.random()>0.5?"0 0 50px "+色:"0 0 100px "+色;
+document.body.style.background=Math.random()>0.5?"#000000":"#ff0000";
+document.body.style.color=色;
+狂気要素.style.background="radial-gradient(circle,"+色+"20 0%,transparent 70%)";
+狂気要素.style.boxShadow=影;
+if(回数>20){clearInterval(狂気間隔);setTimeout(function(){document.body.innerHTML='<div class="終局" style="display:flex">サイト=オフ</div>';},500);}
+},100);
+}
+
 document.addEventListener("mousemove",function(e){var 光=document.getElementById("光");光.style.left=(e.pageX-100)+"px";光.style.top=(e.pageY-100)+"px";});
 document.getElementById("鍵1").addEventListener("keypress",function(e){if(e.key==="Enter")検証(1);});
 document.getElementById("鍵2").addEventListener("keypress",function(e){if(e.key==="Enter")検証(2);});
 document.getElementById("鍵3").addEventListener("keypress",function(e){if(e.key==="Enter")検証(3);});
 document.getElementById("鍵4").addEventListener("keypress",function(e){if(e.key==="Enter")検証(4);});
 document.getElementById("鍵5").addEventListener("keypress",function(e){if(e.key==="Enter")検証(5);});
+
+const スタイル=document.createElement('style');
+スタイル.textContent=`
+@keyframes 震 {
+0% { transform: translate(0px, 0px) rotate(0deg); }
+25% { transform: translate(-5px, -5px) rotate(-1deg); }
+50% { transform: translate(5px, 5px) rotate(1deg); }
+75% { transform: translate(-3px, 3px) rotate(-0.5deg); }
+100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+`;
+document.head.appendChild(スタイル);
 </script>
 </body>
 </html>
