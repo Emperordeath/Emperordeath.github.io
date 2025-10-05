@@ -6,9 +6,8 @@
 <title>𓂀 𝔓𝖘𝖞𝖈𝖍𝖔Ｄ𝖊𝖆𝖙𝖍 𓂀 — 迷宮</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body,html{height:100%;background:radial-gradient(ellipse at center,#000000 0%,#0a0a2a 70%,#000000 100%);color:#a0a0c0;font-family:"MS Mincho","Hiragino Mincho Pro",serif;overflow-x:hidden}
-.幽界{display:none;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;padding:20px;position:relative;animation:冥 2s ease}
-@keyframes 冥{0%{opacity:0}100%{opacity:1}}
+body,html{height:100%;background:radial-gradient(ellipse at center,#000000 0%,#0a0a2a 70%,#000000 100%);color:#a0a0c0;font-family:"MS Mincho","Hiragino Mincho Pro",serif;overflow-x:hidden;cursor:none}
+.幽界{display:none;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;padding:20px;position:relative}
 .現界{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh}
 .影{font-size:1.4rem;text-align:center;margin-bottom:40px;text-shadow:0 0 10px #303060;animation:幽 6s infinite alternate;letter-spacing:0.2em}
 @keyframes 幽{0%,100%{opacity:0.7}50%{opacity:1}}
@@ -19,12 +18,20 @@ body,html{height:100%;background:radial-gradient(ellipse at center,#000000 0%,#0
 .按钮:hover{box-shadow:0 0 25px #5050a0;color:#e0e0ff}
 .結果{margin:25px 0;font-size:1.2rem;min-height:1.5em;text-shadow:0 0 8px #303060;text-align:center}
 .謎{font-size:1.1rem;margin:15px 0;text-align:center;line-height:1.6}
-.光{position:fixed;width:200px;height:200px;background:radial-gradient(circle,rgba(64,64,128,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;mix-blend-mode:screen}
+.光{position:fixed;width:200px;height:200px;background:radial-gradient(circle,rgba(64,64,128,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;mix-blend-mode:screen;z-index:9998}
 .進捗{width:300px;height:4px;background:rgba(48,48,96,0.3);margin:20px 0;border-radius:2px;overflow:hidden}
 .進捗内{height:100%;background:linear-gradient(90deg,#303060,#404080);width:0%;transition:width 0.5s}
 .階層{font-size:0.9rem;margin-bottom:10px;color:#606090}
 .狂気{display:none;position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
-.終局{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000;color:#ff0000;justify-content:center;align-items:center;font-size:3rem;z-index:10000}
+.終局{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000;justify-content:center;align-items:center;font-size:4rem;z-index:10000;flex-direction:column}
+.血痕{position:fixed;font-size:8rem;color:#80000020;pointer-events:none;z-index:9997;animation:血 3s linear}
+.影目{position:fixed;width:100px;height:100px;background:radial-gradient(circle,#000000 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:9999}
+.叫び{position:fixed;font-size:2rem;color:#ff000080;pointer-events:none;z-index:9999;animation:叫 2s linear}
+@keyframes 血{0%{transform:translateY(-100px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(360deg);opacity:0}}
+@keyframes 叫{0%{transform:scale(0.1);opacity:1}100%{transform:scale(3);opacity:0}}
+@keyframes 震{0%{transform:translate(0px,0px) rotate(0deg) scale(1)}25%{transform:translate(-20px,-20px) rotate(-5deg) scale(1.1)}50%{transform:translate(20px,20px) rotate(5deg) scale(0.9)}75%{transform:translate(-10px,10px) rotate(-3deg) scale(1.05)}100%{transform:translate(0px,0px) rotate(0deg) scale(1)}}
+@keyframes 歪{0%{filter:hue-rotate(0deg) blur(0px)}50%{filter:hue-rotate(180deg) blur(2px)}100%{filter:hue-rotate(360deg) blur(0px)}}
+@keyframes 脈{0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.2);opacity:0.7}}
 </style>
 </head>
 <body>
@@ -81,40 +88,54 @@ body,html{height:100%;background:radial-gradient(ellipse at center,#000000 0%,#0
 </div>
 
 <div id="狂気" class="狂気"></div>
-<div id="終局" class="終局">サイト=オフ</div>
+<div id="終局" class="終局">
+<div style="color:#ff0000;text-shadow:0 0 50px #ff0000">サイト=オフ</div>
+<div style="color:#660000;font-size:1.5rem;margin-top:20px;text-shadow:0 0 20px #ff0000">死</div>
+</div>
 
 <script>
 var 現在階層=1;
 var 正解=["影の鍵","一二三","7","4","闇光"];
 var 狂気発動=false;
 
-function 検証(階層){var 入力値=document.getElementById("鍵"+階層).value;var 結果要素=document.getElementById("結果"+階層);if(入力値===正解[階層-1]){結果要素.textContent="✓ 正解";結果要素.style.color="#a0f0a0";if(階層===5){狂気開始();}else{setTimeout(function(){転移(階層);},800);}}else if(入力値===""){結果要素.textContent="答えを入力せよ";結果要素.style.color="#f0a0a0";}else{結果要素.textContent="✗ 謎解きを続けよ";結果要素.style.color="#f0a0a0";}}
+function 検証(階層){var 入力値=document.getElementById("鍵"+階層).value;var 結果要素=document.getElementById("結果"+階層);if(入力値===正解[階層-1]){結果要素.textContent="✓ 正解";結果要素.style.color="#a0f0a0";if(階層===5){地獄開始();}else{地獄転移(階層);}}else if(入力値===""){結果要素.textContent="答えを入力せよ";結果要素.style.color="#f0a0a0";}else{結果要素.textContent="✗ 謎解きを続けよ";結果要素.style.color="#f0a0a0";}}
 
-function 転移(現在){
-document.getElementById("界"+現在).style.animation="震 1s infinite";
+function 地獄転移(現在){
+var 現在界=document.getElementById("界"+現在);
+現在界.style.animation="震 0.8s infinite, 歪 2s infinite";
+document.body.style.background="#000000";
+setTimeout(function(){for(var i=0;i<30;i++){setTimeout(function(){var 血=document.createElement("div");血.className="血痕";血.textContent=["死","狂","痛","苦","怨","呪"][Math.floor(Math.random()*6)];血.style.left=Math.random()*100+"vw";血.style.top="-100px";document.body.appendChild(血);setTimeout(function(){血.remove();},3000);},i*100);}},500);
+setTimeout(function(){var 目=document.createElement("div");目.className="影目";目.style.left=Math.random()*100+"vw";目.style.top=Math.random()*100+"vh";document.body.appendChild(目);setTimeout(function(){目.remove();},1000);},800);
 setTimeout(function(){
-document.getElementById("界"+現在).style.display="none";
+現在界.style.display="none";
+現在界.style.animation="";
+document.body.style.background="radial-gradient(ellipse at center,#000000 0%,#0a0a2a 70%,#000000 100%)";
 if(現在<5){document.getElementById("界"+(現在+1)).style.display="flex";現在階層=現在+1;}else{document.getElementById("界5").style.display="flex";}
 document.getElementById("進捗").style.width=(現在/5*100)+"%";
-},1000);
+},2000);
 }
 
-function 狂気開始(){
+function 地獄開始(){
 if(狂気発動)return;
 狂気発動=true;
 var 狂気要素=document.getElementById("狂気");
 狂気要素.style.display="block";
+var 音=new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==");
+音.loop=true;
+音.play();
 var 回数=0;
 var 狂気間隔=setInterval(function(){
 回数++;
-var 色=Math.random()>0.5?"#ff0000":"#00ffff";
-var 影=Math.random()>0.5?"0 0 50px "+色:"0 0 100px "+色;
-document.body.style.background=Math.random()>0.5?"#000000":"#ff0000";
+var 色=["#ff0000","#00ffff","#00ff00","#ffff00","#ff00ff"][Math.floor(Math.random()*5)];
+document.body.style.background=Math.random()>0.3?"#000000":色;
 document.body.style.color=色;
-狂気要素.style.background="radial-gradient(circle,"+色+"20 0%,transparent 70%)";
-狂気要素.style.boxShadow=影;
-if(回数>20){clearInterval(狂気間隔);setTimeout(function(){document.body.innerHTML='<div class="終局" style="display:flex">サイト=オフ</div>';},500);}
-},100);
+狂気要素.style.background="radial-gradient(circle,"+色+"30 0%,transparent 70%)";
+狂気要素.style.boxShadow="0 0 200px "+色;
+狂気要素.style.animation="脈 0.3s infinite";
+if(Math.random()>0.7){var 叫=document.createElement("div");叫.className="叫び";叫.textContent=["助けて","許して","痛い","やめて","死"][Math.floor(Math.random()*5)];叫.style.left=Math.random()*100+"vw";叫.style.top=Math.random()*100+"vh";document.body.appendChild(叫);setTimeout(function(){叫.remove();},2000);}
+if(回数>15){var 最終震=setInterval(function(){document.body.style.transform="scale("+(0.9+Math.random()*0.2)+")";},50);}
+if(回数>25){clearInterval(狂気間隔);clearInterval(最終震);setTimeout(function(){document.body.innerHTML=document.getElementById("終局").outerHTML;document.body.style.background="#000000";document.body.style.color="#ff0000";var 脈動=setInterval(function(){document.body.style.transform=document.body.style.transform=="scale(1.1)"?"scale(1)":"scale(1.1)";},300);},800);}
+},80);
 }
 
 document.addEventListener("mousemove",function(e){var 光=document.getElementById("光");光.style.left=(e.pageX-100)+"px";光.style.top=(e.pageY-100)+"px";});
@@ -123,18 +144,6 @@ document.getElementById("鍵2").addEventListener("keypress",function(e){if(e.key
 document.getElementById("鍵3").addEventListener("keypress",function(e){if(e.key==="Enter")検証(3);});
 document.getElementById("鍵4").addEventListener("keypress",function(e){if(e.key==="Enter")検証(4);});
 document.getElementById("鍵5").addEventListener("keypress",function(e){if(e.key==="Enter")検証(5);});
-
-const スタイル=document.createElement('style');
-スタイル.textContent=`
-@keyframes 震 {
-0% { transform: translate(0px, 0px) rotate(0deg); }
-25% { transform: translate(-5px, -5px) rotate(-1deg); }
-50% { transform: translate(5px, 5px) rotate(1deg); }
-75% { transform: translate(-3px, 3px) rotate(-0.5deg); }
-100% { transform: translate(0px, 0px) rotate(0deg); }
-}
-`;
-document.head.appendChild(スタイル);
 </script>
 </body>
 </html>
