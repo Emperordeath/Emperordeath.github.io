@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* ShadowQuest XP - RPG Premium Theme */
+    --background: 220 20% 8%;
+    --foreground: 0 0% 100%;
+
+    --card: 220 18% 12%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Purple Magic - Primary */
+    --primary: 261 70% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 261 80% 75%;
+
+    /* Mystic Green - Secondary */
+    --secondary: 166 70% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Epic Gold - Accent */
+    --accent: 45 100% 70%;
+    --accent-foreground: 220 20% 8%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 10% 65%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 16%;
+    --ring: 261 70% 65%;
+
+    --radius: 0.75rem;
+
+    /* RPG Gradients */
+    --gradient-epic: linear-gradient(135deg, hsl(261 70% 65%), hsl(291 70% 60%));
+    --gradient-legendary: linear-gradient(135deg, hsl(45 100% 70%), hsl(30 100% 65%));
+    --gradient-mystical: linear-gradient(135deg, hsl(166 70% 45%), hsl(185 70% 50%));
+    --gradient-dark: linear-gradient(180deg, hsl(220 20% 8%), hsl(220 18% 12%));
+
+    /* RPG Shadows & Glows */
+    --shadow-glow: 0 0 20px hsl(261 70% 65% / 0.3);
+    --shadow-gold: 0 0 25px hsl(45 100% 70% / 0.4);
+    --shadow-card: 0 8px 32px hsl(220 20% 4% / 0.6);
+    --shadow-epic: 0 10px 40px hsl(261 70% 65% / 0.5);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* RPG Glass Cards */
+  .glass-card {
+    @apply bg-card/40 backdrop-blur-xl border border-border/50;
+    box-shadow: var(--shadow-card);
+  }
+
+  .glass-card-glow {
+    @apply glass-card;
+    box-shadow: var(--shadow-glow), var(--shadow-card);
+  }
+
+  /* Epic Gradients */
+  .gradient-epic {
+    background: var(--gradient-epic);
+  }
+
+  .gradient-gold {
+    background: var(--gradient-legendary);
+  }
+
+  .gradient-mystical {
+    background: var(--gradient-mystical);
+  }
+
+  /* XP Bar Animation */
+  @keyframes xp-fill {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .xp-bar {
+    animation: xp-fill 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: left;
+  }
+
+  /* Level Up Effect */
+  @keyframes level-up {
+    0% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% {
+      transform: scale(1.1);
+      filter: brightness(1.5);
+    }
+    100% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+  }
+
+  .level-up {
+    animation: level-up 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* Particle Effects */
+  @keyframes particle-rise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  .particle {
+    animation: particle-rise 1.5s ease-out forwards;
+  }
+
+  /* Mission Complete Effect */
+  @keyframes mission-complete {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+  }
+
+  /* Glow Pulse */
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: var(--shadow-glow);
+    }
+    50% {
+      box-shadow: var(--shadow-epic);
+    }
+  }
+
+  .glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  /* Hover Scale */
+  .hover-scale {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  .hover-scale:active {
+    transform: scale(0.98);
+  }
+}
