@@ -1,149 +1,1164 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>𓂀 𝔓𝖘𝖞𝖈𝖍𝖔Ｄ𝖊𝖆𝖙𝖍 𓂀 — 迷宮</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body,html{height:100%;background:radial-gradient(ellipse at center,#000000 0%,#0a0a2a 70%,#000000 100%);color:#a0a0c0;font-family:"MS Mincho","Hiragino Mincho Pro",serif;overflow-x:hidden;cursor:none}
-.幽界{display:none;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;padding:20px;position:relative}
-.現界{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh}
-.影{font-size:1.4rem;text-align:center;margin-bottom:40px;text-shadow:0 0 10px #303060;animation:幽 6s infinite alternate;letter-spacing:0.2em}
-@keyframes 幽{0%,100%{opacity:0.7}50%{opacity:1}}
-.暗号{display:flex;flex-direction:column;align-items:center;gap:15px;margin:20px 0}
-.入力{background:rgba(10,10,40,0.3);border:1px solid #303060;color:#c0c0e0;padding:12px;font-size:1.1rem;width:280px;text-align:center;box-shadow:0 0 15px rgba(48,48,96,0.3);transition:all 0.4s}
-.入力:focus{outline:none;box-shadow:0 0 20px #404080;border-color:#404080}
-.按钮{background:linear-gradient(45deg,#000000,#202050);border:1px solid #404080;color:#a0a0c0;padding:12px 30px;font-size:1.1rem;cursor:pointer;transition:all 0.4s;letter-spacing:0.3em}
-.按钮:hover{box-shadow:0 0 25px #5050a0;color:#e0e0ff}
-.結果{margin:25px 0;font-size:1.2rem;min-height:1.5em;text-shadow:0 0 8px #303060;text-align:center}
-.謎{font-size:1.1rem;margin:15px 0;text-align:center;line-height:1.6}
-.光{position:fixed;width:200px;height:200px;background:radial-gradient(circle,rgba(64,64,128,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;mix-blend-mode:screen;z-index:9998}
-.進捗{width:300px;height:4px;background:rgba(48,48,96,0.3);margin:20px 0;border-radius:2px;overflow:hidden}
-.進捗内{height:100%;background:linear-gradient(90deg,#303060,#404080);width:0%;transition:width 0.5s}
-.階層{font-size:0.9rem;margin-bottom:10px;color:#606090}
-.狂気{display:none;position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
-.終局{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000;justify-content:center;align-items:center;font-size:4rem;z-index:10000;flex-direction:column}
-.血痕{position:fixed;font-size:8rem;color:#80000020;pointer-events:none;z-index:9997;animation:血 3s linear}
-.影目{position:fixed;width:100px;height:100px;background:radial-gradient(circle,#000000 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:9999}
-.叫び{position:fixed;font-size:2rem;color:#ff000080;pointer-events:none;z-index:9999;animation:叫 2s linear}
-@keyframes 血{0%{transform:translateY(-100px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(360deg);opacity:0}}
-@keyframes 叫{0%{transform:scale(0.1);opacity:1}100%{transform:scale(3);opacity:0}}
-@keyframes 震{0%{transform:translate(0px,0px) rotate(0deg) scale(1)}25%{transform:translate(-20px,-20px) rotate(-5deg) scale(1.1)}50%{transform:translate(20px,20px) rotate(5deg) scale(0.9)}75%{transform:translate(-10px,10px) rotate(-3deg) scale(1.05)}100%{transform:translate(0px,0px) rotate(0deg) scale(1)}}
-@keyframes 歪{0%{filter:hue-rotate(0deg) blur(0px)}50%{filter:hue-rotate(180deg) blur(2px)}100%{filter:hue-rotate(360deg) blur(0px)}}
-@keyframes 脈{0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.2);opacity:0.7}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtividade RPG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6b8cbc;
+            --accent: #ff9a3c;
+            --dark: #2c3e50;
+            --light: #f5f7fa;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-subtitle {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .level-card {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, 30%);
+        }
+
+        .level {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .xp-bar-container {
+            background: rgba(255, 255, 255, 0.3);
+            height: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .xp-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .xp-bar::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .xp-info {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .missions-section, .rewards-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            margin-bottom: 15px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        .mission-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: var(--light);
+            border: 1px solid var(--secondary);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            flex: 1;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .filter-btn.active {
+            background: var(--secondary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .mission-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .mission-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .mission-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .mission-checkbox {
+            width: 22px;
+            height: 22px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: var(--success);
+        }
+
+        .mission-content {
+            flex: 1;
+        }
+
+        .mission-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .mission-description {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .mission-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mission-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .daily {
+            background: #e1f5fe;
+            color: #0288d1;
+        }
+
+        .weekly {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .monthly {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .mission-xp {
+            color: var(--accent);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .add-mission-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+            font-weight: 600;
+        }
+
+        .add-mission-btn:hover {
+            background: var(--secondary);
+        }
+
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        @media (max-width: 480px) {
+            .rewards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+        }
+
+        .reward-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .reward-item.unlocked {
+            border-color: var(--accent);
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(255, 154, 60, 0.2);
+        }
+
+        .reward-item.locked {
+            opacity: 0.6;
+            filter: grayscale(0.7);
+        }
+
+        .reward-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .reward-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .reward-description {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+            z-index: 1001;
+            max-width: 300px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.warning {
+            background: var(--warning);
+        }
+
+        .level-up {
+            animation: levelUp 0.6s ease;
+        }
+
+        @keyframes levelUp {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        .xp-gain {
+            animation: xpGain 0.8s ease;
+        }
+
+        @keyframes xpGain {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(1.05); }
+            100% { transform: scaleX(1); }
+        }
+
+        .completed-mission {
+            animation: completeMission 0.5s ease;
+        }
+
+        @keyframes completeMission {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); background-color: rgba(46, 204, 113, 0.2); }
+            100% { transform: scale(1); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Menu mobile */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .mobile-menu-items {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .mobile-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .mobile-menu-item.active {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            body {
+                padding-bottom: 70px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="光" id="光"></div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-dragon"></i> Produtividade RPG</h1>
+            <p class="header-subtitle">Transforme suas tarefas em missões épicas!</p>
+        </header>
 
-<div id="界1" class="現界">
-<div class="影">影が門を見守る。鍵を解ける者だけが進める。</div>
-<div class="暗号">
-<input type="text" class="入力" id="鍵1" placeholder="最初の暗号を入力">
-<button class="按钮" onclick="検証(1)">解読</button>
-</div>
-<div class="結果" id="結果1"></div>
-</div>
+        <div class="dashboard">
+            <div class="card level-card">
+                <h2>Seu Nível</h2>
+                <div class="level" id="level">1</div>
+                <div class="xp-info" id="xp-info">0/100 XP</div>
+                <div class="xp-bar-container">
+                    <div class="xp-bar" id="xp-bar"></div>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="coins">0</div>
+                        <div class="stat-label"><i class="fas fa-coins"></i> Moedas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="completed-missions">0</div>
+                        <div class="stat-label"><i class="fas fa-tasks"></i> Missões</div>
+                    </div>
+                </div>
+            </div>
 
-<div id="界2" class="幽界">
-<div class="階層">第二門</div>
-<div class="謎">月が三つ重なる時、<br>鏡の向こうに答えが映る<br>「一二三」を漢字で記せ</div>
-<div class="暗号">
-<input type="text" class="入力" id="鍵2" placeholder="答えを入力">
-<button class="按钮" onclick="検証(2)">検証</button>
-</div>
-<div class="結果" id="結果2"></div>
-</div>
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-gift"></i> Próximas Recompensas</h2>
+                <div class="rewards-preview" id="rewards-preview">
+                    <!-- Recompensas serão carregadas aqui -->
+                </div>
+            </div>
+        </div>
 
-<div id="界3" class="幽界">
-<div class="階層">第三門</div>
-<div class="謎">闇を数えよ<br>星の瞬きは七回<br>闇夜に浮かぶ数字は？</div>
-<div class="暗号">
-<input type="text" class="入力" id="鍵3" placeholder="数字を入力">
-<button class="按钮" onclick="検証(3)">検証</button>
-</div>
-<div class="結果" id="結果3"></div>
-</div>
+        <div class="missions-section">
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-scroll"></i> Missões</h2>
+                <div class="mission-filters">
+                    <button class="filter-btn active" data-filter="all"><i class="fas fa-layer-group"></i> Todas</button>
+                    <button class="filter-btn" data-filter="daily"><i class="fas fa-sun"></i> Diárias</button>
+                    <button class="filter-btn" data-filter="weekly"><i class="fas fa-calendar-week"></i> Semanais</button>
+                    <button class="filter-btn" data-filter="monthly"><i class="fas fa-calendar-alt"></i> Mensais</button>
+                </div>
+                <div class="mission-list" id="mission-list">
+                    <!-- Missões serão carregadas aqui -->
+                </div>
+                <button class="add-mission-btn" id="add-mission-btn">
+                    <i class="fas fa-plus"></i> Nova Missão
+                </button>
+            </div>
+        </div>
 
-<div id="界4" class="幽界">
-<div class="階層">第四門</div>
-<div class="謎">古の言葉で記されし謎<br>「風」＋「林」＋「火」＋「山」<br>その意味する数字は？</div>
-<div class="暗号">
-<input type="text" class="入力" id="鍵4" placeholder="数字を入力">
-<button class="按钮" onclick="検証(4)">検証</button>
-</div>
-<div class="結果" id="結果4"></div>
-</div>
+        <div class="rewards-section">
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-trophy"></i> Conquistas e Recompensas</h2>
+                <div class="rewards-grid" id="rewards-grid">
+                    <!-- Recompensas serão carregadas aqui -->
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Produtividade RPG - Transforme seu dia a dia em uma aventura!</p>
+        </footer>
+    </div>
 
-<div id="界5" class="幽界">
-<div class="階層">最終門</div>
-<div class="謎">全ての謎を解き明かした者へ<br>最後の鍵は「影の真実」<br>最初から最後まで通じる道</div>
-<div class="暗号">
-<input type="text" class="入力" id="鍵5" placeholder="最終答えを入力">
-<button class="按钮" onclick="検証(5)">最終検証</button>
-</div>
-<div class="結果" id="結果5"></div>
-<div class="進捗"><div class="進捗内" id="進捗"></div></div>
-</div>
+    <!-- Modal para adicionar missão -->
+    <div class="modal" id="mission-modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-plus-circle"></i> Nova Missão</h3>
+            <form id="mission-form">
+                <div class="form-group">
+                    <label for="mission-title">Título da Missão</label>
+                    <input type="text" id="mission-title" placeholder="Ex: Estudar JavaScript" required>
+                </div>
+                <div class="form-group">
+                    <label for="mission-description">Descrição (opcional)</label>
+                    <textarea id="mission-description" placeholder="Descreva sua missão..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mission-type">Tipo de Missão</label>
+                    <select id="mission-type" required>
+                        <option value="daily">Diária</option>
+                        <option value="weekly">Semanal</option>
+                        <option value="monthly">Mensal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mission-xp">XP de Recompensa</label>
+                    <input type="number" id="mission-xp" min="10" max="500" value="50" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-mission">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Adicionar Missão
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-<div id="狂気" class="狂気"></div>
-<div id="終局" class="終局">
-<div style="color:#ff0000;text-shadow:0 0 50px #ff0000">サイト=オフ</div>
-<div style="color:#660000;font-size:1.5rem;margin-top:20px;text-shadow:0 0 20px #ff0000">死</div>
-</div>
+    <!-- Notificação -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text"></span>
+    </div>
 
-<script>
-var 現在階層=1;
-var 正解=["影の鍵","一二三","7","4","闇光"];
-var 狂気発動=false;
+    <!-- Menu Mobile -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-items">
+            <a href="#" class="mobile-menu-item active">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="#" class="mobile-menu-item" id="mobile-missions-btn">
+                <i class="fas fa-tasks"></i>
+                <span>Missões</span>
+            </a>
+            <a href="#" class="mobile-menu-item" id="mobile-rewards-btn">
+                <i class="fas fa-trophy"></i>
+                <span>Recompensas</span>
+            </a>
+            <a href="#" class="mobile-menu-item" id="mobile-add-btn">
+                <i class="fas fa-plus"></i>
+                <span>Nova</span>
+            </a>
+        </div>
+    </div>
 
-function 検証(階層){var 入力値=document.getElementById("鍵"+階層).value;var 結果要素=document.getElementById("結果"+階層);if(入力値===正解[階層-1]){結果要素.textContent="✓ 正解";結果要素.style.color="#a0f0a0";if(階層===5){地獄開始();}else{地獄転移(階層);}}else if(入力値===""){結果要素.textContent="答えを入力せよ";結果要素.style.color="#f0a0a0";}else{結果要素.textContent="✗ 謎解きを続けよ";結果要素.style.color="#f0a0a0";}}
+    <script>
+        // Sistema de dados
+        const AppData = {
+            level: 1,
+            xp: 0,
+            coins: 0,
+            missions: [],
+            rewards: [
+                { id: 1, title: "Iniciante", description: "Alcance o nível 5", icon: "🥉", xpRequired: 500, unlocked: false },
+                { id: 2, title: "Aventureiro", description: "Alcance o nível 10", icon: "🥈", xpRequired: 1500, unlocked: false },
+                { id: 3, title: "Herói", description: "Alcance o nível 15", icon: "🥇", xpRequired: 3000, unlocked: false },
+                { id: 4, title: "Lenda", description: "Alcance o nível 20", icon: "🏆", xpRequired: 5000, unlocked: false },
+                { id: 5, title: "Primeira Missão", description: "Complete sua primeira missão", icon: "⭐", xpRequired: 0, unlocked: false },
+                { id: 6, title: "Missão Diária", description: "Complete 5 missões diárias", icon: "🌞", xpRequired: 0, unlocked: false },
+                { id: 7, title: "Missão Semanal", description: "Complete 3 missões semanais", icon: "📅", xpRequired: 0, unlocked: false },
+                { id: 8, title: "Missão Mensal", description: "Complete 2 missões mensais", icon: "📆", xpRequired: 0, unlocked: false }
+            ],
+            completedMissions: 0,
+            dailyMissionsCompleted: 0,
+            weeklyMissionsCompleted: 0,
+            monthlyMissionsCompleted: 0
+        };
 
-function 地獄転移(現在){
-var 現在界=document.getElementById("界"+現在);
-現在界.style.animation="震 0.8s infinite, 歪 2s infinite";
-document.body.style.background="#000000";
-setTimeout(function(){for(var i=0;i<30;i++){setTimeout(function(){var 血=document.createElement("div");血.className="血痕";血.textContent=["死","狂","痛","苦","怨","呪"][Math.floor(Math.random()*6)];血.style.left=Math.random()*100+"vw";血.style.top="-100px";document.body.appendChild(血);setTimeout(function(){血.remove();},3000);},i*100);}},500);
-setTimeout(function(){var 目=document.createElement("div");目.className="影目";目.style.left=Math.random()*100+"vw";目.style.top=Math.random()*100+"vh";document.body.appendChild(目);setTimeout(function(){目.remove();},1000);},800);
-setTimeout(function(){
-現在界.style.display="none";
-現在界.style.animation="";
-document.body.style.background="radial-gradient(ellipse at center,#000000 0%,#0a0a2a 70%,#000000 100%)";
-if(現在<5){document.getElementById("界"+(現在+1)).style.display="flex";現在階層=現在+1;}else{document.getElementById("界5").style.display="flex";}
-document.getElementById("進捗").style.width=(現在/5*100)+"%";
-},2000);
-}
+        // Elementos DOM
+        const levelElement = document.getElementById('level');
+        const xpBarElement = document.getElementById('xp-bar');
+        const xpInfoElement = document.getElementById('xp-info');
+        const coinsElement = document.getElementById('coins');
+        const completedMissionsElement = document.getElementById('completed-missions');
+        const missionListElement = document.getElementById('mission-list');
+        const rewardsGridElement = document.getElementById('rewards-grid');
+        const rewardsPreviewElement = document.getElementById('rewards-preview');
+        const missionModal = document.getElementById('mission-modal');
+        const missionForm = document.getElementById('mission-form');
+        const addMissionBtn = document.getElementById('add-mission-btn');
+        const cancelMissionBtn = document.getElementById('cancel-mission');
+        const notificationElement = document.getElementById('notification');
+        const notificationTextElement = document.getElementById('notification-text');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const mobileMissionsBtn = document.getElementById('mobile-missions-btn');
+        const mobileRewardsBtn = document.getElementById('mobile-rewards-btn');
+        const mobileAddBtn = document.getElementById('mobile-add-btn');
 
-function 地獄開始(){
-if(狂気発動)return;
-狂気発動=true;
-var 狂気要素=document.getElementById("狂気");
-狂気要素.style.display="block";
-var 音=new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==");
-音.loop=true;
-音.play();
-var 回数=0;
-var 狂気間隔=setInterval(function(){
-回数++;
-var 色=["#ff0000","#00ffff","#00ff00","#ffff00","#ff00ff"][Math.floor(Math.random()*5)];
-document.body.style.background=Math.random()>0.3?"#000000":色;
-document.body.style.color=色;
-狂気要素.style.background="radial-gradient(circle,"+色+"30 0%,transparent 70%)";
-狂気要素.style.boxShadow="0 0 200px "+色;
-狂気要素.style.animation="脈 0.3s infinite";
-if(Math.random()>0.7){var 叫=document.createElement("div");叫.className="叫び";叫.textContent=["助けて","許して","痛い","やめて","死"][Math.floor(Math.random()*5)];叫.style.left=Math.random()*100+"vw";叫.style.top=Math.random()*100+"vh";document.body.appendChild(叫);setTimeout(function(){叫.remove();},2000);}
-if(回数>15){var 最終震=setInterval(function(){document.body.style.transform="scale("+(0.9+Math.random()*0.2)+")";},50);}
-if(回数>25){clearInterval(狂気間隔);clearInterval(最終震);setTimeout(function(){document.body.innerHTML=document.getElementById("終局").outerHTML;document.body.style.background="#000000";document.body.style.color="#ff0000";var 脈動=setInterval(function(){document.body.style.transform=document.body.style.transform=="scale(1.1)"?"scale(1)":"scale(1.1)";},300);},800);}
-},80);
-}
+        // XP necessária para cada nível
+        function getXpForLevel(level) {
+            return level * 100;
+        }
 
-document.addEventListener("mousemove",function(e){var 光=document.getElementById("光");光.style.left=(e.pageX-100)+"px";光.style.top=(e.pageY-100)+"px";});
-document.getElementById("鍵1").addEventListener("keypress",function(e){if(e.key==="Enter")検証(1);});
-document.getElementById("鍵2").addEventListener("keypress",function(e){if(e.key==="Enter")検証(2);});
-document.getElementById("鍵3").addEventListener("keypress",function(e){if(e.key==="Enter")検証(3);});
-document.getElementById("鍵4").addEventListener("keypress",function(e){if(e.key==="Enter")検証(4);});
-document.getElementById("鍵5").addEventListener("keypress",function(e){if(e.key==="Enter")検証(5);});
-</script>
+        // Carregar dados do localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('rpgProductivityData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                Object.assign(AppData, data);
+            } else {
+                // Dados iniciais de exemplo
+                AppData.missions = [
+                    { id: 1, title: "Estudar 30 minutos", description: "Dedicar tempo para aprendizado", type: "daily", xp: 30, completed: false },
+                    { id: 2, title: "Fazer exercícios", description: "Atividade física para manter a saúde", type: "daily", xp: 25, completed: false },
+                    { id: 3, title: "Planejar a semana", description: "Organizar tarefas e objetivos", type: "weekly", xp: 50, completed: false },
+                    { id: 4, title: "Revisar metas do mês", description: "Avaliar progresso e ajustar planos", type: "monthly", xp: 100, completed: false }
+                ];
+            }
+            updateUI();
+        }
+
+        // Salvar dados no localStorage
+        function saveData() {
+            localStorage.setItem('rpgProductivityData', JSON.stringify(AppData));
+        }
+
+        // Atualizar interface do usuário
+        function updateUI() {
+            // Atualizar nível e XP
+            levelElement.textContent = AppData.level;
+            const xpNeeded = getXpForLevel(AppData.level);
+            const xpPercentage = (AppData.xp / xpNeeded) * 100;
+            xpBarElement.style.width = `${xpPercentage}%`;
+            xpInfoElement.textContent = `${AppData.xp}/${xpNeeded} XP`;
+
+            // Atualizar estatísticas
+            coinsElement.textContent = AppData.coins;
+            completedMissionsElement.textContent = AppData.completedMissions;
+
+            // Atualizar lista de missões
+            renderMissions();
+
+            // Atualizar recompensas
+            renderRewards();
+            renderRewardsPreview();
+        }
+
+        // Renderizar missões
+        function renderMissions(filter = 'all') {
+            missionListElement.innerHTML = '';
+            
+            const filteredMissions = filter === 'all' 
+                ? AppData.missions 
+                : AppData.missions.filter(mission => mission.type === filter);
+            
+            if (filteredMissions.length === 0) {
+                missionListElement.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Nenhuma missão encontrada. Adicione uma nova missão!</p>';
+                return;
+            }
+
+            filteredMissions.forEach((mission, index) => {
+                const missionElement = document.createElement('div');
+                missionElement.className = 'mission-item';
+                if (mission.completed) {
+                    missionElement.classList.add('completed-mission');
+                }
+                missionElement.innerHTML = `
+                    <input type="checkbox" class="mission-checkbox" ${mission.completed ? 'checked' : ''} data-id="${mission.id}">
+                    <div class="mission-content">
+                        <div class="mission-title">${mission.title}</div>
+                        <div class="mission-description">${mission.description}</div>
+                        <div class="mission-meta">
+                            <span class="mission-type ${mission.type}">
+                                <i class="fas ${getTypeIcon(mission.type)}"></i>
+                                ${getTypeLabel(mission.type)}
+                            </span>
+                            <span class="mission-xp">
+                                <i class="fas fa-star"></i>
+                                +${mission.xp} XP
+                            </span>
+                        </div>
+                    </div>
+                `;
+                missionListElement.appendChild(missionElement);
+            });
+
+            // Adicionar event listeners para checkboxes
+            document.querySelectorAll('.mission-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', handleMissionComplete);
+            });
+        }
+
+        // Obter ícone do tipo de missão
+        function getTypeIcon(type) {
+            switch(type) {
+                case 'daily': return 'fa-sun';
+                case 'weekly': return 'fa-calendar-week';
+                case 'monthly': return 'fa-calendar-alt';
+                default: return 'fa-tasks';
+            }
+        }
+
+        // Obter rótulo do tipo de missão
+        function getTypeLabel(type) {
+            switch(type) {
+                case 'daily': return 'Diária';
+                case 'weekly': return 'Semanal';
+                case 'monthly': return 'Mensal';
+                default: return type;
+            }
+        }
+
+        // Renderizar recompensas
+        function renderRewards() {
+            rewardsGridElement.innerHTML = '';
+            
+            AppData.rewards.forEach(reward => {
+                const rewardElement = document.createElement('div');
+                rewardElement.className = `reward-item ${reward.unlocked ? 'unlocked' : 'locked'}`;
+                rewardElement.innerHTML = `
+                    <div class="reward-icon">${reward.icon}</div>
+                    <div class="reward-title">${reward.title}</div>
+                    <div class="reward-description">${reward.description}</div>
+                    ${reward.unlocked ? '<div style="margin-top: 8px; font-size: 0.7rem; color: var(--accent);"><i class="fas fa-unlock"></i> Desbloqueada</div>' : ''}
+                `;
+                rewardsGridElement.appendChild(rewardElement);
+            });
+        }
+
+        // Renderizar preview de recompensas
+        function renderRewardsPreview() {
+            rewardsPreviewElement.innerHTML = '';
+            
+            const nextRewards = AppData.rewards
+                .filter(reward => !reward.unlocked)
+                .slice(0, 2);
+            
+            if (nextRewards.length === 0) {
+                rewardsPreviewElement.innerHTML = '<p style="text-align: center; padding: 10px;">Você desbloqueou todas as recompensas! 🎉</p>';
+                return;
+            }
+
+            nextRewards.forEach(reward => {
+                const rewardElement = document.createElement('div');
+                rewardElement.className = 'reward-item locked';
+                rewardElement.innerHTML = `
+                    <div class="reward-icon">${reward.icon}</div>
+                    <div class="reward-title">${reward.title}</div>
+                    <div class="reward-description">${reward.description}</div>
+                `;
+                rewardsPreviewElement.appendChild(rewardElement);
+            });
+        }
+
+        // Mostrar notificação
+        function showNotification(message, type = 'success') {
+            notificationTextElement.textContent = message;
+            notificationElement.className = `notification show`;
+            if (type === 'success') {
+                notificationElement.style.background = 'var(--success)';
+            } else if (type === 'warning') {
+                notificationElement.classList.add('warning');
+            }
+            
+            setTimeout(() => {
+                notificationElement.classList.remove('show');
+            }, 3000);
+        }
+
+        // Adicionar XP
+        function addXP(amount) {
+            AppData.xp += amount;
+            const xpNeeded = getXpForLevel(AppData.level);
+            
+            // Verificar se subiu de nível
+            if (AppData.xp >= xpNeeded) {
+                levelUp();
+            }
+            
+            // Adicionar moedas
+            AppData.coins += Math.floor(amount / 10);
+            
+            // Verificar conquistas
+            checkAchievements();
+            
+            // Atualizar UI e salvar
+            updateUI();
+            saveData();
+            
+            // Animação de ganho de XP
+            xpBarElement.classList.add('xp-gain');
+            setTimeout(() => {
+                xpBarElement.classList.remove('xp-gain');
+            }, 800);
+        }
+
+        // Subir de nível
+        function levelUp() {
+            AppData.level++;
+            AppData.xp = AppData.xp - getXpForLevel(AppData.level - 1);
+            
+            // Animação de level up
+            levelElement.classList.add('level-up');
+            setTimeout(() => {
+                levelElement.classList.remove('level-up');
+            }, 600);
+            
+            showNotification(`Parabéns! Você alcançou o nível ${AppData.level}!`, 'warning');
+        }
+
+        // Verificar conquistas
+        function checkAchievements() {
+            // Conquistas baseadas em nível
+            AppData.rewards.forEach(reward => {
+                if (!reward.unlocked) {
+                    if (reward.xpRequired > 0 && AppData.xp >= reward.xpRequired) {
+                        reward.unlocked = true;
+                        showNotification(`Conquista desbloqueada: ${reward.title}!`, 'warning');
+                    }
+                }
+            });
+            
+            // Conquista da primeira missão
+            if (AppData.completedMissions >= 1 && !AppData.rewards[4].unlocked) {
+                AppData.rewards[4].unlocked = true;
+                showNotification(`Conquista desbloqueada: ${AppData.rewards[4].title}!`, 'warning');
+            }
+            
+            // Conquista de missões diárias
+            if (AppData.dailyMissionsCompleted >= 5 && !AppData.rewards[5].unlocked) {
+                AppData.rewards[5].unlocked = true;
+                showNotification(`Conquista desbloqueada: ${AppData.rewards[5].title}!`, 'warning');
+            }
+            
+            // Conquista de missões semanais
+            if (AppData.weeklyMissionsCompleted >= 3 && !AppData.rewards[6].unlocked) {
+                AppData.rewards[6].unlocked = true;
+                showNotification(`Conquista desbloqueada: ${AppData.rewards[6].title}!`, 'warning');
+            }
+            
+            // Conquista de missões mensais
+            if (AppData.monthlyMissionsCompleted >= 2 && !AppData.rewards[7].unlocked) {
+                AppData.rewards[7].unlocked = true;
+                showNotification(`Conquista desbloqueada: ${AppData.rewards[7].title}!`, 'warning');
+            }
+        }
+
+        // Manipular conclusão de missão
+        function handleMissionComplete(event) {
+            const missionId = parseInt(event.target.dataset.id);
+            const mission = AppData.missions.find(m => m.id === missionId);
+            
+            if (event.target.checked && !mission.completed) {
+                mission.completed = true;
+                AppData.completedMissions++;
+                
+                // Contar por tipo
+                if (mission.type === 'daily') AppData.dailyMissionsCompleted++;
+                if (mission.type === 'weekly') AppData.weeklyMissionsCompleted++;
+                if (mission.type === 'monthly') AppData.monthlyMissionsCompleted++;
+                
+                addXP(mission.xp);
+                showNotification(`Missão "${mission.title}" concluída! +${mission.xp} XP`);
+                
+                // Animação de missão concluída
+                event.target.closest('.mission-item').classList.add('completed-mission');
+            } else if (!event.target.checked && mission.completed) {
+                mission.completed = false;
+                AppData.completedMissions--;
+                
+                // Descontar por tipo
+                if (mission.type === 'daily') AppData.dailyMissionsCompleted--;
+                if (mission.type === 'weekly') AppData.weeklyMissionsCompleted--;
+                if (mission.type === 'monthly') AppData.monthlyMissionsCompleted--;
+                
+                // Remover XP e moedas
+                AppData.xp = Math.max(0, AppData.xp - mission.xp);
+                AppData.coins = Math.max(0, AppData.coins - Math.floor(mission.xp / 10));
+                
+                // Verificar se o nível diminuiu
+                while (AppData.level > 1 && AppData.xp < 0) {
+                    AppData.level--;
+                    AppData.xp += getXpForLevel(AppData.level);
+                }
+                
+                updateUI();
+                saveData();
+            }
+        }
+
+        // Adicionar nova missão
+        function addMission(title, description, type, xp) {
+            const newMission = {
+                id: Date.now(),
+                title,
+                description,
+                type,
+                xp: parseInt(xp),
+                completed: false
+            };
+            
+            AppData.missions.push(newMission);
+            updateUI();
+            saveData();
+            showNotification(`Nova missão "${title}" adicionada!`);
+        }
+
+        // Inicializar aplicação
+        function init() {
+            // Carregar dados
+            loadData();
+            
+            // Event listeners para filtros
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderMissions(button.dataset.filter);
+                });
+            });
+            
+            // Event listeners para modal de missão
+            addMissionBtn.addEventListener('click', () => {
+                missionModal.style.display = 'flex';
+            });
+            
+            mobileAddBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                missionModal.style.display = 'flex';
+            });
+            
+            cancelMissionBtn.addEventListener('click', () => {
+                missionModal.style.display = 'none';
+                missionForm.reset();
+            });
+            
+            missionForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const title = document.getElementById('mission-title').value;
+                const description = document.getElementById('mission-description').value;
+                const type = document.getElementById('mission-type').value;
+                const xp = document.getElementById('mission-xp').value;
+                
+                addMission(title, description, type, xp);
+                
+                missionModal.style.display = 'none';
+                missionForm.reset();
+            });
+            
+            // Fechar modal ao clicar fora
+            window.addEventListener('click', (e) => {
+                if (e.target === missionModal) {
+                    missionModal.style.display = 'none';
+                    missionForm.reset();
+                }
+            });
+            
+            // Navegação mobile
+            mobileMissionsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.missions-section').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            mobileRewardsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.rewards-section').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // Iniciar a aplicação quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
