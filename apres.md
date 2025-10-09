@@ -45,7 +45,7 @@ Produtividade RPG é uma aplicação web que combina técnicas de gamificação 
 ### Opção 1: GitHub Pages (Recomendado)
 1. Faça um fork deste repositório
 2. No settings do seu fork, ative GitHub Pages
-3. Acesse `https://seu-usuario.github.io/produtividade-rpg`
+3. Acesse `https://emperordeath.github.io/`
 
 ### Opção 2: Execução Local
 ```bash
